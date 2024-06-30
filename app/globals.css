@@ -8,26 +8,58 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* globals.css */
+@font-face {
+  font-family: 'E-Ukraine';
+  src: url('/public/fonts/e-Ukraine-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'E-Ukraine';
+  src: url('/public/fonts/e-Ukraine-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'E-Ukraine';
+  src: url('/public/fonts/e-Ukraine-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'E-Ukraine';
+  src: url('/public/fonts/e-Ukraine-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'E-Ukraine';
+  src: url('/public/fonts/e-Ukraine-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'E-Ukraine';
+  src: url('/public/fonts/e-Ukraine-UltraLight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+.navbar-and-filters {
+  background: linear-gradient(180deg, #BDC9CC 0%, #CCD4D6 49.48%, #BDC9CC 100%);
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  /* Gradient background */
+  font-family: 'E-Ukraine', sans-serif;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.leaflet-container {
+  height: 100vh;
 }
