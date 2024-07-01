@@ -1,6 +1,6 @@
 'use client'
 
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet"
+import  {MapContainer, Marker, Popup, TileLayer} from "react-leaflet"
 import 'leaflet/dist/leaflet.css';
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
@@ -28,7 +28,7 @@ export default function Map(props: MapProps) {
                 <Marker key={location.id} position={[Number(location.lat), Number(location.lon)]}>
                     <Popup>
                         <div>
-                            <img src={location.images[0].url} alt={location.title}/>
+                            <img src={location.images[0]?.url} alt={location.title}/>
                             <p>{location.description.slice(0, 100)}...</p>
                             <span>{location.price} PLN</span>
                             <span> | {location.areaTotal} m<sup>2</sup></span>
