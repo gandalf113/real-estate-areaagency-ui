@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const navigation = [
+export const navigation = [
     {
         content: 'About Us',
         href: 'https://areaagency.pl/en/?currency=PLN#main-slide-2'
@@ -40,12 +40,12 @@ const navigation = [
 
 export default function Navbar() {
     return (
-        <nav className={`flex px-[71px] items-center pb-8 navbar-and-filters`}>
+        <nav className={`flex px-[71px] items-center pb-8`}>
             <div className={`flex flex-col items-center gap-y-[14px] mr-7`}>
                 <div className={`h-[20px] w-[1px] bg-[#FF0000] invisible`}/>
                 <Link href={`https://areaagency.pl/en/?currency=PLN`}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="134" height="22" viewBox="0 0 134 22"
-                         className={`fill-white hover:fill-[#FF0000] duration-200`}>
+                         className={`fill-zinc-900 hover:fill-[#FF0000] duration-200`}>
                         <path
                             d="M17.4396 21.3163L11.0133 6.28012L4.58697 21.3163H0L8.99228 0.306519H13.0343L22.0038 21.3163H17.4396Z"></path>
                         <path
@@ -76,7 +76,7 @@ export default function Navbar() {
 
                 {navigation.map((item, index) => (
                     <div key={index}
-                         className={`${item.active ? 'text-[#FF0000]' : 'text-white hover:text-[#FF0000] duration-200'} flex flex-col items-center justify-center gap-y-[14px] xl:mr-[20px] mr-4`}>
+                         className={`${item.active ? 'text-[#FF0000]' : 'hover:text-[#FF0000] duration-200'} flex flex-col items-center justify-center gap-y-[14px] xl:mr-[20px] mr-4`}>
                         <div className={`h-[20px] w-[1px] bg-[#FF0000] ${item.active ? 'visible' : 'invisible'}`}/>
                         <Link href={item.href} className={`xl:text-[1.1em] font-medium text-balance text-sm  tracking-wide`}>
                             {item.content}
@@ -84,7 +84,6 @@ export default function Navbar() {
                     </div>
                 ))}
             </div>
-
         </nav>
 
     )
