@@ -55,7 +55,7 @@ export default async function Home() {
 async function findListings() {
 
     const url = process.env.API_BASE_URL + '/listings'
-    const res = await fetch(url)
+    const res = await fetch(url, {next: {revalidate: 900}})
 
     if (!res.ok) {
         // This will activate the closest `error.js` Error Boundary

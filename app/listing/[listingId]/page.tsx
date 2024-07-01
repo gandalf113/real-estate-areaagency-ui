@@ -20,7 +20,8 @@ export default async function Page({params}: { params: { listingId: string } }) 
 
 
 async function findListing(id: number) {
-    const res = await fetch(process.env.API_BASE_URL + '/listings/' + id)
+    const url = process.env.API_BASE_URL + '/listings/' + id;
+    const res = await fetch(url, {next: {revalidate: 900}})
 
     if (!res.ok) {
         throw new Error('Failed to fetch data')
