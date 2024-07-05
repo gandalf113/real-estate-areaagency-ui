@@ -5,7 +5,13 @@ import {IListing} from "@/types";
 import Link from "next/link";
 import Filters from "@/components/filters/Filters";
 
-export default async function Home() {
+
+interface HomePageProps {
+    params: { page: string };
+    searchParams: ListingsQueryParams;
+}
+export default async function Home({ params, searchParams }: HomePageProps) {
+
     const Map = useMemo(() => dynamic(
         () => import('@/components/Map'),
         {
@@ -14,7 +20,7 @@ export default async function Home() {
         }
     ), [])
 
-    const listings: IListing[] = await findListings();
+    const listings: IListing[] = await findListings(searchParams);
 
     return (
         <>
@@ -51,10 +57,28 @@ export default async function Home() {
         ;
 }
 
+interface ListingsQueryParams {
+    page?: number;
+    limit?: number;
+    transactionType?: string;
+    propertyType?: string;
+    location?: string;
+    minRooms?: number;
+    maxRooms?: number;
+    minPrice?: number;
+    maxPrice?: number;
+}
 
-async function findListings() {
+async function findListings(params: ListingsQueryParams = {}) {
+    const queryParams = Object.keys(params)
+        .map(key => {
+            const value = (params as any)[key];
+            return value !== undefined ? `${encodeURIComponent(key)}=${encodeURIComponent(value)}` : '';
+        })
+        .filter(param => param !== '')
+        .join('&');
 
-    const url = process.env.API_BASE_URL + '/listings'
+    const url = process.env.API_BASE_URL + `/listings?` + queryParams;
     const res = await fetch(url, {next: {revalidate: 900}})
 
     if (!res.ok) {

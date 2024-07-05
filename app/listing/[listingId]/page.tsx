@@ -6,7 +6,7 @@ export default async function Page({params}: { params: { listingId: string } }) 
 
     return <div className={`max-w-6xl mx-auto`}>
         <div className={`grid grid-cols-6 gap-4 mb-4`}>
-            <Image src={listing.images[0].url} width={600} height={300} alt={``}
+            <Image src={listing.images[0]?.url} width={600} height={300} alt={``}
                    className={`rounded-sm col-span-4 w-full`}/>
             <div className={`bg-gray-100 col-span-2`}></div>
         </div>

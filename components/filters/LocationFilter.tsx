@@ -1,50 +1,22 @@
 import Select from 'react-select';
+import {FilterProps} from "@/components/filters/Filters";
 
-export const LocationFilter = () => {
+export const LocationFilter = ({filters, setFilters}: FilterProps) => {
     const options = [
         {
-            value: 'krakow',
-            label: 'Kraków'
-        },
-        {
-            value: 'warsaw',
+            value: 'Warszawa',
             label: 'Warszawa'
         },
         {
-            value: 'gdansk',
+            value: 'Gdańsk',
             label: 'Gdańsk'
         },
-        {
-            value: 'poznan',
-            label: 'Poznań'
-        },
-        {
-            value: 'wroclaw',
-            label: 'Wrocław'
-        },
-        {
-            value: 'lodz',
-            label: 'Łódź'
-        },
-        {
-            value: 'szczecin',
-            label: 'Szczecin'
-        },
-        {
-            value: 'katowice',
-            label: 'Katowice'
-        },
-        {
-            value: 'bialystok',
-            label: 'Białystok'
-        },
-        {
-            value: 'lublin',
-            label: 'Lublin'
-        }
     ]
 
     return (
-        <Select options={options} />
+        <Select options={options} value={options.find(option => option.value === filters.locationFilter)}
+                onChange={(selectedOption) => {
+                    setFilters({...filters, locationFilter: selectedOption?.value})
+                }} placeholder={`Lokalizacja`} isClearable={true}/>
     );
 }
