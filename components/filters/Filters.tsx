@@ -82,7 +82,7 @@ export default function Filters() {
     };
 
     return (
-        <div className={`grid sm:grid-cols-5 grid-cols-3 gap-x-3 gap-y-3`}>
+        <div className={`grid sm:grid-cols-5 grid-cols-3 gap-x-3 gap-y-3 z-20`}>
             <TransactionTypeFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
             {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
             <LocationFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
