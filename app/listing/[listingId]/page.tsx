@@ -1,13 +1,17 @@
 import {IListing} from "@/types";
 import Image from "next/image";
+import ListingPageCarousel from "@/components/listing-detail/ListingPageCarousel";
 
 export default async function Page({params}: { params: { listingId: string } }) {
     const listing: IListing = await findListing(parseInt(params.listingId));
 
     return <div className={`max-w-6xl mx-auto`}>
         <div className={`grid grid-cols-6 gap-4 mb-4`}>
-            <Image src={listing.images[0]?.url} width={600} height={300} alt={``}
-                   className={`rounded-sm col-span-4 w-full`} />
+            {/*<Image src={listing.images[0]?.url} width={600} height={300} alt={``}*/}
+            {/*       className={`rounded-sm col-span-4 w-full`} />*/}
+            <div className={`col-span-4`}>
+                <ListingPageCarousel images={listing.images}/>
+            </div>
             {/*Contact Info*/}
             <div className={`col-span-2 bg-gray-100 p-4 rounded-sm`}>
                 <h3 className={`text-2xl font-bold mb-2`}>Kontakt</h3>
