@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import {FilterProps} from "@/components/filters/Filters";
 
-export const TransactionTypeFilter = ({filters, setFilters}: FilterProps) => {
+export const TransactionTypeFilter = ({filters, setFilters, applyFilters}: FilterProps) => {
 
     const options = [
         {
@@ -14,11 +14,13 @@ export const TransactionTypeFilter = ({filters, setFilters}: FilterProps) => {
         }
     ]
 
+    const onChange = (selectedOption: any) => {
+        setFilters({...filters, transactionType: selectedOption?.value})
+    }
+
     return (
         <Select options={options}
                 value={options.find(option => option.value === filters.transactionType)}
-                onChange={(selectedOption) => {
-                    setFilters({...filters, transactionType: selectedOption?.value})
-                }} placeholder={`Chcę...`} isClearable={true} />
+                onChange={onChange} placeholder={`Chcę...`} isClearable={true}/>
     );
 }

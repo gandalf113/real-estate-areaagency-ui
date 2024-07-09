@@ -1,11 +1,10 @@
 'use client'
 
 import {LocationFilter} from "@/components/filters/LocationFilter";
-import {PropertyTypeFilter} from "@/components/filters/PropertyTypeFilter";
 import {TransactionTypeFilter} from "@/components/filters/TransactionTypeFilter";
 import {RoomFilter} from "@/components/filters/RoomFilter";
 import {PriceFilter} from "@/components/filters/PriceFilter";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from 'next/navigation'
 
 const toQuery = (filters: IFilter) => {
@@ -27,8 +26,12 @@ const toQuery = (filters: IFilter) => {
         query['roomFilter'] = filters.roomFilter.map(room => room.toString()).join(',');
     }
 
-    if (filters.priceFilter) {
-        query['priceFilter'] = `${filters.priceFilter.min || 0}-${filters.priceFilter.max || ''}`;
+    if (filters.priceFilter && filters.priceFilter.min && filters.priceFilter.max) {
+        query['priceFilter'] = `${filters.priceFilter.min }-${filters.priceFilter.max}`;
+    } else if (filters.priceFilter && filters.priceFilter.min) {
+        query['priceFilter'] = `${filters.priceFilter.min }-`;
+    } else if (filters.priceFilter && filters.priceFilter.max) {
+        query['priceFilter'] = `-${filters.priceFilter.max}`;
     }
 
     return query;
@@ -45,6 +48,7 @@ export interface IFilter {
 export interface FilterProps {
     filters: IFilter;
     setFilters: (filters: IFilter) => void;
+    applyFilters: (newFilter: IFilter) => void;
 }
 
 export default function Filters() {
@@ -69,23 +73,34 @@ export default function Filters() {
     });
 
 
+    useEffect(() => {
+        router.push('/?' + new URLSearchParams(toQuery(filters)).toString());
+    }, [filters]);
+
     const applyFilters = () => {
         router.push('/?' + new URLSearchParams(toQuery(filters)).toString());
     };
 
     return (
-        <div className={`grid grid-cols-6 gap-x-3 gap-y-3`}>
-            <TransactionTypeFilter filters={filters} setFilters={setFilters}/>
+        <div className={`grid sm:grid-cols-5 grid-cols-3 gap-x-3 gap-y-3`}>
+            <TransactionTypeFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
             {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
-            <LocationFilter filters={filters} setFilters={setFilters}/>
-            <RoomFilter filters={filters} setFilters={setFilters}/>
-            <PriceFilter filters={filters} setFilters={setFilters}/>
+            <LocationFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
+            
+            <div className={`hidden  md:block`}>
+                <RoomFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
+            </div>
 
-            <button
-                className={`text-white  px-12 rounded-sm bg-[#FF0000]`}
-                onClick={applyFilters}>
-                Szukaj
-            </button>
+            <div className={`hidden md:block col-span-2`}>
+                <PriceFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
+            </div>
+
+            {/*<button*/}
+            {/*    className={`text-white  px-12 rounded-sm bg-[#FF0000]`}*/}
+            {/*    onClick={applyFilters}*/}
+            {/*>*/}
+            {/*    Szukaj*/}
+            {/*</button>*/}
 
         </div>
     )
