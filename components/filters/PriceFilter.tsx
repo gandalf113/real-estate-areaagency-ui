@@ -2,7 +2,9 @@ import Select, { SingleValue } from 'react-select';
 import { FilterProps } from "@/components/filters/Filters";
 import React, { useState } from 'react';
 
-export const PriceFilter = ({ filters, setFilters }: FilterProps) => {
+export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) => {
+    const t = translations.filters;
+
     const options = [
         { value: '0-1000', label: '0 - 1000 zł' },
         { value: '1000-2000', label: '1000 - 2000 zł' },
@@ -69,7 +71,7 @@ export const PriceFilter = ({ filters, setFilters }: FilterProps) => {
                 options={minOptions}
                 value={findMinPriceOption(filters.priceFilter?.min)}
                 onChange={setMinPriceFilter}
-                placeholder={`Cena od..`}
+                placeholder={t.priceFrom.placeholder}
                 isClearable={true}
                 className="w-1/2"
             />
@@ -78,7 +80,7 @@ export const PriceFilter = ({ filters, setFilters }: FilterProps) => {
                 options={maxOptions}
                 value={findMaxPriceOption(filters.priceFilter?.max)}
                 onChange={setMaxPriceFilter}
-                placeholder={`Cena do..`}
+                placeholder={t.priceTo.placeholder}
                 isClearable={true}
                 className="w-1/2"
             />

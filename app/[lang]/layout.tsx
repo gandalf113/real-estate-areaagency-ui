@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type {Metadata} from "next";
+import "../globals.css";
 import Navbar from "@/components/Navbar";
+import {LanguageType} from "@/types";
 
 export const metadata: Metadata = {
     title: "Real Estate - AREA",
@@ -9,13 +10,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
                                        children,
+                                       params
                                    }: Readonly<{
     children: React.ReactNode;
+    params: { lang: LanguageType }
 }>) {
+    const {lang} = params;
+
     return (
         <html lang="en">
         <body>
-        <Navbar />
+        <Navbar lang={lang}/>
         {children}
         </body>
         </html>

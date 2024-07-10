@@ -27,3 +27,53 @@ export interface IListing {
         url: string;
     }[];
 }
+
+export type LanguageType = 'en' | 'pl' | 'ua';
+
+export interface Translations {
+    contact: string;
+    phone: string;
+    email: string;
+    company: string;
+    details: string;
+    area: string;
+    price: string;
+    rooms: string;
+    dateAdded: string;
+    floor: string;
+    city: string;
+    street: string;
+    description: string;
+    location: string;
+    nextPage: string;
+    noResults: string;
+    navbar: {
+        aboutUs: string;
+        services: string;
+        realEstate: string;
+        team: string;
+        reviews: string;
+        blog: string;
+        chatbot: string;
+        contacts: string;
+    };
+    filters: {
+        transactionType: {
+            placeholder: string;
+            sale: string;
+            rent: string;
+        };
+        location: {
+            placeholder: string;
+        };
+        rooms: {
+            placeholder: string;
+        };
+        priceFrom: {
+            placeholder: string;
+        };
+        priceTo: {
+            placeholder: string;
+        };
+    };
+}

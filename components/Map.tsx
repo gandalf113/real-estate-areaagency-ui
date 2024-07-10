@@ -11,6 +11,7 @@ interface MapProps {
     position: [number, number]
     zoom: number,
     locations: IListing[],
+    noPopup?: boolean
 }
 
 export default function Map(props: MapProps) {
@@ -26,7 +27,7 @@ export default function Map(props: MapProps) {
         {
             props.locations.map(location => (
                 <Marker key={location.id} position={[Number(location.lat), Number(location.lon)]}>
-                    <Popup>
+                    {!props.noPopup && <Popup>
                         <div>
                             <img src={location.images[0]?.url} alt={location.title}/>
                             <p>{location.description.slice(0, 100)}...</p>
@@ -35,7 +36,7 @@ export default function Map(props: MapProps) {
                             <br/>
                         </div>
                         <button className={`mt-2`}>Zobacz</button>
-                    </Popup>
+                    </Popup>}
                 </Marker>
             ))
         }

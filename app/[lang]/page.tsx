@@ -1,17 +1,18 @@
 import {useMemo} from "react";
 import dynamic from "next/dynamic";
-import {IListing} from "@/types";
+import {IListing, LanguageType} from "@/types";
 import Filters from "@/components/filters/Filters";
 import ListingCard from "@/components/ListingCard";
 import Pagination from "@/components/filters/Pagination";
+import translations from "@/app/translations";
 
 
 interface HomePageProps {
+    params: {lang: LanguageType}
     searchParams: ListingsQueryParams;
 }
 
-export default async function Home({searchParams}: HomePageProps) {
-
+export default async function Home({params, searchParams}: HomePageProps) {
     const Map = useMemo(() => dynamic(
         () => import('@/components/Map'),
         {
@@ -20,22 +21,24 @@ export default async function Home({searchParams}: HomePageProps) {
         }
     ), [])
 
+    const t = translations[params.lang];
+
     const currentPage = Number.parseInt(searchParams.page || '1');
-    const {listings, totalPages} = await findListings({...searchParams, page: currentPage.toString()});
+    const {listings, totalPages} = await findListings({...searchParams, page: currentPage.toString()}, params.lang);
 
     return (
         <>
-            <div className={`px-8 py-14 flex flex-col border-t-2`}>
+            <div className={`px-8 pt-4 pb-16 flex flex-col`}>
                 <Filters/>
             </div>
-            <main className="flex overflow-x-clip">
+            <main className="flex overflow-x-clip pb-8">
                 <div className={`px-8 lg:w-7/12 w-full`}>
-                    {listings.length === 0 && <p className={`text-center text-2xl mt-8`}>Brak wyników</p>}
+                    {listings.length === 0 && <p className={`text-center text-2xl mt-8`}>{t.noResults}</p>}
 
                     {/* Real Estate Listings */}
                     {listings.map((listing: IListing) => (
                         // Card
-                        <ListingCard key={listing.id} listing={listing}/>
+                        <ListingCard key={listing.id} listing={listing} lang={params.lang}/>
                     ))}
 
                     {listings && listings.length > 0 && totalPages > 1 && <Pagination
@@ -65,7 +68,11 @@ interface ListingsQueryParams {
     maxPrice?: string;
 }
 
-async function findListings(params: ListingsQueryParams = {}) {
+async function findListings(search: ListingsQueryParams = {}, lang: string) {
+    const params = {
+        lang,
+        ...search
+    }
     const queryParams = Object.keys(params)
         .map(key => {
             const value = (params as any)[key];
@@ -74,9 +81,10 @@ async function findListings(params: ListingsQueryParams = {}) {
         .filter(param => param !== '')
         .join('&');
 
+    console.log(queryParams)
+
     const url = process.env.API_BASE_URL + `/listings?` + queryParams;
     const res = await fetch(url, {next: {revalidate: 900}})
-    console.log(url)
 
     if (!res.ok) {
         // This will activate the closest `error.js` Error Boundary

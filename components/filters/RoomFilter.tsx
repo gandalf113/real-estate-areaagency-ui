@@ -1,7 +1,9 @@
 import Select, { MultiValue } from 'react-select';
 import { FilterProps } from "@/components/filters/Filters";
 
-export const RoomFilter = ({ filters, setFilters }: FilterProps) => {
+export const RoomFilter = ({ filters, setFilters, translations }: FilterProps) => {
+    const t = translations.filters.rooms;
+
     const options = [
         { value: '1', label: '1' },
         { value: '2', label: '2' },
@@ -30,7 +32,7 @@ export const RoomFilter = ({ filters, setFilters }: FilterProps) => {
             isMulti={true}
             value={findRoomOptions()}
             onChange={setRoomFilter}
-            placeholder={`Liczba pokoi`}
+            placeholder={t.placeholder}
             maxMenuHeight={200}
         />
     );

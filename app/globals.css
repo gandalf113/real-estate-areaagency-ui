@@ -20,48 +20,51 @@
 /* globals.css */
 @font-face {
     font-family: 'E-Ukraine';
-    src: url('/public/fonts/e-Ukraine-Bold.otf') format('opentype');
+    src: url('/static/fonts/e-Ukraine-Bold.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'E-Ukraine';
-    src: url('/public/fonts/e-Ukraine-Light.otf') format('opentype');
+    src: url('/static/fonts/e-Ukraine-Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'E-Ukraine';
-    src: url('/public/fonts/e-Ukraine-Medium.otf') format('opentype');
+    src: url('/static/fonts/e-Ukraine-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'E-Ukraine';
-    src: url('/public/fonts/e-Ukraine-Regular.otf') format('opentype');
+    src: url('/static/fonts/e-Ukraine-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'E-Ukraine';
-    src: url('/public/fonts/e-Ukraine-Thin.otf') format('opentype');
+    src: url('/static/fonts/e-Ukraine-Thin.otf') format('opentype');
     font-weight: 100;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'E-Ukraine';
-    src: url('/public/fonts/e-Ukraine-UltraLight.otf') format('opentype');
+    src: url('/static/fonts/e-Ukraine-UltraLight.otf') format('opentype');
     font-weight: 200;
     font-style: normal;
 }
 
 .navbar-and-filters {
-    background: linear-gradient(180deg, #A3ADAF 50%, #CCD4D6 79.48%, #BDC9CC 100%);
+    background: linear-gradient(180deg, #A3ADAF 50%, #CCD4D6 89.48%, #BDC9CC 100%);
+
+/*linear gradient at opacity*/
+/*    background: linear-gradient(180deg, #A3ADAF 80%,  #CCD4D6 95.48%, #BDC9CC 100%);*/
 }
 
 body {

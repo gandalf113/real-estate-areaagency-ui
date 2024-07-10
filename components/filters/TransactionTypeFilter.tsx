@@ -1,16 +1,19 @@
 import Select from 'react-select';
 import {FilterProps} from "@/components/filters/Filters";
+import {LanguageType, Translations} from "@/types";
+import translations from "@/app/translations";
 
-export const TransactionTypeFilter = ({filters, setFilters, applyFilters}: FilterProps) => {
+export const TransactionTypeFilter = ({filters, setFilters, translations}: FilterProps & { translations: Translations }) => {
+    const t = translations.filters.transactionType;
 
     const options = [
         {
             value: 'rent' as const,
-            label: 'Wynająć'
+            label: t.rent
         },
         {
             value: 'buy' as const,
-            label: 'Kupić'
+            label: t.sale
         }
     ]
 
@@ -21,6 +24,6 @@ export const TransactionTypeFilter = ({filters, setFilters, applyFilters}: Filte
     return (
         <Select options={options}
                 value={options.find(option => option.value === filters.transactionType)}
-                onChange={onChange} placeholder={`Chcę...`} isClearable={true}/>
+                onChange={onChange} placeholder={t.placeholder} isClearable={true}/>
     );
 }

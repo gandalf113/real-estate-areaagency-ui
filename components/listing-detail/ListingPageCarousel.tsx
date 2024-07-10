@@ -44,7 +44,6 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 spaceBetween={10}
                 slidesPerView={1}
                 ref={sliderRef}
-                navigation
                 pagination={{clickable: true}}
                 scrollbar={{draggable: true}}
                 thumbs={{swiper: thumbsSwiper}}
@@ -52,7 +51,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img src={image.url} alt={`Image ${index}`} className={`w-full`}/>
+                        <img src={image.url} alt={`Image ${index}`} className={`w-full rounded-lg shadow-2xl`}/>
                     </SwiperSlide>
                 ))}
 
@@ -86,7 +85,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 className={`mt-4`}
             >
                 {images.map((image, index) => (
-                    <SwiperSlide key={index} className="swiper-slide-thumb">
+                    <SwiperSlide key={index}>
                         <img src={image.url} alt={`Thumb ${index}`} className={`w-full cursor-pointer`}/>
                     </SwiperSlide>
                 ))}

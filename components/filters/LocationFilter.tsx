@@ -1,7 +1,9 @@
 import Select from 'react-select';
 import {FilterProps} from "@/components/filters/Filters";
 
-export const LocationFilter = ({filters, setFilters}: FilterProps) => {
+export const LocationFilter = ({filters, setFilters, translations}: FilterProps) => {
+    const t = translations.filters.location;
+
     const options = [
         {
             value: 'warszawa' as const,
@@ -93,12 +95,10 @@ export const LocationFilter = ({filters, setFilters}: FilterProps) => {
         }
     ]
 
-    console.log(options.map((opt) => opt.value))
-
     return (
         <Select options={options} value={options.find(option => option.value === filters.locationFilter)}
                 onChange={(selectedOption) => {
                     setFilters({...filters, locationFilter: selectedOption?.value})
-                }} placeholder={`Lokalizacja`} isClearable={true}/>
+                }} placeholder={t.placeholder} isClearable={true}/>
     );
 }

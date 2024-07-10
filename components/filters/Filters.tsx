@@ -6,6 +6,8 @@ import {RoomFilter} from "@/components/filters/RoomFilter";
 import {PriceFilter} from "@/components/filters/PriceFilter";
 import {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from 'next/navigation'
+import useTranslations from "@/components/hooks/useTranslations";
+import {Translations} from "@/types";
 
 const toQuery = (filters: IFilter) => {
     const query: { [key: string]: string } = {};
@@ -48,7 +50,7 @@ export interface IFilter {
 export interface FilterProps {
     filters: IFilter;
     setFilters: (filters: IFilter) => void;
-    applyFilters: (newFilter: IFilter) => void;
+    translations: Translations;
 }
 
 export default function Filters() {
@@ -60,6 +62,8 @@ export default function Filters() {
     const initLocationFilter = searchParams.get('locationFilter');
     const initRoomFilter = searchParams.get('roomFilter');
     const initPriceFilter = searchParams.get('priceFilter');
+
+    const translations = useTranslations();
 
     const [filters, setFilters] = useState<IFilter>({
         transactionType: initTransactionType === 'buy' || initTransactionType === 'rent' ? initTransactionType : undefined,
@@ -79,22 +83,21 @@ export default function Filters() {
 
     const applyFilters = () => {
         const query = new URLSearchParams(toQuery(filters)).toString();
-        const timestamp = new Date().getTime();
-        router.push('/?' + query + (query ? `&_=d` : `_=d`));
+        router.push('?' + query + (query ? `&_=d` : `_=d`));
     };
 
     return (
         <div className={`grid sm:grid-cols-5 grid-cols-3 gap-x-3 gap-y-3 z-20`}>
-            <TransactionTypeFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
+            <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
             {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
-            <LocationFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
+            <LocationFilter filters={filters} setFilters={setFilters}  translations={translations}/>
 
-            <div className={`hidden  md:block`}>
-                <RoomFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
+            <div className={`hidden md:block`}>
+                <RoomFilter filters={filters} setFilters={setFilters}  translations={translations}/>
             </div>
 
             <div className={`hidden md:block col-span-2`}>
-                <PriceFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
+                <PriceFilter filters={filters} setFilters={setFilters}  translations={translations}/>
             </div>
         </div>
     )

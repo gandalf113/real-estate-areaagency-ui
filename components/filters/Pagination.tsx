@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {useRouter, useSearchParams} from "next/navigation";
+import useTranslations from "@/components/hooks/useTranslations";
 
 interface PaginationProps {
     currentPage: number;
@@ -11,6 +12,7 @@ interface PaginationProps {
 const Pagination = ({currentPage, totalPages}: PaginationProps) => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { nextPage: nextPageStr} = useTranslations();
 
     const handlePageChange = (page: number) => {
         if (page > 0 && page <= totalPages) {
@@ -67,7 +69,7 @@ const Pagination = ({currentPage, totalPages}: PaginationProps) => {
 
                 <button onClick={() => handlePageChange(currentPage + 1)}
                         className="px-4 py-1 mx-1 bg-gray-200 text-sm rounded-md">
-                    Następna strona
+                    {nextPageStr}
                 </button>
             </div>
         </>
