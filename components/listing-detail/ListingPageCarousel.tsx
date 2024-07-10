@@ -7,7 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/thumbs';
-import { useState } from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import './ListingPageCarousel.css'
 
 interface ListingPageCarouselProps {
@@ -15,26 +15,65 @@ interface ListingPageCarouselProps {
 }
 
 const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
+    const sliderRef = useRef<{ swiper: any }>(null);
     const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+
+    const handlePrev = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (!sliderRef.current) return;
+        sliderRef.current.swiper.slidePrev();
+    }, []);
+
+    const handleNext = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (!sliderRef.current) return;
+        sliderRef.current.swiper.slideNext();
+    }, []);
+
+    useEffect(() => {
+        if (sliderRef.current && sliderRef.current.swiper) {
+            sliderRef.current.swiper.update();
+        }
+    }, [images]);
 
     return (
         <div>
             {/* Main Swiper */}
             <Swiper
-                modules={[Navigation, Scrollbar, Thumbs]}
+                modules={[Scrollbar, Thumbs]}
                 spaceBetween={10}
                 slidesPerView={1}
+                ref={sliderRef}
                 navigation
-                pagination={{ clickable: true }}
-                scrollbar={{ draggable: true }}
-                thumbs={{ swiper: thumbsSwiper }}
-                className={`w-full`}
+                pagination={{clickable: true}}
+                scrollbar={{draggable: true}}
+                thumbs={{swiper: thumbsSwiper}}
+                className={`w-full relative`}
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img src={image.url} alt={`Image ${index}`} className={`w-full`} />
+                        <img src={image.url} alt={`Image ${index}`} className={`w-full`}/>
                     </SwiperSlide>
                 ))}
+
+                <button
+                    onClick={handlePrev}
+                    className={`absolute top-1/2 left-0 transform -translate-y-1/2 bg-white p-2 rounded-r-md bg-opacity-50 hover:bg-opacity-100 z-20`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6`} fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                              d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button
+                    onClick={handleNext}
+                    className={`absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-2 rounded-l-md bg-opacity-50 hover:bg-opacity-100 z-20`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6`} fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                              d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
             </Swiper>
 
             {/* Thumbs Swiper */}
@@ -48,7 +87,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index} className="swiper-slide-thumb">
-                        <img src={image.url} alt={`Thumb ${index}`} className={`w-full cursor-pointer`} />
+                        <img src={image.url} alt={`Thumb ${index}`} className={`w-full cursor-pointer`}/>
                     </SwiperSlide>
                 ))}
             </Swiper>

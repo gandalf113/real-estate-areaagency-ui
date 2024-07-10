@@ -3,13 +3,14 @@ import dynamic from "next/dynamic";
 import {IListing} from "@/types";
 import Filters from "@/components/filters/Filters";
 import ListingCard from "@/components/ListingCard";
+import Pagination from "@/components/filters/Pagination";
 
 
 interface HomePageProps {
-    params: { page: string };
     searchParams: ListingsQueryParams;
 }
-export default async function Home({ params, searchParams }: HomePageProps) {
+
+export default async function Home({searchParams}: HomePageProps) {
 
     const Map = useMemo(() => dynamic(
         () => import('@/components/Map'),
@@ -19,7 +20,8 @@ export default async function Home({ params, searchParams }: HomePageProps) {
         }
     ), [])
 
-    const listings: IListing[] = await findListings(searchParams);
+    const currentPage = Number.parseInt(searchParams.page || '1');
+    const {listings, totalPages} = await findListings({...searchParams, page: currentPage.toString()});
 
     return (
         <>
@@ -31,33 +33,36 @@ export default async function Home({ params, searchParams }: HomePageProps) {
                     {listings.length === 0 && <p className={`text-center text-2xl mt-8`}>Brak wyników</p>}
 
                     {/* Real Estate Listings */}
-                    {listings.map((listing) => (
+                    {listings.map((listing: IListing) => (
                         // Card
-                        <ListingCard key={listing.id} listing={listing} />
+                        <ListingCard key={listing.id} listing={listing}/>
                     ))}
+
+                    {listings && listings.length > 0 && totalPages > 1 && <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                    />}
                 </div>
 
-
-                {/*The map*/}
+                {/* The map */}
                 <div className={`lg:block hidden sticky right-0 h-[calc(100vh-64px)] top-0 w-5/12`}>
                     <Map position={[52.247463, 21.015801]} zoom={10} locations={listings}/>
                 </div>
-
             </main>
-        </>)
-        ;
+        </>
+    );
 }
 
 interface ListingsQueryParams {
-    page?: number;
-    limit?: number;
+    page?: string;
+    limit?: string;
     transactionType?: string;
     propertyType?: string;
     location?: string;
-    minRooms?: number;
-    maxRooms?: number;
-    minPrice?: number;
-    maxPrice?: number;
+    minRooms?: string;
+    maxRooms?: string;
+    minPrice?: string;
+    maxPrice?: string;
 }
 
 async function findListings(params: ListingsQueryParams = {}) {
@@ -71,6 +76,7 @@ async function findListings(params: ListingsQueryParams = {}) {
 
     const url = process.env.API_BASE_URL + `/listings?` + queryParams;
     const res = await fetch(url, {next: {revalidate: 900}})
+    console.log(url)
 
     if (!res.ok) {
         // This will activate the closest `error.js` Error Boundary

@@ -27,9 +27,9 @@ const toQuery = (filters: IFilter) => {
     }
 
     if (filters.priceFilter && filters.priceFilter.min && filters.priceFilter.max) {
-        query['priceFilter'] = `${filters.priceFilter.min }-${filters.priceFilter.max}`;
+        query['priceFilter'] = `${filters.priceFilter.min}-${filters.priceFilter.max}`;
     } else if (filters.priceFilter && filters.priceFilter.min) {
-        query['priceFilter'] = `${filters.priceFilter.min }-`;
+        query['priceFilter'] = `${filters.priceFilter.min}-`;
     } else if (filters.priceFilter && filters.priceFilter.max) {
         query['priceFilter'] = `-${filters.priceFilter.max}`;
     }
@@ -74,11 +74,13 @@ export default function Filters() {
 
 
     useEffect(() => {
-        router.push('/?' + new URLSearchParams(toQuery(filters)).toString());
+        applyFilters();
     }, [filters]);
 
     const applyFilters = () => {
-        router.push('/?' + new URLSearchParams(toQuery(filters)).toString());
+        const query = new URLSearchParams(toQuery(filters)).toString();
+        const timestamp = new Date().getTime();
+        router.push('/?' + query + (query ? `&_=d` : `_=d`));
     };
 
     return (
@@ -86,7 +88,7 @@ export default function Filters() {
             <TransactionTypeFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
             {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
             <LocationFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
-            
+
             <div className={`hidden  md:block`}>
                 <RoomFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
             </div>
@@ -94,14 +96,6 @@ export default function Filters() {
             <div className={`hidden md:block col-span-2`}>
                 <PriceFilter filters={filters} setFilters={setFilters} applyFilters={applyFilters}/>
             </div>
-
-            {/*<button*/}
-            {/*    className={`text-white  px-12 rounded-sm bg-[#FF0000]`}*/}
-            {/*    onClick={applyFilters}*/}
-            {/*>*/}
-            {/*    Szukaj*/}
-            {/*</button>*/}
-
         </div>
     )
 }
