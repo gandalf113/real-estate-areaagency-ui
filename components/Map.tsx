@@ -30,7 +30,7 @@ export default function Map(props: MapProps) {
                     {!props.noPopup && <Popup>
                         <div>
                             <img src={location.images[0]?.url} alt={location.title}/>
-                            <p>{location.description.slice(0, 100)}...</p>
+                            <p>{location?.description?.slice(0, 100) ?? ""}...</p>
                             <span>{location.price} PLN</span>
                             <span> | {location.areaTotal} m<sup>2</sup></span>
                             <br/>
