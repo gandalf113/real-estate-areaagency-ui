@@ -14,9 +14,12 @@ export async function submitContactForm(props: {
 }, link: string) {
     const { name, email, countryCode, phoneNumber, message } = props;
 
-    const response = await fetch(process.env.NEXT_PUBLIC_API_BASE_URL + '/contact-form', {
+    const text = `Ogłoszenie: ${link}\nImię: ${name}\nEmail: ${email}\nTelefon: ${phoneNumber ? countryCode + " " + phoneNumber : "-"}\nWiadomość: ${message}`;
+    const body = {             chat_id: process.env.TELEGRAM_CHAT_ID, text: text}
+
+    const response = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
         method: 'POST',
-        body: JSON.stringify({ link, name, email, countryCode, phoneNumber, message }),
+        body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json'
         }
