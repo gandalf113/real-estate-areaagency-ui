@@ -75,5 +75,33 @@ export interface Translations {
         priceTo: {
             placeholder: string;
         };
-    };
+    },
+    contactForm: {
+        name: string;
+        email: string;
+        phone: string;
+        message: string;
+        send: string;
+        reason: {
+            needMoreInfo: {
+                label: string,
+                content: string
+            },
+            scheduleVisit: {
+                label: string,
+                content: string
+            },
+            other: {
+                label: string,
+                content: string
+            }
+        },
+        validation: {
+            nameRequired: string;
+            invalidEmail: string;
+            invalidPhoneNumber: string;
+            messageRequired: string;
+        }
+    }
+
 }

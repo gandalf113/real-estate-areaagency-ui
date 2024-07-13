@@ -17,7 +17,7 @@ const ListingCard = ({listing, lang}: ListingCardProps) => {
 
     return (
         <Link key={listing.id} href={hrefUrl}>
-            <div className={`grid sm:grid-cols-5 grid-cols-1 gap-x-2 w-full shadow cursor-pointer bg-white mb-4`}>
+            <div className={`grid sm:grid-cols-5 grid-cols-1 gap-x-2 w-full shadow cursor-pointer bg-zinc-100 mb-4 max-h-56 rounded-lg overflow-hidden`}>
                 <div className={`w-full sm:col-span-2`}>
                     {hasImages ? <ListingCardCarousel images={images}/> :
                         <Image src={hasImages ? listing.images[0]?.url : "/no-image.png"} alt={`House`}
@@ -29,11 +29,10 @@ const ListingCard = ({listing, lang}: ListingCardProps) => {
                         {" | "} {listing.city_name}
                         </span>
 
-                    <h2 className={`text-lg font-bold mb-1`}>{listing.title}</h2>
+                    <h2 className={`text-base font-bold mb-1 whitespace-nowrap truncate`}>{listing.title}</h2>
                     {/*Grow to fill*/}
-                    <p className={`text-gray-500 flex-grow `}>{listing.description.slice(0, 100)}...</p>
+                    <p className={`text-gray-500 flex-grow `}>{listing.description.slice(0, 160)}...</p>
                     <p className={`w-fit mt-auto h-fit ml-auto`}>{listing.price} zł {listing.transaction === 'wynajem' && ' / miesiąc'}</p>
-
                 </div>
             </div>
         </Link>

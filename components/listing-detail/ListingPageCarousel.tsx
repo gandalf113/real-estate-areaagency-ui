@@ -51,7 +51,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img src={image.url} alt={`Image ${index}`} className={`w-full rounded-lg shadow-2xl`}/>
+                        <img src={image.url} alt={`Image ${index}`} className={`w-full rounded-lg shadow-2xl object-cover`}/>
                     </SwiperSlide>
                 ))}
 

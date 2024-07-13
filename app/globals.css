@@ -61,15 +61,16 @@
 }
 
 .navbar-and-filters {
-    background: linear-gradient(180deg, #A3ADAF 50%, #CCD4D6 89.48%, #BDC9CC 100%);
+    /*background: linear-gradient(180deg, #A3ADAF 50%, #CCD4D6 89.48%, #BDC9CC 100%);*/
 
 /*linear gradient at opacity*/
-/*    background: linear-gradient(180deg, #A3ADAF 80%,  #CCD4D6 95.48%, #BDC9CC 100%);*/
+    background: linear-gradient(180deg, #BDC9CC 80%,  #CCD4D6 95.48%, #A3ADAF 100%);
 }
 
 body {
     /* Gradient background */
     font-family: 'E-Ukraine', sans-serif;
+    background: linear-gradient(180deg, #A3ADAF 50%, #CCD4D6 89.48%, #BDC9CC 100%);
 }
 
 .leaflet-container {

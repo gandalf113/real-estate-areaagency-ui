@@ -4,6 +4,7 @@ import translations from "@/app/translations";
 import {useMemo} from "react";
 import dynamic from "next/dynamic";
 import ListingDetailCard from "@/components/listing-detail/ListingDetailCard";
+import ContactForm from "@/components/listing-detail/ContactForm";
 
 export default async function Page({params}: { params: { listingId: string, lang: LanguageType } }) {
     const Map = useMemo(() => dynamic(
@@ -17,22 +18,19 @@ export default async function Page({params}: { params: { listingId: string, lang
     const listing: IListing = await findListing(parseInt(params.listingId), params.lang);
     const t = translations[params.lang];
 
-
     return <div className={`max-w-6xl mx-auto py-4 pb-16`}>
-        <div className={`grid grid-cols-6 gap-4 mb-4`}>
-            <div className={`col-span-4`}>
+        <div className={`grid grid-cols-10 gap-4 mb-4`}>
+            <div className={`col-span-7`}>
                 <ListingPageCarousel images={listing.images}/>
             </div>
             {/*Contact Info*/}
-            <div className={`col-span-2 h-full`}>
+            <div className={`col-span-3 rounded-sm h-[29rem]`}>
+                <ContactForm lang={params.lang} />
                 {/*<h3 className={`text-2xl font-bold mb-2`}>{t.contact}</h3>*/}
-
-                {/*<div className={`col-span-2 bg-gray-100 rounded-sm h-[29rem] p-4`}>*/}
-                {/*    <p className={`text-xl mb-4`}>{listing.contact_name}</p>*/}
-                {/*    <p className={`text-`}>{listing.contact_phone}</p>*/}
-                {/*    <p className={`text-`}>{listing.contact_email}</p>*/}
-                {/*    {listing.company_name && <p className={`text-sm`}>{t.company}: {listing.company_name}</p>}*/}
-                {/*</div>*/}
+                {/*<p className={`text-xl mb-4`}>{listing.contact_name}</p>*/}
+                {/*<p className={`text-`}>{listing.contact_phone}</p>*/}
+                {/*<p className={`text-`}>{listing.contact_email}</p>*/}
+                {/*{listing.company_name && <p className={`text-sm`}>{t.company}: {listing.company_name}</p>}*/}
             </div>
         </div>
 

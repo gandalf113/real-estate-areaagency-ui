@@ -48,6 +48,33 @@ const translations: Record<LanguageType, Translations> = {
                 placeholder: "Price to..",
             },
         },
+        contactForm: {
+            name: "Name",
+            email: "Email",
+            message: "Message",
+            send: "Send",
+            phone: "Phone number",
+            reason: {
+                needMoreInfo: {
+                    label: "I need more information",
+                    content: "This rental apartment seems interesting to me. I would like to know more. Please contact me. \n"
+                },
+                scheduleVisit: {
+                    label: "I want to schedule a visit",
+                    content: "I would like to schedule a visit to view the apartment. Please contact me to arrange a time.\n"
+                },
+                other: {
+                    label: "Other reason",
+                    content: ""
+                }
+            },
+            validation: {
+                nameRequired: "Name is required",
+                invalidEmail: "Invalid email",
+                invalidPhoneNumber: "Invalid phone number",
+                messageRequired: "Message is required"
+            }
+        }
     },
     pl: {
         contact: "Kontakt",
@@ -95,6 +122,35 @@ const translations: Record<LanguageType, Translations> = {
                 placeholder: "Cena do..",
             },
         },
+        contactForm: {
+            name: "Imię",
+            email: "Email",
+            message: "Wiadomość",
+            send: "Wyślij",
+            phone: "Numer telefonu",
+            reason: {
+                needMoreInfo: {
+                    label: "Potrzebuję więcej informacji",
+                    content: "To mieszkanie na wynajem wydaje mi się interesujące. Chętnie poznam więcej szczegółów. Proszę o kontakt. \n" +
+                        "\n" +
+                        "Pozdrawiam."
+                },
+                scheduleVisit: {
+                    label: "Chcę umówić się na wizytę",
+                    content: "Chciałbym umówić się na wizytę w celu obejrzenia mieszkania. Proszę o kontakt w celu ustalenia terminu.\n"
+                },
+                other: {
+                    label: "Inny powód",
+                    content: ""
+                }
+            },
+            validation: {
+                nameRequired: "Imię jest wymagane",
+                invalidEmail: "Nieprawidłowy adres email",
+                invalidPhoneNumber: "Nieprawidłowy numer telefonu",
+                messageRequired: "Wiadomość jest wymagana"
+            }
+        }
     },
     ua: {
         contact: "Контакт",
@@ -142,6 +198,35 @@ const translations: Record<LanguageType, Translations> = {
                 placeholder: "Ціна до..",
             },
         },
+        contactForm: {
+            name: "Ім'я",
+            email: "Ел. пошта",
+            message: "Повідомлення",
+            send: "Надіслати",
+            phone: "Номер телефону",
+            reason: {
+                needMoreInfo: {
+                    label: "Мені потрібна додаткова інформація",
+                    content: "Ця квартира для оренди виглядає цікавою. Я б хотів дізнатися більше. Будь ласка, зв'яжіться зі мною. \n" +
+                        "\n" +
+                        "З повагою."
+                },
+                scheduleVisit: {
+                    label: "Я хочу запланувати візит",
+                    content: "Я хотів би запланувати візит для перегляду квартири. Будь ласка, зв'яжіться зі мною, щоб домовитися про час.\n"
+                },
+                other: {
+                    label: "Інша причина",
+                    content: ""
+                }
+            },
+            validation: {
+                nameRequired: "Ім'я є обов'язковим",
+                invalidEmail: "Недійсна електронна адреса",
+                invalidPhoneNumber: "Недійсний номер телефону",
+                messageRequired: "Повідомлення є обов'язковим"
+            }
+        }
     }
 };
 
