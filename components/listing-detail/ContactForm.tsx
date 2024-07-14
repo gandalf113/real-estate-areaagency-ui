@@ -6,6 +6,8 @@ import translations from "@/app/translations";
 import { useEffect, useState } from "react";
 import {countryCodeOptions} from "@/components/utils/country-code";
 import {submitContactForm} from "@/app/actions";
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 const ContactForm = ({ lang }: { lang: LanguageType }) => {
     const t = translations[lang].contactForm;
@@ -102,8 +104,8 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={`w-full flex flex-col gap-4 font-light text-sm p-6 rounded`}>
-            <div>
+        <form onSubmit={handleSubmit} className={`w-full flex flex-col gap-4 font-light text-sm p-6 rounded bg-white bg-opacity-25`}>
+            <div className={`w-full`}>
                 <input
                     name={'name'}
                     type="text"
@@ -125,27 +127,13 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
                 />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
-            <div className="flex">
-                <div className="w-1/3">
-                    <Select
-                        name={'countryCode'}
-                        options={countryCodeOptions}
-                        value={countryCodeOptions.find(option => option.value === countryCode)}
-                        onChange={(selectedOption: any) => setCountryCode(selectedOption.value)}
-                    />
-                    {errors.phoneNumber && <p className="text-red-500 text-xs mt-1 whitespace-nowrap">{errors.phoneNumber}</p>}
-                </div>
-                <div className="w-2/3">
-                    <input
-                        name={'phoneNumber'}
-                        type="text"
-                        placeholder={t.phone}
-                        className={`w-full px-3 py-2 rounded outline-none border border-gray-300 hover:border-gray-500 focus:border-gray-500 ${errors.phoneNumber ? '' : ''}`}
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                </div>
-            </div>
+            <PhoneInput
+                defaultCountry={lang === 'pl' ? 'pl' : lang === 'ua' ? 'ua' : 'us'}
+                value={phoneNumber}
+                onChange={(phone) => setPhoneNumber(phone)}
+                className={`w-full`}
+                inputClassName={`w-full`}
+            />
 
             <Select
                 name={'reason'}

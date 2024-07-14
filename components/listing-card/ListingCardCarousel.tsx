@@ -36,7 +36,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
     }, [images]);
 
     return (
-        <div className={``}>
+        <div className={`h-full`}>
             {/* Main Swiper */}
             <Swiper
                 modules={[Pagination]}
@@ -45,11 +45,11 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 slidesPerView={1}
                 pagination={{ clickable: true }}
                 scrollbar={{ draggable: true }}
-                className={`w-full relative`}
+                className={`w-full h-full relative`}
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <Image src={image.url} width={300} height={200} alt={`Image ${index}`} className={`w-full min-h-48 h-56 object-cover`} priority />
+                        <Image src={image.url} width={300} height={200} alt={`Image ${index}`} className={`group-hover:scale-105 duration-200 w-full h-full object-cover`} priority />
                     </SwiperSlide>
                 ))}
 

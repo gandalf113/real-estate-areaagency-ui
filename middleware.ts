@@ -4,7 +4,7 @@ let locales = ['en', 'pl', 'ua'];
 
 // Get the preferred locale, similar to the above or using a library
 function getLocale(request: NextRequest) {
-    return 'en';
+    return 'pl';
 }
 
 export function middleware(request: NextRequest) {

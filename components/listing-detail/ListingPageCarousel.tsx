@@ -9,6 +9,7 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/thumbs';
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import './ListingPageCarousel.css'
+import Image from "next/image";
 
 interface ListingPageCarouselProps {
     images: { url: string }[];
@@ -47,11 +48,11 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 pagination={{clickable: true}}
                 scrollbar={{draggable: true}}
                 thumbs={{swiper: thumbsSwiper}}
-                className={`w-full relative`}
+                className={`w-full relative rounded-lg overflow-hidden shadow-lg `}
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img src={image.url} alt={`Image ${index}`} className={`w-full rounded-lg shadow-2xl object-cover`}/>
+                        <Image width={1280} height={720} src={image.url} alt={`Image ${index}`} className={`w-full rounded-lg shadow-2xl`}/>
                     </SwiperSlide>
                 ))}
 
@@ -82,7 +83,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 slidesPerView={6}
                 freeMode
                 watchSlidesProgress
-                className={`mt-4`}
+                className={`mt-4 shadow-lg`}
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>

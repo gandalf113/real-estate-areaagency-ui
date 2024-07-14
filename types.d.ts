@@ -102,6 +102,12 @@ export interface Translations {
             invalidPhoneNumber: string;
             messageRequired: string;
         }
+    },
+    listingCard: {
+        floor: string;
+        floor_0: string;
+        room: string;
+        roomsNominative: string;
+        roomsGentitive: string;
     }
-
 }

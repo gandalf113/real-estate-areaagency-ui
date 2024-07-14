@@ -74,6 +74,13 @@ const translations: Record<LanguageType, Translations> = {
                 invalidPhoneNumber: "Invalid phone number",
                 messageRequired: "Message is required"
             }
+        },
+        listingCard: {
+            floor: "floor",
+            floor_0: "Ground floor",
+            room: "room",
+            roomsNominative: "rooms",
+            roomsGentitive: "rooms"
         }
     },
     pl: {
@@ -131,9 +138,7 @@ const translations: Record<LanguageType, Translations> = {
             reason: {
                 needMoreInfo: {
                     label: "Potrzebuję więcej informacji",
-                    content: "To mieszkanie na wynajem wydaje mi się interesujące. Chętnie poznam więcej szczegółów. Proszę o kontakt. \n" +
-                        "\n" +
-                        "Pozdrawiam."
+                    content: "To mieszkanie na wynajem wydaje mi się interesujące. Chętnie poznam więcej szczegółów. Proszę o kontakt. \n"
                 },
                 scheduleVisit: {
                     label: "Chcę umówić się na wizytę",
@@ -150,6 +155,13 @@ const translations: Record<LanguageType, Translations> = {
                 invalidPhoneNumber: "Nieprawidłowy numer telefonu",
                 messageRequired: "Wiadomość jest wymagana"
             }
+        },
+        listingCard: {
+            floor: "piętro",
+            floor_0: "Parter",
+            room: "pokój",
+            roomsNominative: "pokoje",
+            roomsGentitive: "pokoi"
         }
     },
     ua: {
@@ -207,9 +219,7 @@ const translations: Record<LanguageType, Translations> = {
             reason: {
                 needMoreInfo: {
                     label: "Мені потрібна додаткова інформація",
-                    content: "Ця квартира для оренди виглядає цікавою. Я б хотів дізнатися більше. Будь ласка, зв'яжіться зі мною. \n" +
-                        "\n" +
-                        "З повагою."
+                    content: "Ця квартира для оренди виглядає цікавою. Я б хотів дізнатися більше. Будь ласка, зв'яжіться зі мною. \n"
                 },
                 scheduleVisit: {
                     label: "Я хочу запланувати візит",
@@ -226,6 +236,13 @@ const translations: Record<LanguageType, Translations> = {
                 invalidPhoneNumber: "Недійсний номер телефону",
                 messageRequired: "Повідомлення є обов'язковим"
             }
+        },
+        listingCard: {
+            floor: "поверх",
+            floor_0: "Перший поверх",
+            room: "кімната",
+            roomsNominative: "кімнати",
+            roomsGentitive: "кімнат"
         }
     }
 };

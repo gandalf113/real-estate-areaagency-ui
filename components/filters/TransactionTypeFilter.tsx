@@ -3,7 +3,9 @@ import {FilterProps} from "@/components/filters/Filters";
 import {LanguageType, Translations} from "@/types";
 import translations from "@/app/translations";
 
-export const TransactionTypeFilter = ({filters, setFilters, translations}: FilterProps & { translations: Translations }) => {
+export const TransactionTypeFilter = ({filters, setFilters, translations}: FilterProps & {
+    translations: Translations
+}) => {
     const t = translations.filters.transactionType;
 
     const options = [
@@ -24,6 +26,18 @@ export const TransactionTypeFilter = ({filters, setFilters, translations}: Filte
     return (
         <Select options={options}
                 value={options.find(option => option.value === filters.transactionType)}
-                onChange={onChange} placeholder={t.placeholder} isClearable={true}/>
+                onChange={onChange} placeholder={t.placeholder} isClearable={true}
+                // styles={{
+                //     control: (baseStyles, style) => ({
+                //         ...baseStyles,
+                //         backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                //         borderColor: 'transparent',
+                //     }),
+                //     placeholder: (baseStyles, style) => ({
+                //         ...baseStyles,
+                //         color: 'white'
+                //     }),
+                // }}
+        />
     );
 }
