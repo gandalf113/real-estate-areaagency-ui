@@ -1,6 +1,6 @@
 'use client';
 
-import { Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules';
+import { Scrollbar, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -83,7 +83,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 slidesPerView={6}
                 freeMode
                 watchSlidesProgress
-                className={`mt-4 shadow-lg`}
+                className={`mt-4`}
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>

@@ -93,15 +93,9 @@ const ListingCard = ({listing, lang}: ListingCardProps) => {
                 </div>
                 <div className={`p-4 sm:col-span-3 flex flex-col gap-y-2 h-full`}>
                     <div className={`text-black  font-light`}> {formatAdditionalInfo(listing)}</div>
-
                     <h2 className={`text-xl font-light mb-1 line-clamp-3 flex-grow`}>{listing.title}</h2>
                     <div className={`font-thin`}>{location}</div>
-                    <p className={`w-fit ml-auto font-thin text-xl`}>{price} zł {listing.transaction === 'wynajem' && ' / miesiąc'}</p>
-
-                    {/*Grow to fill*/}
-                    {/*<p className="text-gray-500 flex-grow ellipsis-multiline" style={{lineClamp: 'none'}}>*/}
-                    {/*    {listing.description.slice(0, 200)}*/}
-                    {/*</p>*/}
+                    <div className={`w-fit ml-auto font-thin text-lg`}>{price} zł {listing.transaction === 'wynajem' && ' / miesiąc'}</div>
                 </div>
             </div>
         </Link>

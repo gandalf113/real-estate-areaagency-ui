@@ -18,6 +18,8 @@ export default async function Page({params}: { params: { listingId: string, lang
     const listing: IListing = await findListing(parseInt(params.listingId), params.lang);
     const t = translations[params.lang];
 
+    const descriptionLines = listing.description.split('\n');
+
     return <div className={`max-w-6xl mx-auto py-4 pb-16`}>
         <div className={`grid grid-cols-10 gap-4 mb-4`}>
             <div className={`col-span-7`}>
@@ -25,18 +27,16 @@ export default async function Page({params}: { params: { listingId: string, lang
             </div>
             {/*Contact Info*/}
             <div className={`col-span-3 rounded-sm h-[29rem]`}>
-                <ContactForm lang={params.lang} />
-                {/*<h3 className={`text-2xl font-bold mb-2`}>{t.contact}</h3>*/}
-                {/*<p className={`text-xl mb-4`}>{listing.contact_name}</p>*/}
-                {/*<p className={`text-`}>{listing.contact_phone}</p>*/}
-                {/*<p className={`text-`}>{listing.contact_email}</p>*/}
-                {/*{listing.company_name && <p className={`text-sm`}>{t.company}: {listing.company_name}</p>}*/}
+                <ContactForm lang={params.lang}/>
             </div>
         </div>
 
 
         <h1 className={`text-3xl font-bold my-8 lg:w-4/5`}>{listing.title}</h1>
-        <p className={`font-light w-3/4`}>{listing.description}</p>
+
+        <div className={`w-2/3`}>
+            {descriptionLines.map((line, index) => <p key={index} className={`font-light mb-2`}>{line}</p>)}
+        </div>
 
         <h3 className={`text-2xl font-bold my-8`}>{t.details}</h3>
         <div className={`grid grid-cols-4 gap-4 mb-4`}>
