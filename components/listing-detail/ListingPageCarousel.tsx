@@ -48,11 +48,11 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 pagination={{clickable: true}}
                 scrollbar={{draggable: true}}
                 thumbs={{swiper: thumbsSwiper}}
-                className={`w-full relative rounded-lg overflow-hidden shadow-lg `}
+                className={`w-full relative rounded-lg h-full overflow-hidden shadow-lg `}
             >
                 {images.map((image, index) => (
-                    <SwiperSlide key={index}>
-                        <Image width={1280} height={720} src={image.url} alt={`Image ${index}`} className={`w-full rounded-lg shadow-2xl`}/>
+                    <SwiperSlide key={index} className={`h-full`}>
+                        <Image width={1280} height={720} src={image.url} alt={`Image ${index}`} className={`w-full h-[32rem] object-cover rounded-lg shadow-2xl`}/>
                     </SwiperSlide>
                 ))}
 
@@ -87,7 +87,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img src={image.url} alt={`Thumb ${index}`} className={`w-full cursor-pointer`}/>
+                        <Image width={100} height={60} src={image.url} alt={`Thumb ${index}`} className={`w-full cursor-pointer`}/>
                     </SwiperSlide>
                 ))}
             </Swiper>

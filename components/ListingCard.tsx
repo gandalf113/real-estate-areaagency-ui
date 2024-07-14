@@ -87,7 +87,7 @@ const ListingCard = ({listing, lang, onMouseLeave, onMouseEnter}: ListingCardPro
     return (
         <Link key={listing.id} href={hrefUrl} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <div
-                className={`font-sans grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg group duration-100 cursor-pointer bg-stone-50 bg-opacity-80 hover:bg-opacity-90 mb-4 gap-x-2 rounded-lg overflow-hidden`}>
+                className={`font-sans grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg duration-100 cursor-pointer bg-slate-50 bg-opacity-70 hover:bg-opacity-90 mb-4 gap-x-2 rounded overflow-hidden`}>
                 <div className={`w-full max-h-56 sm:col-span-2`}>
                     {hasImages ? <ListingCardCarousel images={images}/> :
                         <Image src={hasImages ? listing.images[0]?.url : "/no-image.png"} alt={`House`}

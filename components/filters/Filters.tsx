@@ -21,7 +21,7 @@ const toQuery = (filters: IFilter) => {
     }
 
     if (filters.locationFilter) {
-        query['locationFilter'] = filters.locationFilter;
+        query['locationFilter'] = filters.locationFilter.join(',');
     }
 
     if (filters.roomFilter) {
@@ -42,7 +42,7 @@ const toQuery = (filters: IFilter) => {
 export interface IFilter {
     transactionType?: 'buy' | 'rent';
     propertyType?: 'house' | 'apartment' | 'commercial';
-    locationFilter?: string;
+    locationFilter?: string[];
     roomFilter?: number[]
     priceFilter?: { min?: number; max?: number };
 }
@@ -68,7 +68,7 @@ export default function Filters() {
     const [filters, setFilters] = useState<IFilter>({
         transactionType: initTransactionType === 'buy' || initTransactionType === 'rent' ? initTransactionType : undefined,
         // propertyType: initPropertyType === 'house' || initPropertyType === 'apartment' || initPropertyType === 'commercial' ? initPropertyType : undefined,
-        locationFilter: initLocationFilter ? initLocationFilter : undefined,
+        locationFilter: initLocationFilter ? initLocationFilter.split(',') : undefined,
         roomFilter: initRoomFilter ? initRoomFilter.split(',').map(Number) : undefined,
         priceFilter: initPriceFilter ? {
             min: parseInt(initPriceFilter.split('-')[0]),
