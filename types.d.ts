@@ -28,6 +28,14 @@ export interface IListing {
     }[];
 }
 
+export interface IListingPin {
+    id: number;
+    lat: number;
+    lon: number;
+    title: string;
+    description: string;
+}
+
 export type LanguageType = 'en' | 'pl' | 'ua';
 
 export interface Translations {
@@ -105,6 +113,7 @@ export interface Translations {
         }
     },
     listingCard: {
+        month: string;
         floor: string;
         floor_0: string;
         room: string;

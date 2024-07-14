@@ -18,7 +18,7 @@ export default async function Page({params}: { params: { listingId: string, lang
     const listing: IListing = await findListing(parseInt(params.listingId), params.lang);
     const t = translations[params.lang];
 
-    const descriptionLines = listing.description.split('\n');
+    const descriptionLines = listing.description ? listing.description.split('\n') : [];
 
     return <div className={`max-w-6xl mx-auto py-4 pb-16`}>
         <div className={`grid grid-cols-10 gap-4 mb-4`}>

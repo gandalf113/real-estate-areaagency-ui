@@ -1,12 +1,7 @@
-import {useMemo} from "react";
-import dynamic from "next/dynamic";
-import {IListing, LanguageType} from "@/types";
+import {LanguageType} from "@/types";
 import Filters from "@/components/filters/Filters";
-import ListingCard from "@/components/ListingCard";
-import Pagination from "@/components/filters/Pagination";
 import translations from "@/app/translations";
 import ListingsWithMap from "@/components/ListingsWithMap";
-
 
 interface HomePageProps {
     params: {lang: LanguageType}
@@ -18,7 +13,7 @@ export default async function Home({params, searchParams}: HomePageProps) {
     const t = translations[params.lang];
 
     const currentPage = Number.parseInt(searchParams.page || '1');
-    const {listings, totalPages} = await findListings({...searchParams, page: currentPage.toString()}, params.lang);
+    const {listings, totalPages, pins} = await findListings({...searchParams, page: currentPage.toString()}, params.lang);
 
     return (
         <>
@@ -30,7 +25,9 @@ export default async function Home({params, searchParams}: HomePageProps) {
                     listings={listings}
                     totalPages={totalPages}
                     currentPage={currentPage}
-                    lang={params.lang} />
+                    lang={params.lang}
+                    pins={pins}
+                />
             </main>
         </>
     );
@@ -61,15 +58,24 @@ async function findListings(search: ListingsQueryParams = {}, lang: string) {
         .filter(param => param !== '')
         .join('&');
 
-    console.log(queryParams)
+    const listingsUrl = process.env.API_BASE_URL + `/listings?` + queryParams;
+    const pinsUrl = process.env.API_BASE_URL + `/pins?` + queryParams;
 
-    const url = process.env.API_BASE_URL + `/listings?` + queryParams;
-    const res = await fetch(url, {next: {revalidate: 900}})
+    const [listingsRes, pinsRes] = await Promise.all([
+        fetch(listingsUrl, {next: {revalidate: 900}}),
+        fetch(pinsUrl, {next: {revalidate: 900}})
+    ]);
 
-    if (!res.ok) {
-        // This will activate the closest `error.js` Error Boundary
-        throw new Error('Failed to fetch data')
+    if (!listingsRes.ok || !pinsRes.ok) {
+        throw new Error('Failed to fetch data');
     }
 
-    return res.json()
+    const listingsData = await listingsRes.json();
+    const pinsData = await pinsRes.json();
+
+    return {
+        listings: listingsData.listings,
+        totalPages: listingsData.totalPages,
+        pins: pinsData.pins
+    };
 }

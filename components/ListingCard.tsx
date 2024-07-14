@@ -87,19 +87,19 @@ const ListingCard = ({listing, lang, onMouseLeave, onMouseEnter}: ListingCardPro
     return (
         <Link key={listing.id} href={hrefUrl} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <div
-                className={`font-sans grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg group duration-100 cursor-pointer bg-white bg-opacity-60 hover:bg-opacity-75 mb-4 gap-x-2 rounded-lg overflow-hidden`}>
+                className={`font-sans grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg group duration-100 cursor-pointer bg-stone-50 bg-opacity-80 hover:bg-opacity-90 mb-4 gap-x-2 rounded-lg overflow-hidden`}>
                 <div className={`w-full max-h-56 sm:col-span-2`}>
                     {hasImages ? <ListingCardCarousel images={images}/> :
                         <Image src={hasImages ? listing.images[0]?.url : "/no-image.png"} alt={`House`}
                                width={600} height={300} className={`w-full h-full object-cover`}/>}
                 </div>
                 <div className={`p-4 sm:col-span-3 flex flex-col gap-y-2 h-full`}>
-                    <div
-                        className={`w-fit font-thin text-lg`}>{price} zł {listing.transaction === 'wynajem' && ' / miesiąc'}</div>
-
-                    <h2 className={`text-xl font-light mb-1 line-clamp-3 flex-grow`}>{listing.title}</h2>
-                    <div className={`font-thin`}>{location}</div>
                     <div className={`text-black  font-light`}> {formatAdditionalInfo(listing)}</div>
+
+                    <h2 className={`text-xl mb-1 line-clamp-3 font-semibold flex-grow`}>{listing.title}</h2>
+                    <div className={`font-thin`}>{location}</div>
+                    <div
+                        className={`w-fit font-thin text-xl`}>{price} zł {listing.transaction === 'wynajem' && ' / ' + t.month}</div>
 
                 </div>
             </div>

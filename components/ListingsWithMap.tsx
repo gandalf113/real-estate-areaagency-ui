@@ -1,6 +1,6 @@
 'use client'
 
-import {IListing, LanguageType} from "@/types";
+import {IListing, IListingPin, LanguageType} from "@/types";
 import ListingCard from "@/components/ListingCard";
 import Pagination from "@/components/filters/Pagination";
 import {useMemo, useState} from "react";
@@ -10,12 +10,13 @@ import Map from "@/components/Map";
 
 interface ListingsWithMapProps {
     listings: IListing[];
+    pins: IListingPin[];
     totalPages: number;
     currentPage: number;
     lang: LanguageType
 }
 
-const ListingsWithMap = ({listings, totalPages, currentPage, lang}: ListingsWithMapProps) => {
+const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: ListingsWithMapProps) => {
     const [activeLocationId, setActiveLocationId] = useState<number>();
 
     const Map = useMemo(() => dynamic(
@@ -58,7 +59,7 @@ const ListingsWithMap = ({listings, totalPages, currentPage, lang}: ListingsWith
 
             {/* The map */}
             <div className={`lg:block hidden sticky right-0 h-[calc(100vh-64px)] top-0 w-5/12`}>
-                <Map position={[52.247463, 21.015801]} zoom={10} locations={listings} activeLocationId={activeLocationId}/>
+                <Map position={[52.247463, 21.015801]} zoom={10} locations={pins} activeLocationId={activeLocationId}/>
             </div>
         </div>
     );

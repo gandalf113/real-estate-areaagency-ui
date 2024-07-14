@@ -1,53 +1,53 @@
 import Select, { SingleValue } from 'react-select';
+import CreateSelect from 'react-select/creatable';
 import { FilterProps } from "@/components/filters/Filters";
 import React, { useState } from 'react';
+
+const values = [3000, 5000, 7000, 10000, 15000, 20000, 30000, 50000, 70000, 100000, 150000, 200000, 300000, 500000, 700000, 1000000, 2500000, 5000000];
 
 export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) => {
     const t = translations.filters;
 
-    const options = [
-        { value: '0-1000', label: '0 - 1000 zł' },
-        { value: '1000-2000', label: '1000 - 2000 zł' },
-        { value: '2000-3000', label: '2000 - 3000 zł' },
-        { value: '3000-4000', label: '3000 - 4000 zł' },
-        { value: '4000-5000', label: '4000 - 5000 zł' },
-        { value: '5000-6000', label: '5000 - 6000 zł' },
-        { value: '6000-7000', label: '6000 - 7000 zł' },
-        { value: '7000-8000', label: '7000 - 8000 zł' },
-        { value: '8000-9000', label: '8000 - 9000 zł' },
-        { value: '9000-10000', label: '9000 - 10000 zł' },
-        { value: '10000-11000', label: '10000 - 11000 zł' },
-        { value: '11000-12000', label: '11000 - 12000 zł' },
-        { value: '12000-13000', label: '12000 - 13000 zł' },
-        { value: '13000-14000', label: '13000 - 14000 zł' },
-        { value: '14000-15000', label: '14000 - 15000 zł' },
-        { value: '15000-16000', label: '15000 - 16000 zł' },
-        { value: '16000-17000', label: '16000 - 17000 zł' },
-        { value: '17000-18000', label: '17000 - 18000 zł' },
-        { value: '18000-19000', label: '18000 - 19000 zł' }
-    ];
+    function formatPrice(price: number) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
 
-    const minOptions = options.map(option => ({ value: option.value.split('-')[0], label: option.label.split(' - ')[0] + ' zł' }));
-
-    const filterMaxOptions = (minPrice: number | undefined) => {
-        if (minPrice === undefined) return options.map(option => ({ value: option.value.split('-')[1], label: option.label.split(' - ')[1] }));
-        return options.filter(option => {
-            const [min, max] = option.value.split('-').map(Number);
-            return minPrice < max;
-        }).map(option => ({ value: option.value.split('-')[1], label: option.label.split(' - ')[1] }));
+    const createOptions = (min: number, max: number) => {
+        return values.filter(value => value >= min && value <= max).map(value => ({
+            value: value.toString(),
+            label: formatPrice(value) + ' zł'
+        }));
     };
 
-    const [maxOptions, setMaxOptions] = useState(filterMaxOptions(undefined));
+    const filterMaxOptions = (minPrice?: number) => {
+        const max = values[values.length - 1];
+        const start = minPrice || 0;
+        return createOptions(start, max);
+    };
+
+    const [minOptions, setMinOptions] = useState(createOptions(0, 1000000));
+    const [maxOptions, setMaxOptions] = useState(filterMaxOptions());
 
     const setMinPriceFilter = (selectedOption: SingleValue<{ value: string }>) => {
         const min = selectedOption ? Number(selectedOption.value) : undefined;
         const max = filters.priceFilter?.max;
         setFilters({ ...filters, priceFilter: { min, max } });
         setMaxOptions(filterMaxOptions(min));
-        // If current filter max price is lower than the new min price, reset the max price filter
         if (max && min && max < min) {
             setFilters({ ...filters, priceFilter: { min, max: undefined } });
         }
+    };
+
+    const handleCreateMinOption = (inputValue: string) => {
+        const newOption = { value: inputValue, label: `${inputValue} zł` };
+        const min = Number(inputValue);
+        const max = filters.priceFilter?.max;
+        setFilters({ ...filters, priceFilter: { min, max } });
+        setMaxOptions(filterMaxOptions(min));
+        if (max && min && max < min) {
+            setFilters({ ...filters, priceFilter: { min, max: undefined } });
+        }
+        setMinOptions((prevOptions) => [...prevOptions, newOption]);
     };
 
     const setMaxPriceFilter = (selectedOption: SingleValue<{ value: string }>) => {
@@ -56,34 +56,48 @@ export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) 
         setFilters({ ...filters, priceFilter: { min, max } });
     };
 
-    const findMinPriceOption = (min?: number) => {
-        return minOptions.find(option => Number(option.value) === min);
+    const handleCreateMaxOption = (inputValue: string) => {
+        const newOption = { value: inputValue, label: `${inputValue} zł` };
+        const max = Number(inputValue);
+        const min = filters.priceFilter?.min;
+        setFilters({ ...filters, priceFilter: { min, max } });
+        setMaxOptions((prevOptions) => [...prevOptions, newOption]);
     };
 
-    const findMaxPriceOption = (max?: number) => {
-        return maxOptions.find(option => Number(option.value) === max);
+    const handleNumberOnlyInput = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!/[\d\b]/.test(e.key) && e.key.length === 1 && !['ArrowLeft', 'ArrowRight', 'Delete', 'Backspace'].includes(e.key)) {
+            e.preventDefault();
+        }
     };
+
+    const formatCreateLabel = (inputValue: string) => `${inputValue} zł`;
 
     return (
         <div className="flex col-span-2">
-            <Select
+            <CreateSelect
                 name="min-price"
                 options={minOptions}
-                value={findMinPriceOption(filters.priceFilter?.min)}
+                value={minOptions.find(option => Number(option.value) === filters.priceFilter?.min) || undefined}
                 onChange={setMinPriceFilter}
+                onCreateOption={handleCreateMinOption}
                 placeholder={t.priceFrom.placeholder}
                 isClearable={true}
+                onKeyDown={handleNumberOnlyInput}
                 className="w-1/2"
+                formatCreateLabel={formatCreateLabel}
             />
-            <Select
+            <CreateSelect
                 name="max-price"
                 options={maxOptions}
-                value={findMaxPriceOption(filters.priceFilter?.max)}
+                value={maxOptions.find(option => Number(option.value) === filters.priceFilter?.max) || null}
                 onChange={setMaxPriceFilter}
+                onCreateOption={handleCreateMaxOption}
                 placeholder={t.priceTo.placeholder}
                 isClearable={true}
                 className="w-1/2"
+                onKeyDown={handleNumberOnlyInput}
+                formatCreateLabel={formatCreateLabel}
             />
         </div>
     );
-}
+};

@@ -1,25 +1,25 @@
 'use client';
 
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { Map as LeafletMap, Marker as LeafletMarker } from 'leaflet';
+import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+import {map, Map as LeafletMap, Marker as LeafletMarker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
-import { IListing } from "@/types";
+import {IListing, IListingPin} from "@/types";
 import Link from "next/link";
-import { useRef, useEffect } from "react";
+import {useRef, useEffect} from "react";
 import useTranslations from "@/components/hooks/useTranslations";
 
 interface MapProps {
     position: [number, number];
     zoom: number;
-    locations: IListing[];
+    locations: IListing[] | IListingPin[];
     noPopup?: boolean;
     activeLocationId?: number;
 }
 
 export default function Map(props: MapProps) {
-    const { position, zoom, activeLocationId } = props;
+    const {position, zoom, activeLocationId} = props;
 
     const mapRef = useRef<LeafletMap | null>(null);
     const markerRefs = useRef<{ [key: string]: LeafletMarker | null }>({});
@@ -29,12 +29,15 @@ export default function Map(props: MapProps) {
     useEffect(() => {
         Object.values(markerRefs.current).forEach(marker => {
             if (marker) {
-                marker.closeTooltip();
+                marker.closePopup();
             }
         });
         if (activeLocationId && markerRefs.current[activeLocationId]) {
             markerRefs.current[activeLocationId]?.openPopup();
-            mapRef?.current && mapRef.current.setView(markerRefs.current[activeLocationId].getLatLng(), 11);
+            // mapRef?.current && mapRef.current.setView(markerRefs.current[activeLocationId]?.getLatLng(), 15)
+            mapRef.current?.flyTo(markerRefs.current[activeLocationId]?.getLatLng(), undefined, {
+                duration: 0.1
+            });
         }
     }, [activeLocationId]);
 

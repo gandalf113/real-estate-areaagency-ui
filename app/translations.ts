@@ -81,7 +81,8 @@ const translations: Record<LanguageType, Translations> = {
             floor_0: "Ground floor",
             room: "room",
             roomsNominative: "rooms",
-            roomsGentitive: "rooms"
+            roomsGentitive: "rooms",
+            month: "month"
         }
     },
     pl: {
@@ -163,7 +164,8 @@ const translations: Record<LanguageType, Translations> = {
             floor_0: "Parter",
             room: "pokój",
             roomsNominative: "pokoje",
-            roomsGentitive: "pokoi"
+            roomsGentitive: "pokoi",
+            month: "miesiąc"
         }
     },
     ua: {
@@ -245,7 +247,8 @@ const translations: Record<LanguageType, Translations> = {
             floor_0: "Перший поверх",
             room: "кімната",
             roomsNominative: "кімнати",
-            roomsGentitive: "кімнат"
+            roomsGentitive: "кімнат",
+            month: "місяць"
         }
     }
 };
