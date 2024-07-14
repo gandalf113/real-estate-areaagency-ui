@@ -47,6 +47,7 @@ export interface Translations {
     location: string;
     nextPage: string;
     noResults: string;
+    viewMore: string;
     navbar: {
         aboutUs: string;
         services: string;

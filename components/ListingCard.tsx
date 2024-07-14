@@ -8,9 +8,11 @@ import translations from "@/app/translations";
 interface ListingCardProps {
     listing: IListing
     lang: LanguageType
+    onMouseEnter?: () => void
+    onMouseLeave?: () => void
 }
 
-const ListingCard = ({listing, lang}: ListingCardProps) => {
+const ListingCard = ({listing, lang, onMouseLeave, onMouseEnter}: ListingCardProps) => {
     const hasImages = listing.images.length > 0;
 
     const images = listing.images.slice(0, 16);
@@ -44,7 +46,7 @@ const ListingCard = ({listing, lang}: ListingCardProps) => {
     }
 
     const formatAdditionalInfo = (listing: IListing) => {
-        const { apartment_room_number, floor_number, areaTotal } = listing;
+        const {apartment_room_number, floor_number, areaTotal} = listing;
 
         let roomPart = '';
         if (apartment_room_number === 1) {
@@ -83,19 +85,22 @@ const ListingCard = ({listing, lang}: ListingCardProps) => {
     const hrefUrl = lang ? `/${lang}/listing/${listing.id}` : `/listing/${listing.id}`;
 
     return (
-        <Link key={listing.id} href={hrefUrl}>
+        <Link key={listing.id} href={hrefUrl} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
             <div
-                className={`grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg group duration-100 cursor-pointer bg-white bg-opacity-60 hover:bg-opacity-75 mb-4 gap-x-2 rounded-lg overflow-hidden`}>
+                className={`font-sans grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg group duration-100 cursor-pointer bg-white bg-opacity-60 hover:bg-opacity-75 mb-4 gap-x-2 rounded-lg overflow-hidden`}>
                 <div className={`w-full max-h-56 sm:col-span-2`}>
                     {hasImages ? <ListingCardCarousel images={images}/> :
                         <Image src={hasImages ? listing.images[0]?.url : "/no-image.png"} alt={`House`}
                                width={600} height={300} className={`w-full h-full object-cover`}/>}
                 </div>
                 <div className={`p-4 sm:col-span-3 flex flex-col gap-y-2 h-full`}>
-                    <div className={`text-black  font-light`}> {formatAdditionalInfo(listing)}</div>
+                    <div
+                        className={`w-fit font-thin text-lg`}>{price} zł {listing.transaction === 'wynajem' && ' / miesiąc'}</div>
+
                     <h2 className={`text-xl font-light mb-1 line-clamp-3 flex-grow`}>{listing.title}</h2>
                     <div className={`font-thin`}>{location}</div>
-                    <div className={`w-fit ml-auto font-thin text-lg`}>{price} zł {listing.transaction === 'wynajem' && ' / miesiąc'}</div>
+                    <div className={`text-black  font-light`}> {formatAdditionalInfo(listing)}</div>
+
                 </div>
             </div>
         </Link>

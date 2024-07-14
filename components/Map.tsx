@@ -1,44 +1,72 @@
-'use client'
+'use client';
 
-import  {MapContainer, Marker, Popup, TileLayer} from "react-leaflet"
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map as LeafletMap, Marker as LeafletMarker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import "leaflet-defaulticon-compatibility"
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
-import {IListing} from "@/types";
-
+import { IListing } from "@/types";
+import Link from "next/link";
+import { useRef, useEffect } from "react";
+import useTranslations from "@/components/hooks/useTranslations";
 
 interface MapProps {
-    position: [number, number]
-    zoom: number,
-    locations: IListing[],
-    noPopup?: boolean
+    position: [number, number];
+    zoom: number;
+    locations: IListing[];
+    noPopup?: boolean;
+    activeLocationId?: number;
 }
 
 export default function Map(props: MapProps) {
-    const {position, zoom} = props
+    const { position, zoom, activeLocationId } = props;
 
-    return <MapContainer center={position} zoom={zoom}>
-        <TileLayer
-            url={`https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png`}
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            //     url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png"
-        />
-        {
-            props.locations.map(location => (
-                <Marker key={location.id} position={[Number(location.lat), Number(location.lon)]}>
-                    {!props.noPopup && <Popup>
-                        <div>
-                            <img src={location.images[0]?.url} alt={location.title}/>
-                            <p>{location?.description?.slice(0, 100) ?? ""}...</p>
-                            <span>{location.price} PLN</span>
-                            <span> | {location.areaTotal} m<sup>2</sup></span>
-                            <br/>
-                        </div>
-                        <button className={`mt-2`}>Zobacz</button>
-                    </Popup>}
-                </Marker>
-            ))
+    const mapRef = useRef<LeafletMap | null>(null);
+    const markerRefs = useRef<{ [key: string]: LeafletMarker | null }>({});
+
+    const t = useTranslations();
+
+    useEffect(() => {
+        Object.values(markerRefs.current).forEach(marker => {
+            if (marker) {
+                marker.closeTooltip();
+            }
+        });
+        if (activeLocationId && markerRefs.current[activeLocationId]) {
+            markerRefs.current[activeLocationId]?.openPopup();
+            mapRef?.current && mapRef.current.setView(markerRefs.current[activeLocationId].getLatLng(), 11);
         }
-    </MapContainer>
+    }, [activeLocationId]);
+
+    return (
+        <MapContainer center={position} zoom={zoom} ref={mapRef}>
+            <TileLayer
+                url={`https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png`}
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+            />
+            {
+                props.locations.map(location => (
+                    <Marker
+                        key={location.id}
+                        position={[Number(location.lat), Number(location.lon)]}
+                        ref={el => markerRefs.current[location.id] = el}
+                    >
+                        {!props.noPopup && <Popup>
+                            <div>
+                                {/*<img src={location.images[0]?.url} alt={location.title} />*/}
+                                <p>{location?.title}</p>
+
+                            </div>
+                            <Link href={`/listing/${location.id}`} target={`_blank`}>
+                                {t.viewMore}
+                            </Link>
+                        </Popup>}
+                        {/*<Tooltip direction="left" offset={[-10, -20]} opacity={1} interactive={false} permanent={false} sticky={true}>*/}
+                        {/*    {location.title}*/}
+                        {/*</Tooltip>*/}
+                    </Marker>
+                ))
+            }
+        </MapContainer>
+    );
 }

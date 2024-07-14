@@ -4,7 +4,6 @@ import { LanguageType } from "@/types";
 import Select from "react-select";
 import translations from "@/app/translations";
 import { useEffect, useState } from "react";
-import {countryCodeOptions} from "@/components/utils/country-code";
 import {submitContactForm} from "@/app/actions";
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
@@ -104,7 +103,7 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={`w-full flex flex-col gap-4 font-light text-sm p-6 rounded bg-white bg-opacity-25`}>
+        <form onSubmit={handleSubmit} className={`w-full flex flex-col gap-4 font-light text-sm p-6 rounded `}>
             <div className={`w-full`}>
                 <input
                     name={'name'}

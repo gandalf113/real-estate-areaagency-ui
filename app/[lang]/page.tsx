@@ -5,6 +5,7 @@ import Filters from "@/components/filters/Filters";
 import ListingCard from "@/components/ListingCard";
 import Pagination from "@/components/filters/Pagination";
 import translations from "@/app/translations";
+import ListingsWithMap from "@/components/ListingsWithMap";
 
 
 interface HomePageProps {
@@ -13,13 +14,6 @@ interface HomePageProps {
 }
 
 export default async function Home({params, searchParams}: HomePageProps) {
-    const Map = useMemo(() => dynamic(
-        () => import('@/components/Map'),
-        {
-            loading: () => <div className={`w-full h-full bg-gray-200 animate-pulse`}/>,
-            ssr: false
-        }
-    ), [])
 
     const t = translations[params.lang];
 
@@ -31,26 +25,12 @@ export default async function Home({params, searchParams}: HomePageProps) {
             <div className={`px-8 pt-4 pb-16 flex flex-col`}>
                 <Filters/>
             </div>
-            <main className="flex overflow-x-clip pb-8">
-                <div className={`px-8 lg:w-7/12 w-full`}>
-                    {listings.length === 0 && <p className={`text-center text-2xl mt-8`}>{t.noResults}</p>}
-
-                    {/* Real Estate Listings */}
-                    {listings.map((listing: IListing) => (
-                        // Card
-                        <ListingCard key={listing.id} listing={listing} lang={params.lang}/>
-                    ))}
-
-                    {listings && listings.length > 0 && totalPages > 1 && <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                    />}
-                </div>
-
-                {/* The map */}
-                <div className={`lg:block hidden sticky right-0 h-[calc(100vh-64px)] top-0 w-5/12`}>
-                    <Map position={[52.247463, 21.015801]} zoom={10} locations={listings}/>
-                </div>
+            <main className="overflow-x-clip pb-8">
+                <ListingsWithMap
+                    listings={listings}
+                    totalPages={totalPages}
+                    currentPage={currentPage}
+                    lang={params.lang} />
             </main>
         </>
     );
