@@ -1,14 +1,14 @@
 'use client';
 
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
-import L, {Map as LeafletMap, Marker as LeafletMarker} from 'leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import L, { Map as LeafletMap, Marker as LeafletMarker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import "leaflet-defaulticon-compatibility"
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
-import {IListing, IListingPin} from "@/types";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import { IListing, IListingPin } from "@/types";
 import Link from "next/link";
-import {useRef, useEffect} from "react";
-import MarkerClusterGroup from 'react-leaflet-cluster'
+import { useRef, useEffect } from "react";
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import useTranslations from "@/components/hooks/useTranslations";
 
 const icon = L.icon({
@@ -25,7 +25,7 @@ interface MapProps {
 }
 
 export default function Map(props: MapProps) {
-    const {position, zoom, activeLocationId} = props;
+    const { position, zoom, activeLocationId } = props;
 
     const mapRef = useRef<LeafletMap | null>(null);
     const markerRefs = useRef<{ [key: string]: LeafletMarker | null }>({});
@@ -39,7 +39,7 @@ export default function Map(props: MapProps) {
             }
         });
         if (activeLocationId && markerRefs.current[activeLocationId]) {
-            mapRef.current?.flyTo(markerRefs.current[activeLocationId]?.getLatLng(), 13, {
+            mapRef.current?.flyTo(markerRefs.current[activeLocationId]?.getLatLng(), 15, {
                 duration: 0.1
             });
             markerRefs.current[activeLocationId]?.openPopup();
@@ -61,7 +61,7 @@ export default function Map(props: MapProps) {
                             key={location.id}
                             position={[Number(location.lat), Number(location.lon)]}
                             icon={icon}
-                            ref={el => markerRefs.current[location.id] = el}
+                            ref={el => { markerRefs.current[location.id] = el }}
                         >
                             {!props.noPopup && <Popup>
                                 <div>
