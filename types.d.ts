@@ -15,6 +15,7 @@ export interface IListing {
     precinct_name: string;
     apartment_room_number: number;
     floor_number: number;
+    building_year: number;
     contact_name: string;
     contact_phone: string;
     contact_email: string;
@@ -49,6 +50,7 @@ export interface Translations {
     rooms: string;
     dateAdded: string;
     floor: string;
+    buildingYear: string;
     city: string;
     street: string;
     description: string;

@@ -73,6 +73,11 @@ body {
     position: relative;
     height: 100%;
     z-index: 0;
+    background-image: linear-gradient(180deg, #A3ADAF 50%, #CCD4D6 89.48%, #BDC9CC 100%);
+    background-repeat: repeat;
+    background-size: contain;
+    background-position: top center;
+
 }
 
 body::before {
@@ -89,13 +94,6 @@ body::before {
     background-position: top center;
     opacity: 0.5;  /* Adjust the opacity as needed */
     z-index: -1;
-}
-
-body {
-    background-image: linear-gradient(180deg, #A3ADAF 50%, #CCD4D6 89.48%, #BDC9CC 100%);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top center;
 }
 
 /*html {*/
@@ -118,7 +116,7 @@ html::-webkit-scrollbar {
     width: 5px;
 }
 
-::-webkit-scrollbar-thumb {
+-webkit-scrollbar-thumb {
     background-color: red;
     border-radius: 0px;
 }

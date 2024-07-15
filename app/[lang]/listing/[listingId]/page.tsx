@@ -39,12 +39,12 @@ export default async function Page({params}: { params: { listingId: string, lang
         </div>
 
         <h3 className={`text-2xl font-bold my-8`}>{t.details}</h3>
-        <div className={`grid grid-cols-4 gap-4 mb-4`}>
+        <div className={`flex gap-4 mb-4`}>
             <ListingDetailCard name={t.area} value={listing.areaTotal + ' m2'}/>
             <ListingDetailCard name={t.price} value={listing.price + ' zł'}/>
             <ListingDetailCard name={t.rooms} value={listing.apartment_room_number}/>
-            <ListingDetailCard name={t.dateAdded} value={new Date(listing.add_date).toLocaleDateString()}/>
-
+            {listing.building_year && <ListingDetailCard name={t.buildingYear} value={listing.building_year}/>}
+            {listing.floor_number && <ListingDetailCard name={t.floor} value={listing.floor_number}/>}
         </div>
         <h1 className={`text-2xl font-bold mt-12 mb-4`}>{t.contact}</h1>
 
