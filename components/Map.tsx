@@ -38,11 +38,11 @@ export default function Map(props: MapProps) {
                 marker.closePopup();
             }
         });
-        if (activeLocationId && mapRef.current && markerRefs.current[activeLocationId]) {
+        if (activeLocationId && mapRef.current && markerRefs && markerRefs.current[activeLocationId]) {
             mapRef.current.flyTo(markerRefs.current[activeLocationId].getLatLng(), 15, {
                 duration: 0.1
             });
-            markerRefs.current[activeLocationId]?.openPopup();
+            markerRefs.current[activeLocationId].openPopup();
         }
     }, [activeLocationId]);
 
