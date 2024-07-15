@@ -60,13 +60,6 @@ export default async function Page({params}: { params: { listingId: string, lang
             {listing.building_year && <ListingDetailCard name={t.buildingYear} value={listing.building_year}/>}
             {listing.floor_number && <ListingDetailCard name={t.floor} value={listing.floor_number}/>}
         </div>
-        <h1 className={`text-2xl font-bold mt-12 mb-4`}>{t.contact}</h1>
-
-        <div className={`gap-4 mb-4`}>
-            <p className={``}>{listing.contact_name}</p>
-            <p>{t.phone}: {listing.contact_phone}</p>
-            <p>{t.email}: {listing.contact_email}</p>
-        </div>
 
         <h1 className={`text-2xl font-bold mt-12 mb-4`}>{t.location}</h1>
         <p className={`font-light w-3/4 mb-4`}>{listing.city_name}, {listing.street_name}, {listing.precinct_name},
