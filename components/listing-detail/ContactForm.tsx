@@ -103,7 +103,7 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={`w-full flex flex-col gap-4 font-light text-sm p-6 rounded `}>
+        <form onSubmit={handleSubmit} className={`w-full flex flex-col gap-4 font-light text-sm rounded`}>
             <div className={`w-full`}>
                 <input
                     name={'name'}

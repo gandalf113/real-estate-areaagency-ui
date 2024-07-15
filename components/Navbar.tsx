@@ -50,7 +50,7 @@ export default function Navbar({lang}: NavbarProps) {
 
 
     return (
-        <nav className={`flex px-[71px] items-center justify-between pb-8`}>
+        <nav className={`flex md:px-[71px] px-12 items-center justify-between pb-8`}>
             <div className={`flex items-center`}>
                 <div className={`flex flex-col items-center gap-y-[14px] mr-7`}>
                     <div className={`h-[20px] w-[1px] bg-[#FF0000] invisible`}/>
@@ -96,10 +96,9 @@ export default function Navbar({lang}: NavbarProps) {
                     ))}
                 </div>
             </div>
-            <div className={`lg:flex hidden flex-col items-center gap-y-[14px] mr-7`}>
+            <div className={`flex flex-col items-center gap-y-[14px] lg:mr-7`}>
                 <div className={`h-[20px] w-[1px] bg-[#FF0000] invisible`}/>
                 <div className={`flex items-center gap-x-2`}>
-                    {/*<p>+48 799 366 800</p>*/}
 
                     {/*Language Dropdown*/}
                     <LanguageDropdown lang={lang}/>

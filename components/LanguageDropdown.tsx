@@ -30,7 +30,7 @@ const LanguageDropdown = ({ lang }: LanguageDropdownProps) => {
     return (
         <Select
             options={options}
-            className="lg:block hidden z-50"
+            className="z-50"
             value={selectedOption}
             onChange={handleChange}
             styles={{
