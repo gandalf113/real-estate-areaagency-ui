@@ -38,8 +38,8 @@ export default function Map(props: MapProps) {
                 marker.closePopup();
             }
         });
-        if (activeLocationId && markerRefs.current[activeLocationId]) {
-            mapRef.current?.flyTo(markerRefs.current[activeLocationId]?.getLatLng(), 15, {
+        if (activeLocationId && mapRef.current && markerRefs.current[activeLocationId]) {
+            mapRef.current.flyTo(markerRefs.current[activeLocationId].getLatLng(), 15, {
                 duration: 0.1
             });
             markerRefs.current[activeLocationId]?.openPopup();
