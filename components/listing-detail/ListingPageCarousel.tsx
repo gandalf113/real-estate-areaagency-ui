@@ -85,11 +85,11 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
                 watchSlidesProgress
                 className={`mt-4`}
             >
-                {images.map((image, index) => (
+                {thumbsSwiper ? images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <Image width={100} height={60} src={image.url} alt={`Thumb ${index}`} className={`w-full cursor-pointer`}/>
+                        <Image width={100} height={60} src={image.url} alt={`Thumb ${index}`} className={`w-full cursor-pointer h-20 object-cover`}/>
                     </SwiperSlide>
-                ))}
+                )) : null}
             </Swiper>
         </div>
     );

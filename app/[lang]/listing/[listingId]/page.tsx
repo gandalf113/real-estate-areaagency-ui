@@ -6,6 +6,20 @@ import dynamic from "next/dynamic";
 import ListingDetailCard from "@/components/listing-detail/ListingDetailCard";
 import ContactForm from "@/components/listing-detail/ContactForm";
 
+function formatPrice(price: string) {
+    // Convert the price to a float
+    let number = Number.parseFloat(price);
+
+    // Check if the price is in the millions
+    if (number >= 1000000) {
+        return (number / 1000000).toFixed(1) + ' mln';
+    }
+
+    // Otherwise, format the number with spaces
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+
 export default async function Page({params}: { params: { listingId: string, lang: LanguageType } }) {
     const Map = useMemo(() => dynamic(
         () => import('@/components/Map'),
@@ -41,8 +55,8 @@ export default async function Page({params}: { params: { listingId: string, lang
         <h3 className={`text-2xl font-bold my-8`}>{t.details}</h3>
         <div className={`flex gap-4 mb-4`}>
             <ListingDetailCard name={t.area} value={listing.areaTotal + ' m2'}/>
-            <ListingDetailCard name={t.price} value={listing.price + ' zł'}/>
-            <ListingDetailCard name={t.rooms} value={listing.apartment_room_number}/>
+            <ListingDetailCard name={t.price} value={formatPrice(listing.price) + ' zł'}/>
+            {listing.floor_number && <ListingDetailCard name={t.rooms} value={listing.apartment_room_number}/>}
             {listing.building_year && <ListingDetailCard name={t.buildingYear} value={listing.building_year}/>}
             {listing.floor_number && <ListingDetailCard name={t.floor} value={listing.floor_number}/>}
         </div>
