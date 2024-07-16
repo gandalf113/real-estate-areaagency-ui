@@ -55,8 +55,7 @@ export default function Map(props: MapProps) {
                 url={`https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png`}
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             />
-            <MarkerClusterGroup chunkedLoading
-                                maxClusterRadius={40}
+            <MarkerClusterGroup maxClusterRadius={40}
             >
                 {
                     props.locations.map(location => (
