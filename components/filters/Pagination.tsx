@@ -42,7 +42,7 @@ const Pagination = ({currentPage, totalPages}: PaginationProps) => {
                 <button
                     key={1}
                     onClick={() => handlePageChange(1)}
-                    className={`px-4 py-2 mx-1 rounded-md ${1 === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    className={`px-4 py-2 mx-1 rounded-md ${1 === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-blue-300 duration-200'}`}
                 >
                     1
                 </button>
@@ -57,7 +57,7 @@ const Pagination = ({currentPage, totalPages}: PaginationProps) => {
                 <button
                     key={i}
                     onClick={() => handlePageChange(i)}
-                    className={`px-4 py-2 mx-1 rounded-md ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    className={`px-4 py-2 mx-1 rounded-md ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-blue-300 duration-200'}`}
                 >
                     {i}
                 </button>
@@ -72,7 +72,7 @@ const Pagination = ({currentPage, totalPages}: PaginationProps) => {
                 <button
                     key={totalPages}
                     onClick={() => handlePageChange(totalPages)}
-                    className={`px-4 py-2 mx-1 rounded-md ${totalPages === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                    className={`px-4 py-2 mx-1 rounded-md ${totalPages === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-blue-300 duration-200'}`}
                 >
                     {totalPages}
                 </button>
@@ -112,7 +112,7 @@ const Pagination = ({currentPage, totalPages}: PaginationProps) => {
                 </div>
 
                 <button onClick={() => handlePageChange(currentPage + 1)}
-                        className="px-4 py-1 mx-1 bg-gray-200 text-sm rounded-md">
+                        className="px-4 py-1 mx-1 bg-gray-200 text-sm rounded-md hover:bg-blue-300 duration-200">
                     {nextPageStr}
                 </button>
             </div>
