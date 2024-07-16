@@ -41,7 +41,7 @@ const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: Listin
         };
     }, []);
 
-    const handleHover = (locationId: number) => {
+    const handleClickPin = (locationId: number) => {
         setActiveLocationId(locationId);
     };
 
@@ -58,8 +58,7 @@ const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: Listin
                     <ListingCard key={listing.id}
                                  listing={listing}
                                  lang={lang}
-                                 onMouseEnter={() => handleHover(listing.id)}
-                                 onMouseLeave={() => setActiveLocationId(undefined)}
+                                 onClickPin={() => handleClickPin(listing.id)}
                     />
                 ))}
 

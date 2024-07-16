@@ -21,6 +21,7 @@ const translations: Record<LanguageType, Translations> = {
         noResults: "No results",
         nextPage: "Next Page",
         viewMore: "View More",
+        showOnMap: "Show on Map",
         navbar: {
             aboutUs: "About Us",
             services: "Services",
@@ -105,6 +106,7 @@ const translations: Record<LanguageType, Translations> = {
         nextPage: "Następna strona",
         noResults: "Brak wyników",
         viewMore: "Zobacz więcej",
+        showOnMap: "Pokaż na mapie",
         navbar: {
             aboutUs: "O nas",
             services: "Usługi",
@@ -189,6 +191,7 @@ const translations: Record<LanguageType, Translations> = {
         nextPage: "Наступна сторінка",
         noResults: "Немає результатів",
         viewMore: "Детальніше",
+        showOnMap: "Показати на карті",
         navbar: {
             aboutUs: "Про нас",
             services: "Послуги",

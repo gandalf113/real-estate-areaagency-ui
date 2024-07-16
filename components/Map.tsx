@@ -42,7 +42,7 @@ export default function Map(props: MapProps) {
             const markerLocation = markerRefs.current[activeLocationId]?.getLatLng();
             if (markerLocation) {
                 mapRef.current.flyTo(markerLocation, 15, {
-                    duration: 0.1
+                    animate: false
                 });
                 markerRefs.current[activeLocationId]?.openPopup();
             }
