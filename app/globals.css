@@ -116,7 +116,7 @@ html::-webkit-scrollbar {
     width: 5px;
 }
 
--webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background-color: red;
     border-radius: 0px;
 }
