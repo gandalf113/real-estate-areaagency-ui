@@ -1,6 +1,7 @@
 export interface IListing {
     id: number;
     crm_id: string;
+    provider: string;
     status: string;
     transaction: string;
     title: string;
@@ -87,6 +88,18 @@ export interface Translations {
         priceTo: {
             placeholder: string;
         };
+        areaFrom: {
+            placeholder: string;
+        },
+        areaTo: {
+            placeholder: string;
+        },
+        yearBuiltFrom: {
+            placeholder: string;
+        },
+        yearBuiltTo: {
+            placeholder: string;
+        }
     },
     contactForm: {
         name: string;
@@ -94,6 +107,8 @@ export interface Translations {
         phone: string;
         message: string;
         send: string;
+        sendResultSuccess: string;
+        sendResultError: string;
         reason: {
             needMoreInfo: {
                 label: string,

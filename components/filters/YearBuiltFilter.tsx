@@ -3,64 +3,62 @@ import CreateSelect from 'react-select/creatable';
 import { FilterProps } from "@/components/filters/Filters";
 import React, { useState } from 'react';
 
-const values = [3000, 5000, 7000, 10000, 15000, 20000, 30000, 50000, 70000, 100000, 150000, 200000, 300000, 500000, 700000, 1000000, 2500000, 5000000];
 
-export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) => {
+const values = [1900, 1920, 1940, 1960, 1980, 2000, 2010, 2020, 2022, new Date().getFullYear()];
+
+export const YearBuiltFilter = ({ filters, setFilters, translations }: FilterProps) => {
     const t = translations.filters;
 
-    function formatPrice(price: number) {
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    }
 
     const createOptions = (min: number, max: number) => {
         return values.filter(value => value >= min && value <= max).map(value => ({
             value: value.toString(),
-            label: formatPrice(value) + ' zł'
+            label: value.toString()
         }));
     };
 
-    const filterMaxOptions = (minPrice?: number) => {
+    const filterMaxOptions = (minValue?: number) => {
         const max = values[values.length - 1];
-        const start = minPrice || 0;
+        const start = minValue || 0;
         return createOptions(start, max);
     };
 
     const [minOptions, setMinOptions] = useState(createOptions(0, 1000000));
     const [maxOptions, setMaxOptions] = useState(filterMaxOptions());
 
-    const setMinPriceFilter = (selectedOption: SingleValue<{ value: string }>) => {
+    const setMinFilter = (selectedOption: SingleValue<{ value: string }>) => {
         const min = selectedOption ? Number(selectedOption.value) : undefined;
-        const max = filters.priceFilter?.max;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const max = filters.yearBuiltFilter?.max;
+        setFilters({ ...filters, yearBuiltFilter: { min, max } });
         setMaxOptions(filterMaxOptions(min));
         if (max && min && max < min) {
-            setFilters({ ...filters, priceFilter: { min, max: undefined } });
+            setFilters({ ...filters, yearBuiltFilter: { min, max: undefined } });
         }
     };
 
     const handleCreateMinOption = (inputValue: string) => {
-        const newOption = { value: inputValue, label: `${inputValue} zł` };
+        const newOption = { value: inputValue, label: `${inputValue}` };
         const min = Number(inputValue);
-        const max = filters.priceFilter?.max;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const max = filters.yearBuiltFilter?.max;
+        setFilters({ ...filters, yearBuiltFilter: { min, max } });
         setMaxOptions(filterMaxOptions(min));
         if (max && min && max < min) {
-            setFilters({ ...filters, priceFilter: { min, max: undefined } });
+            setFilters({ ...filters, yearBuiltFilter: { min, max: undefined } });
         }
         setMinOptions((prevOptions) => [...prevOptions, newOption]);
     };
 
-    const setMaxPriceFilter = (selectedOption: SingleValue<{ value: string }>) => {
+    const setMaxFilter = (selectedOption: SingleValue<{ value: string }>) => {
         const max = selectedOption ? Number(selectedOption.value) : undefined;
-        const min = filters.priceFilter?.min;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const min = filters.yearBuiltFilter?.min;
+        setFilters({ ...filters, yearBuiltFilter: { min, max } });
     };
 
     const handleCreateMaxOption = (inputValue: string) => {
-        const newOption = { value: inputValue, label: `${inputValue} zł` };
+        const newOption = { value: inputValue, label: `${inputValue}` };
         const max = Number(inputValue);
-        const min = filters.priceFilter?.min;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const min = filters.yearBuiltFilter?.min;
+        setFilters({ ...filters, yearBuiltFilter: { min, max } });
         setMaxOptions((prevOptions) => [...prevOptions, newOption]);
     };
 
@@ -70,29 +68,29 @@ export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) 
         }
     };
 
-    const formatCreateLabel = (inputValue: string) => `${inputValue} zł`;
+    const formatCreateLabel = (inputValue: string) => `${inputValue}`;
 
     return (
         <div className="flex col-span-2">
             <CreateSelect
-                name="min-price"
+                name="min-year-built"
                 options={minOptions}
-                value={filters.priceFilter?.min ? { value: filters.priceFilter.min.toString(), label: filters.priceFilter.min.toString() + " zł" } : undefined}
-                onChange={setMinPriceFilter}
+                value={filters.yearBuiltFilter?.min ? { value: filters.yearBuiltFilter.min.toString(), label: filters.yearBuiltFilter.min.toString() } : undefined}
+                onChange={setMinFilter}
                 onCreateOption={handleCreateMinOption}
-                placeholder={t.priceFrom.placeholder}
+                placeholder={t.yearBuiltFrom.placeholder}
                 isClearable={true}
                 onKeyDown={handleNumberOnlyInput}
                 className="w-1/2"
                 formatCreateLabel={formatCreateLabel}
             />
             <CreateSelect
-                name="max-price"
+                name="max-year-built"
                 options={maxOptions}
-                value={filters.priceFilter?.max ? { value: filters.priceFilter.max.toString(), label: filters.priceFilter.max.toString() + " zł" } : undefined}
-                onChange={setMaxPriceFilter}
+                value={filters.yearBuiltFilter?.max ? { value: filters.yearBuiltFilter.max.toString(), label: filters.yearBuiltFilter.max.toString() } : undefined}
+                onChange={setMaxFilter}
                 onCreateOption={handleCreateMaxOption}
-                placeholder={t.priceTo.placeholder}
+                placeholder={t.yearBuiltTo.placeholder}
                 isClearable={true}
                 className="w-1/2"
                 onKeyDown={handleNumberOnlyInput}

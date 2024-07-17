@@ -6,7 +6,6 @@ import Pagination from "@/components/filters/Pagination";
 import {useMemo, useState, useEffect} from "react";
 import dynamic from "next/dynamic";
 import useTranslations from "@/components/hooks/useTranslations";
-import Map from "@/components/Map";
 
 interface ListingsWithMapProps {
     listings: IListing[];

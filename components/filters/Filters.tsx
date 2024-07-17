@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import {useRouter, useSearchParams} from 'next/navigation'
 import useTranslations from "@/components/hooks/useTranslations";
 import {Translations} from "@/types";
+import {AreaFilter} from "@/components/filters/AreaFilter";
+import {YearBuiltFilter} from "@/components/filters/YearBuiltFilter";
 
 const toQuery = (filters: IFilter) => {
     const query: { [key: string]: string } = {};
@@ -36,6 +38,22 @@ const toQuery = (filters: IFilter) => {
         query['priceFilter'] = `-${filters.priceFilter.max}`;
     }
 
+    if (filters.areaFilter && filters.areaFilter.min && filters.areaFilter.max) {
+        query['areaFilter'] = `${filters.areaFilter.min}-${filters.areaFilter.max}`;
+    } else if (filters.areaFilter && filters.areaFilter.min) {
+        query['areaFilter'] = `${filters.areaFilter.min}-`;
+    } else if (filters.areaFilter && filters.areaFilter.max) {
+        query['areaFilter'] = `-${filters.areaFilter.max}`;
+    }
+
+    if (filters.yearBuiltFilter && filters.yearBuiltFilter.min && filters.yearBuiltFilter.max) {
+        query['yearBuiltFilter'] = `${filters.yearBuiltFilter.min}-${filters.yearBuiltFilter.max}`;
+    } else if (filters.yearBuiltFilter && filters.yearBuiltFilter.min) {
+        query['yearBuiltFilter'] = `${filters.yearBuiltFilter.min}-`;
+    } else if (filters.yearBuiltFilter && filters.yearBuiltFilter.max) {
+        query['yearBuiltFilter'] = `-${filters.yearBuiltFilter.max}`;
+    }
+
     return query;
 }
 
@@ -45,6 +63,8 @@ export interface IFilter {
     locationFilter?: string[];
     roomFilter?: number[]
     priceFilter?: { min?: number; max?: number };
+    areaFilter?: { min?: number; max?: number };
+    yearBuiltFilter?: { min?: number; max?: number };
 }
 
 export interface FilterProps {
@@ -62,6 +82,8 @@ export default function Filters() {
     const initLocationFilter = searchParams.get('locationFilter');
     const initRoomFilter = searchParams.get('roomFilter');
     const initPriceFilter = searchParams.get('priceFilter');
+    const initAreaFilter = searchParams.get('areaFilter');
+    const initYearBuiltFilter = searchParams.get('yearBuiltFilter');
 
     const translations = useTranslations();
 
@@ -73,6 +95,14 @@ export default function Filters() {
         priceFilter: initPriceFilter ? {
             min: parseInt(initPriceFilter.split('-')[0]),
             max: parseInt(initPriceFilter.split('-')[1])
+        } : undefined,
+        areaFilter: initAreaFilter ? {
+            min: parseInt(initAreaFilter.split('-')[0]),
+            max: parseInt(initAreaFilter.split('-')[1])
+        } : undefined,
+        yearBuiltFilter: initYearBuiltFilter ? {
+            min: parseInt(initYearBuiltFilter.split('-')[0]),
+            max: parseInt(initYearBuiltFilter.split('-')[1])
         } : undefined
     });
 
@@ -87,15 +117,30 @@ export default function Filters() {
     };
 
     return (
-        <div className={`grid md:grid-cols-5 grid-cols-1 gap-x-3 gap-y-3 z-20`}>
-            <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
-            {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
-            <LocationFilter filters={filters} setFilters={setFilters} translations={translations}/>
-
-            <RoomFilter filters={filters} setFilters={setFilters} translations={translations}/>
-
+        <div className={`grid lg:grid-cols-5 grid-cols-1 gap-x-3 gap-y-6 z-20 text-sm`}>
             <div className={`md:col-span-2`}>
+                <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
+            </div>
+            {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
+
+            <div className={`lg:col-span-2`}>
+                <LocationFilter filters={filters} setFilters={setFilters} translations={translations}/>
+            </div>
+
+            <div className={`lg:col-span-2`}>
+                <RoomFilter filters={filters} setFilters={setFilters} translations={translations}/>
+            </div>
+
+            <div className={`lg:col-span-2`}>
                 <PriceFilter filters={filters} setFilters={setFilters} translations={translations}/>
+            </div>
+
+            <div className={`lg:col-span-2`}>
+                <AreaFilter filters={filters} setFilters={setFilters} translations={translations}/>
+            </div>
+
+            <div className={`lg:col-span-2`}>
+                <YearBuiltFilter filters={filters} setFilters={setFilters} translations={translations}/>
             </div>
         </div>
     )

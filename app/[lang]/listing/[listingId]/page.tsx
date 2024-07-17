@@ -36,7 +36,7 @@ export default async function Page({params}: { params: { listingId: string, lang
             </div>
             {/*Contact Info*/}
             <div className={`lg:block hidden col-span-3 rounded-sm h-[29rem] p-6`}>
-                <ContactForm lang={params.lang}/>
+                <ContactForm lang={params.lang} listing={listing}/>
             </div>
         </div>
 
@@ -69,7 +69,7 @@ export default async function Page({params}: { params: { listingId: string, lang
 
             <div className={`lg:hidden block mt-6`}>
                 <h4 className={`text-2xl font-bold mb-4`}>{t.contact}</h4>
-                <ContactForm lang={params.lang}/>
+                <ContactForm lang={params.lang} listing={listing}/>
             </div>
         </div>
 

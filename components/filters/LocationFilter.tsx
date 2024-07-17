@@ -82,12 +82,8 @@ export const LocationFilter = ({filters, setFilters, translations}: FilterProps)
             label: 'Żoliborz'
         },
         {
-            value: 'konstancin',
-            label: 'Konstancin'
-        },
-        {
-            value: 'jeziorno',
-            label: 'Jeziorno'
+            value: 'konstancin-jeziorna',
+            label: 'Konstancin-Jeziorna'
         },
         {
             value: 'piaseczno',

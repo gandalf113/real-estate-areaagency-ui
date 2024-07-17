@@ -1,19 +1,18 @@
 'use client';
 
-import { LanguageType } from "@/types";
+import {IListing, LanguageType} from "@/types";
 import Select from "react-select";
 import translations from "@/app/translations";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {submitContactForm} from "@/app/actions";
-import { PhoneInput } from 'react-international-phone';
+import {PhoneInput} from 'react-international-phone';
 import 'react-international-phone/style.css';
 
-const ContactForm = ({ lang }: { lang: LanguageType }) => {
+const ContactForm = ({listing, lang}: { listing: IListing, lang: LanguageType }) => {
     const t = translations[lang].contactForm;
 
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
-    const [countryCode, setCountryCode] = useState('+48');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [reason, setReason] = useState<{
         value: 'needMoreInfo' | 'scheduleVisit' | 'other',
@@ -25,6 +24,8 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
     const [message, setMessage] = useState('');
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    const [submitResult, setSubmitResult] = useState<{ success: boolean } | null>(null);
 
     const options = [
         {
@@ -60,26 +61,21 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
         return re.test(String(email).toLowerCase());
     };
 
-    const validatePhoneNumber = (phoneNumber: string) => {
-        const re = /^[0-9]+$/;
-        return re.test(String(phoneNumber));
-    };
-
     useEffect(() => {
         setErrors((prevState) => {
-            return { ...prevState, name: '' };
+            return {...prevState, name: ''};
         });
     }, [name]);
 
     useEffect(() => {
         setErrors((prevState) => {
-            return { ...prevState, email: '' };
+            return {...prevState, email: ''};
         });
     }, [email]);
 
     useEffect(() => {
         setErrors((prevState) => {
-            return { ...prevState, phoneNumber: '' };
+            return {...prevState, phoneNumber: ''};
         });
     }, [phoneNumber]);
 
@@ -89,14 +85,19 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
 
         if (!name) newErrors.name = t.validation.nameRequired;
         if (!email || !validateEmail(email)) newErrors.email = t.validation.invalidEmail;
-        if (!countryCode || !phoneNumber || !validatePhoneNumber(phoneNumber)) newErrors.phoneNumber = t.validation.invalidPhoneNumber;
         if (!message || message.length === 0) newErrors.message = t.validation.messageRequired;
 
         if (Object.keys(newErrors).length === 0) {
             // Call /api/contact-form endpoint with the form data.
-            console.log({ name, email, countryCode, phoneNumber, reason, message });
-            const response = await submitContactForm({ name, email, countryCode, phoneNumber, message }, window.location.href);
-            console.log(response);
+            const response = await submitContactForm({
+                crmId: listing.crm_id,
+                provider: listing.provider,
+                name,
+                email,
+                phoneNumber,
+                message
+            }, window.location.href);
+            setSubmitResult(response);
         } else {
             setErrors(newErrors);
         }
@@ -149,7 +150,13 @@ const ContactForm = ({ lang }: { lang: LanguageType }) => {
                 onChange={(e) => setMessage(e.target.value)}
             />
             {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
-            <button type="submit" className={`bg-[#FF0000] text-white rounded py-2`}>{t.send}</button>
+            <button type="submit"
+                    className={`bg-[#FF0000] text-white rounded py-2 ${submitResult && 'opacity-75 contrast-50'}`}
+                    disabled={!!submitResult}>{t.send}</button>
+            {submitResult?.success &&
+                <p className={`tetx-xl`}>{t.sendResultSuccess}</p>
+            }
+            {(submitResult && !submitResult?.success) && <p>{t.sendResultError}</p>}
         </form>
     );
 }

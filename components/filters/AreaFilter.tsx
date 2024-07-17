@@ -3,64 +3,61 @@ import CreateSelect from 'react-select/creatable';
 import { FilterProps } from "@/components/filters/Filters";
 import React, { useState } from 'react';
 
-const values = [3000, 5000, 7000, 10000, 15000, 20000, 30000, 50000, 70000, 100000, 150000, 200000, 300000, 500000, 700000, 1000000, 2500000, 5000000];
+const values = [0, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150, 200, 250, 300, 400, 500, 1000];
 
-export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) => {
+export const AreaFilter = ({ filters, setFilters, translations }: FilterProps) => {
     const t = translations.filters;
 
-    function formatPrice(price: number) {
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    }
 
     const createOptions = (min: number, max: number) => {
         return values.filter(value => value >= min && value <= max).map(value => ({
             value: value.toString(),
-            label: formatPrice(value) + ' zł'
+            label: value + ' m²'
         }));
     };
 
-    const filterMaxOptions = (minPrice?: number) => {
+    const filterMaxOptions = (minValue?: number) => {
         const max = values[values.length - 1];
-        const start = minPrice || 0;
+        const start = minValue || 0;
         return createOptions(start, max);
     };
 
     const [minOptions, setMinOptions] = useState(createOptions(0, 1000000));
     const [maxOptions, setMaxOptions] = useState(filterMaxOptions());
 
-    const setMinPriceFilter = (selectedOption: SingleValue<{ value: string }>) => {
+    const setMinFilter = (selectedOption: SingleValue<{ value: string }>) => {
         const min = selectedOption ? Number(selectedOption.value) : undefined;
-        const max = filters.priceFilter?.max;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const max = filters.areaFilter?.max;
+        setFilters({ ...filters, areaFilter: { min, max } });
         setMaxOptions(filterMaxOptions(min));
         if (max && min && max < min) {
-            setFilters({ ...filters, priceFilter: { min, max: undefined } });
+            setFilters({ ...filters, areaFilter: { min, max: undefined } });
         }
     };
 
     const handleCreateMinOption = (inputValue: string) => {
-        const newOption = { value: inputValue, label: `${inputValue} zł` };
+        const newOption = { value: inputValue, label: `${inputValue} m²` };
         const min = Number(inputValue);
-        const max = filters.priceFilter?.max;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const max = filters.areaFilter?.max;
+        setFilters({ ...filters, areaFilter: { min, max } });
         setMaxOptions(filterMaxOptions(min));
         if (max && min && max < min) {
-            setFilters({ ...filters, priceFilter: { min, max: undefined } });
+            setFilters({ ...filters, areaFilter: { min, max: undefined } });
         }
         setMinOptions((prevOptions) => [...prevOptions, newOption]);
     };
 
-    const setMaxPriceFilter = (selectedOption: SingleValue<{ value: string }>) => {
+    const setMaxFilter = (selectedOption: SingleValue<{ value: string }>) => {
         const max = selectedOption ? Number(selectedOption.value) : undefined;
-        const min = filters.priceFilter?.min;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const min = filters.areaFilter?.min;
+        setFilters({ ...filters, areaFilter: { min, max } });
     };
 
     const handleCreateMaxOption = (inputValue: string) => {
-        const newOption = { value: inputValue, label: `${inputValue} zł` };
+        const newOption = { value: inputValue, label: `${inputValue} m²` };
         const max = Number(inputValue);
-        const min = filters.priceFilter?.min;
-        setFilters({ ...filters, priceFilter: { min, max } });
+        const min = filters.areaFilter?.min;
+        setFilters({ ...filters, areaFilter: { min, max } });
         setMaxOptions((prevOptions) => [...prevOptions, newOption]);
     };
 
@@ -70,29 +67,29 @@ export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) 
         }
     };
 
-    const formatCreateLabel = (inputValue: string) => `${inputValue} zł`;
+    const formatCreateLabel = (inputValue: string) => `${inputValue} m²`;
 
     return (
         <div className="flex col-span-2">
             <CreateSelect
-                name="min-price"
+                name="min-area"
                 options={minOptions}
-                value={filters.priceFilter?.min ? { value: filters.priceFilter.min.toString(), label: filters.priceFilter.min.toString() + " zł" } : undefined}
-                onChange={setMinPriceFilter}
+                value={filters.areaFilter?.min ? { value: filters.areaFilter.min.toString(), label: filters.areaFilter.min.toString() + " m²" } : undefined}
+                onChange={setMinFilter}
                 onCreateOption={handleCreateMinOption}
-                placeholder={t.priceFrom.placeholder}
+                placeholder={t.areaFrom.placeholder}
                 isClearable={true}
                 onKeyDown={handleNumberOnlyInput}
                 className="w-1/2"
                 formatCreateLabel={formatCreateLabel}
             />
             <CreateSelect
-                name="max-price"
+                name="max-area"
                 options={maxOptions}
-                value={filters.priceFilter?.max ? { value: filters.priceFilter.max.toString(), label: filters.priceFilter.max.toString() + " zł" } : undefined}
-                onChange={setMaxPriceFilter}
+                value={filters.areaFilter?.max ? { value: filters.areaFilter.max.toString(), label: filters.areaFilter.max.toString() + " m²" } : undefined}
+                onChange={setMaxFilter}
                 onCreateOption={handleCreateMaxOption}
-                placeholder={t.priceTo.placeholder}
+                placeholder={t.areaTo.placeholder}
                 isClearable={true}
                 className="w-1/2"
                 onKeyDown={handleNumberOnlyInput}
