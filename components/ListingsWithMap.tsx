@@ -17,12 +17,12 @@ interface ListingsWithMapProps {
 
 const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: ListingsWithMapProps) => {
     const [activeLocationId, setActiveLocationId] = useState<number>();
-    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(false);
+    const [isLargeScreen, setIsLargeScreen] = useState<boolean>(window.innerWidth >= 1024);
 
     const Map = useMemo(() => dynamic(
         () => import('@/components/Map'),
         {
-            loading: () => <div className={`w-full h-full bg-gray-200 animate-pulse`}/>,
+            loading: () => <div className={`w-full h-screen bg-gray-200 animate-pulse`}/>,
             ssr: false
         }
     ), [])
@@ -70,7 +70,9 @@ const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: Listin
             {/* The map */}
             {isLargeScreen && (
                 <div className={`lg:block hidden sticky right-0 h-[calc(100vh-64px)] top-0 w-5/12`}>
-                    <Map position={[52.247463, 21.015801]} zoom={10} locations={pins} activeLocationId={activeLocationId}/>
+                    <Map position={[52.247463, 21.015801]} zoom={10} locations={pins}
+                         activeLocationId={activeLocationId}
+                         setActiveLocationId={setActiveLocationId}/>
                 </div>
             )}
         </div>

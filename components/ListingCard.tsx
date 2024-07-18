@@ -100,11 +100,11 @@ const ListingCard = ({listing, lang, onClickPin}: ListingCardProps) => {
                     <h2 className={`text-xl mb-1 line-clamp-3 font-semibold flex-grow`}>{listing.title}</h2>
                     <div className={`font-thin`}>{location}</div>
 
-                    <div className={`flex justify-between items-center`}>
+                    <div className={`flex justify-between items-end`}>
                         <div
                             className={`w-fit font-thin text-xl`}>{price} zł {listing.transaction === 'wynajem' && ' / ' + t.listingCard.month}</div>
                         {/*  Location Pin Icon  */}
-                        <button onClick={handleClickPin} className={`lg:flex gap-x-1 hidden p-2 hover:bg-zinc-200 bg-opacity-40 duration-300 rounded-lg`}>
+                        <button onClick={handleClickPin} className={`lg:flex items-center text-gray-700 gap-x-1 hidden px-2 py-0.5 hover:bg-zinc-200 bg-opacity-40 duration-300 rounded-lg text-sm`}>
                             {t.showOnMap}
                             <svg fill="#808080" height="28px" width="28px" version="1.1" id="Capa_1"
                                  xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"

@@ -36,6 +36,8 @@ export interface IListingPin {
     lon: number;
     title: string;
     description: string;
+    price: string;
+    transaction: string;
 }
 
 export type LanguageType = 'en' | 'pl' | 'ua';

@@ -27,3 +27,15 @@ export async function submitContactForm(props: {
         return { success: false };
     }
 }
+
+export async function fetchListingImages(id: number) {
+    const url = process.env.API_BASE_URL + '/listings/' + id + '/images';
+    const res = await fetch(url, {next: {revalidate: 900}})
+
+    if (!res.ok) {
+        throw new Error('Failed to fetch data')
+    }
+
+    const json = await res.json();
+    return json.images;
+}
