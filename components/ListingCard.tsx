@@ -89,7 +89,7 @@ const ListingCard = ({listing, lang, onClickPin}: ListingCardProps) => {
         <Link key={listing.id} href={hrefUrl}>
             <div
                 className={`font-sans grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg duration-100 cursor-pointer bg-slate-50 bg-opacity-80 hover:bg-opacity-90 mb-4 gap-x-2 rounded overflow-hidden`}>
-                <div className={`w-full max-h-56 sm:col-span-2`}>
+                <div className={`w-full h-52 sm:col-span-2`}>
                     {hasImages ? <ListingCardCarousel images={images}/> :
                         <Image src={hasImages ? listing.images[0]?.url : "/no-image.png"} alt={`House`}
                                width={600} height={300} className={`w-full h-full object-cover`}/>}

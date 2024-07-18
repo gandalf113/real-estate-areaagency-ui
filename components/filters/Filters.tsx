@@ -10,8 +10,9 @@ import useTranslations from "@/components/hooks/useTranslations";
 import {Translations} from "@/types";
 import {AreaFilter} from "@/components/filters/AreaFilter";
 import {YearBuiltFilter} from "@/components/filters/YearBuiltFilter";
+import SortBy from "@/components/SortBy";
 
-const toQuery = (filters: IFilter) => {
+const toQuery = (filters: IFilter, sort?: { field: string, direction: string }) => {
     const query: { [key: string]: string } = {};
 
     if (filters.transactionType) {
@@ -54,6 +55,10 @@ const toQuery = (filters: IFilter) => {
         query['yearBuiltFilter'] = `-${filters.yearBuiltFilter.max}`;
     }
 
+    if (sort && sort.field && sort.direction) {
+        query['sortBy'] = `${sort.field}-${sort.direction}`;
+    }
+
     return query;
 }
 
@@ -86,6 +91,7 @@ export default function Filters() {
     const initYearBuiltFilter = searchParams.get('yearBuiltFilter');
 
     const translations = useTranslations();
+    const [filtersExpanded, setFiltersExpanded] = useState(false);
 
     const [filters, setFilters] = useState<IFilter>({
         transactionType: initTransactionType === 'buy' || initTransactionType === 'rent' ? initTransactionType : undefined,
@@ -105,43 +111,67 @@ export default function Filters() {
             max: parseInt(initYearBuiltFilter.split('-')[1])
         } : undefined
     });
-
+    const [sortBy, setSortBy] = useState<{ field: string, direction: string }>();
 
     useEffect(() => {
         applyFilters();
-    }, [filters]);
+    }, [filters, sortBy]);
 
     const applyFilters = () => {
-        const query = new URLSearchParams(toQuery(filters)).toString();
+        const query = new URLSearchParams(toQuery(filters, sortBy)).toString();
         router.push('?' + query + (query ? `&_=d` : `_=d`));
     };
 
+    const toggleExpanded = () => {
+        setFiltersExpanded(!filtersExpanded);
+    }
+
     return (
-        <div className={`grid lg:grid-cols-5 grid-cols-1 gap-x-3 gap-y-6 z-20 text-base`}>
-            <div className={`md:col-span-2`}>
-                <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
-            </div>
-            {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
+        <>
+            <div className={`grid lg:grid-cols-10 grid-cols-1 gap-x-3 gap-y-6 text-base`}>
+                <div className={`md:col-span-3`}>
+                    <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                </div>
+                {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
 
-            <div className={`lg:col-span-2`}>
-                <LocationFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                <div className={`lg:col-span-5`}>
+                    <LocationFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                </div>
+
+                {/*More filters*/}
+                <button
+                    className={`lg:col-span-2 text-sm text-white bg-slate-500 hover:bg-slate-600 rounded-md p-2 z-20 whitespace-nowrap`}
+                    onClick={toggleExpanded}>
+                    {filtersExpanded ? translations.filters.showLessFilters : translations.filters.showMoreFilters}
+                </button>
+
+                {filtersExpanded && <>
+                    <div className={`lg:col-span-6`}>
+                        <PriceFilter filters={filters} setFilters={setFilters} translations={translations} transactionType={filters.transactionType}/>
+                    </div>
+
+
+                    <div className={`lg:col-span-4`}>
+                        <RoomFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                    </div>
+
+
+                    <div className={`lg:col-span-8`}>
+                        <AreaFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                    </div>
+
+
+                    <div className={`lg:col-span-8`}>
+                        <YearBuiltFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                    </div>
+
+                </>}
             </div>
 
-            <div className={`lg:col-span-2`}>
-                <RoomFilter filters={filters} setFilters={setFilters} translations={translations}/>
+            <div className={`my-6 w-fit ml-auto`}>
+                <SortBy value={sortBy} setValue={setSortBy} t={translations}/>
             </div>
+        </>
 
-            <div className={`lg:col-span-2`}>
-                <PriceFilter filters={filters} setFilters={setFilters} translations={translations}/>
-            </div>
-
-            <div className={`lg:col-span-2`}>
-                <AreaFilter filters={filters} setFilters={setFilters} translations={translations}/>
-            </div>
-
-            <div className={`lg:col-span-2`}>
-                <YearBuiltFilter filters={filters} setFilters={setFilters} translations={translations}/>
-            </div>
-        </div>
     )
 }

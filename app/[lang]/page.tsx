@@ -17,9 +17,9 @@ export default async function Home({params, searchParams}: HomePageProps) {
 
     return (
         <>
-            <div className={`px-8 pt-4 pb-16 flex flex-col`}>
-                <Filters/>
-            </div>
+            {/*<div className={`px-8 pt-4 pb-16 flex flex-col`}>*/}
+            {/*    <Filters/>*/}
+            {/*</div>*/}
             <main className="overflow-x-clip pb-8">
                 <ListingsWithMap
                     listings={listings}

@@ -34,6 +34,14 @@ export const RoomFilter = ({ filters, setFilters, translations }: FilterProps) =
             onChange={setRoomFilter}
             placeholder={t.placeholder}
             maxMenuHeight={200}
+            styles={{
+                menu: (baseStyles) => {
+                    return {
+                        ...baseStyles,
+                        zIndex: 30
+                    }
+                }
+            }}
         />
     );
 };

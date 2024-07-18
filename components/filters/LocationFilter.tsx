@@ -114,6 +114,14 @@ export const LocationFilter = ({filters, setFilters, translations}: FilterProps)
                 placeholder={t.placeholder}
                 isClearable={true}
                 isOptionDisabled={() => filters.locationFilter ? filters.locationFilter.length >= 5 : false}
+                styles={{
+                    menu: (baseStyles) => {
+                        return {
+                            ...baseStyles,
+                            zIndex: 30
+                        }
+                    }
+                }}
         />
     );
 }

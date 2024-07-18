@@ -27,17 +27,14 @@ export const TransactionTypeFilter = ({filters, setFilters, translations}: Filte
         <Select options={options}
                 value={options.find(option => option.value === filters.transactionType)}
                 onChange={onChange} placeholder={t.placeholder} isClearable={true}
-                // styles={{
-                //     control: (baseStyles, style) => ({
-                //         ...baseStyles,
-                //         backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                //         borderColor: 'transparent',
-                //     }),
-                //     placeholder: (baseStyles, style) => ({
-                //         ...baseStyles,
-                //         color: 'white'
-                //     }),
-                // }}
+                styles={{
+                    menu: (baseStyles) => {
+                        return {
+                            ...baseStyles,
+                            zIndex: 30
+                        }
+                    }
+                }}
         />
     );
 }

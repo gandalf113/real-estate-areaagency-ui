@@ -60,6 +60,7 @@ export interface Translations {
     location: string;
     nextPage: string;
     noResults: string;
+    tooCheap: string;
     viewMore: string;
     showOnMap: string;
     navbar: {
@@ -73,6 +74,8 @@ export interface Translations {
         contacts: string;
     };
     filters: {
+        showMoreFilters: string;
+        showLessFilters: string;
         transactionType: {
             placeholder: string;
             sale: string;
@@ -101,6 +104,13 @@ export interface Translations {
         },
         yearBuiltTo: {
             placeholder: string;
+        },
+        sortBy: {
+            placeholder: string;
+            priceAsc: string;
+            priceDesc: string;
+            areaAsc: string;
+            areaDesc: string;
         }
     },
     contactForm: {

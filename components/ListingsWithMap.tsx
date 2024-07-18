@@ -6,6 +6,8 @@ import Pagination from "@/components/filters/Pagination";
 import {useMemo, useState, useEffect} from "react";
 import dynamic from "next/dynamic";
 import useTranslations from "@/components/hooks/useTranslations";
+import Filters from "@/components/filters/Filters";
+import {useSearchParams} from "next/navigation";
 
 interface ListingsWithMapProps {
     listings: IListing[];
@@ -46,10 +48,28 @@ const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: Listin
 
     const t = useTranslations();
 
+    const searchParams = useSearchParams();
+
+    const transactionType = searchParams.get('transactionType');
+    const priceFilter = searchParams.get('priceFilter');
+    const maxPrice = priceFilter ? parseInt(priceFilter.split('-')[1]) : undefined;
+
+
     return (
         <div className={`flex`}>
             <div className={`px-8 lg:w-7/12 w-full`}>
-                {listings.length === 0 && <p className={`text-center text-2xl mt-8`}>{t.noResults}</p>}
+                <div className={`mb-4`}>
+                    <Filters/>
+                </div>
+
+                {listings.length === 0 && <p className={`text-center text-2xl mt-8`}>
+                    {t.noResults}
+                </p>}
+
+                {(listings.length === 0 && maxPrice && maxPrice < 700000 && transactionType === "buy") ? <p className={`text-center text-2xl mt-8`}>
+                    {t.tooCheap}
+                </p> : null}
+
 
                 {/* Real Estate Listings */}
                 {listings.map((listing: IListing) => (

@@ -82,6 +82,14 @@ export const AreaFilter = ({ filters, setFilters, translations }: FilterProps) =
                 onKeyDown={handleNumberOnlyInput}
                 className="w-1/2"
                 formatCreateLabel={formatCreateLabel}
+                styles={{
+                    menu: (baseStyles) => {
+                        return {
+                            ...baseStyles,
+                            zIndex: 30
+                        }
+                    }
+                }}
             />
             <CreateSelect
                 name="max-area"
@@ -94,6 +102,14 @@ export const AreaFilter = ({ filters, setFilters, translations }: FilterProps) =
                 className="w-1/2"
                 onKeyDown={handleNumberOnlyInput}
                 formatCreateLabel={formatCreateLabel}
+                styles={{
+                    menu: (baseStyles) => {
+                        return {
+                            ...baseStyles,
+                            zIndex: 30
+                        }
+                    }
+                }}
             />
         </div>
     );

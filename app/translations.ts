@@ -19,6 +19,7 @@ const translations: Record<LanguageType, Translations> = {
             buildingYear: "Building Year",
             description: "Description",
             noResults: "No results",
+            tooCheap: "Please select a higher price range",
             nextPage: "Next Page",
             viewMore: "View More",
             showOnMap: "Show on Map",
@@ -61,7 +62,16 @@ const translations: Record<LanguageType, Translations> = {
                 },
                 yearBuiltTo: {
                     placeholder: "Year built to..",
-                }
+                },
+                sortBy: {
+                    placeholder: "Sort by",
+                    priceDesc: "Price (descending)",
+                    priceAsc: "Price (ascending)",
+                    areaDesc: "Area (descending)",
+                    areaAsc: "Area (ascending)",
+                },
+                showMoreFilters: "More filters",
+                showLessFilters: "Less filters"
             },
             contactForm: {
                 name: "Name",
@@ -69,16 +79,16 @@ const translations: Record<LanguageType, Translations> = {
                 message: "Message",
                 send: "Send",
                 phone: "Phone number",
-                sendResultSuccess: "Thank you for your message. Our agents will contact you soon.",
+                sendResultSuccess: "Thank you for your message. Our consultant will contact you shortly.",
                 sendResultError: "An error occurred while sending the message. Please try again later.",
                 reason: {
                     needMoreInfo: {
                         label: "I need more information",
-                        content: "This rental apartment seems interesting to me. I would like to know more. Please contact me. \n"
+                        content: "This property seems interesting to me. I would like to know more details. Please contact me.\n"
                     },
                     scheduleVisit: {
                         label: "I want to schedule a visit",
-                        content: "I would like to schedule a visit to view the apartment. Please contact me to arrange a time.\n"
+                        content: "I would like to schedule a visit to view the property. Please contact me to arrange a meeting.\n"
                     },
                     other: {
                         label: "Other reason",
@@ -119,6 +129,7 @@ const translations: Record<LanguageType, Translations> = {
             buildingYear: "Rok budowy",
             nextPage: "Następna strona",
             noResults: "Brak wyników",
+            tooCheap: "Proszę wybrać wyższy przedział cenowy",
             viewMore: "Zobacz więcej",
             showOnMap: "Pokaż na mapie",
             navbar: {
@@ -160,7 +171,16 @@ const translations: Record<LanguageType, Translations> = {
                 },
                 yearBuiltTo: {
                     placeholder: "Rok budowy do..",
-                }
+                },
+                sortBy: {
+                    priceDesc: "Cena (malejąco)",
+                    priceAsc: "Cena (rosnąco)",
+                    areaDesc: "Powierzchnia (malejąco)",
+                    areaAsc: "Powierzchnia (rosnąco)",
+                    placeholder: "Sortuj według"
+                },
+                showLessFilters: "Mniej filtrów",
+                showMoreFilters: "Więcej filtrów"
             },
             contactForm: {
                 name: "Imię",
@@ -168,16 +188,16 @@ const translations: Record<LanguageType, Translations> = {
                 message: "Wiadomość",
                 send: "Wyślij",
                 phone: "Numer telefonu",
-                sendResultSuccess: "Dziękujemy za wiadomość. Nasi agenci skontaktują się z Tobą wkrótce.",
+                sendResultSuccess: "Dziękujemy za wiadomość. Nasz konsultant skontaktuje się z Tobą wkrótce.",
                 sendResultError: "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie później.",
                 reason: {
                     needMoreInfo: {
                         label: "Potrzebuję więcej informacji",
-                        content: "To mieszkanie na wynajem wydaje mi się interesujące. Chętnie poznam więcej szczegółów. Proszę o kontakt. \n"
+                        content: "Ta nieruchomość wydaje mi się interesująca. Chętnie poznam więcej szczegółów. Proszę o kontakt. \n"
                     },
                     scheduleVisit: {
                         label: "Chcę umówić się na wizytę",
-                        content: "Chciałbym umówić się na wizytę w celu obejrzenia mieszkania. Proszę o kontakt w celu ustalenia terminu.\n"
+                        content: "Chciałbym umówić się na wizytę w celu obejrzenia nieruchomości. Proszę o kontakt w celu ustalenia terminu.\n"
                     },
                     other: {
                         label: "Inny powód",
@@ -218,6 +238,7 @@ const translations: Record<LanguageType, Translations> = {
             buildingYear: "Рік будівництва",
             nextPage: "Наступна сторінка",
             noResults: "Немає результатів",
+            tooCheap: "Будь ласка, оберіть вищий ціновий діапазон",
             viewMore: "Детальніше",
             showOnMap: "Показати на карті",
             navbar: {
@@ -259,7 +280,16 @@ const translations: Record<LanguageType, Translations> = {
                 },
                 yearBuiltTo: {
                     placeholder: "Рік будівництва до..",
-                }
+                },
+                sortBy: {
+                    priceDesc: "Ціна (спаданням)",
+                    priceAsc: "Ціна (зростанням)",
+                    areaDesc: "Площа (спаданням)",
+                    areaAsc: "Площа (зростанням)",
+                    placeholder: "Сортувати за"
+                },
+                showLessFilters: "Менше фільтрів",
+                showMoreFilters: "Більше фільтрів"
             },
             contactForm: {
                 name: "Ім'я",
@@ -267,16 +297,16 @@ const translations: Record<LanguageType, Translations> = {
                 message: "Повідомлення",
                 send: "Надіслати",
                 phone: "Номер телефону",
-                sendResultSuccess: "Дякуємо за ваше повідомлення. Наші агенти зв'яжуться з вами найближчим часом.",
+                sendResultSuccess: "Дякуємо за ваше повідомлення. Наш консультант зв'яжеться з вами найближчим часом.",
                 sendResultError: "Під час відправлення повідомлення виникла помилка. Будь ласка, спробуйте ще раз пізніше.",
                 reason: {
                     needMoreInfo: {
-                        label: "Мені потрібна додаткова інформація",
-                        content: "Ця квартира для оренди виглядає цікавою. Я б хотів дізнатися більше. Будь ласка, зв'яжіться зі мною. \n"
+                        label: "Мені потрібна додаткова інформа",
+                        content: "Цей об'єкт здається мені цікавим. Я був би радий дізнатися більше деталей. Будь ласка, не соромтеся звертатися до мене."
                     },
                     scheduleVisit: {
                         label: "Я хочу запланувати візит",
-                        content: "Я хотів би запланувати візит для перегляду квартири. Будь ласка, зв'яжіться зі мною, щоб домовитися про час.\n"
+                        content: "Я хотів би домовитися про зустріч для перегляду нерухомості. Будь ласка, зв'яжіться зі мною, щоб домовитися про зустріч."
                     },
                     other: {
                         label: "Інша причина",

@@ -66,6 +66,11 @@ export default function Map(props: MapProps) {
 
     const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        Object.values(markerRefs.current).forEach(marker => {
+            if (marker) {
+                marker.closePopup();
+            }
+        });
 
         if (setActiveLocationId) {
             setActiveLocationId(undefined);

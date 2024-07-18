@@ -1,11 +1,13 @@
 import { SingleValue } from 'react-select';
 import CreateSelect from 'react-select/creatable';
 import { FilterProps } from "@/components/filters/Filters";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const values = [3000, 5000, 7000, 10000, 15000, 20000, 30000, 50000, 70000, 100000, 150000, 200000, 300000, 500000, 700000, 1000000, 2500000, 5000000];
+const values = [3000, 5000, 7000, 10000, 15000, 20000, 30000, 50000, 70000, 100000, 150000, 200000, 300000, 500000, 700000, 1000000, 2500000, 5000000, 10000000, 15000000, 20000000, 25000000];
 
-export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) => {
+export const PriceFilter = ({ filters, setFilters, translations, transactionType }: FilterProps & {
+    transactionType?: 'buy' | 'rent';
+}) => {
     const t = translations.filters;
 
     function formatPrice(price: number) {
@@ -20,13 +22,21 @@ export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) 
     };
 
     const filterMaxOptions = (minPrice?: number) => {
-        const max = values[values.length - 1];
-        const start = minPrice || 0;
+        const max = transactionType === 'buy' ? 25000000 : values[values.length - 1];
+        const start = minPrice || (transactionType === 'buy' ? 700000 : 0);
         return createOptions(start, max);
     };
 
-    const [minOptions, setMinOptions] = useState(createOptions(0, 1000000));
-    const [maxOptions, setMaxOptions] = useState(filterMaxOptions());
+    const initialMinOptions = transactionType === 'buy' ? createOptions(700000, 25000000) : createOptions(0, 1000000);
+    const initialMaxOptions = filterMaxOptions();
+
+    const [minOptions, setMinOptions] = useState(initialMinOptions);
+    const [maxOptions, setMaxOptions] = useState(initialMaxOptions);
+
+    useEffect(() => {
+        setMinOptions(transactionType === 'buy' ? createOptions(700000, 25000000) : createOptions(0, 1000000));
+        setMaxOptions(filterMaxOptions());
+    }, [transactionType]);
 
     const setMinPriceFilter = (selectedOption: SingleValue<{ value: string }>) => {
         const min = selectedOption ? Number(selectedOption.value) : undefined;
@@ -85,6 +95,14 @@ export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) 
                 onKeyDown={handleNumberOnlyInput}
                 className="w-1/2"
                 formatCreateLabel={formatCreateLabel}
+                styles={{
+                    menu: (baseStyles) => {
+                        return {
+                            ...baseStyles,
+                            zIndex: 30
+                        }
+                    }
+                }}
             />
             <CreateSelect
                 name="max-price"
@@ -97,6 +115,14 @@ export const PriceFilter = ({ filters, setFilters, translations }: FilterProps) 
                 className="w-1/2"
                 onKeyDown={handleNumberOnlyInput}
                 formatCreateLabel={formatCreateLabel}
+                styles={{
+                    menu: (baseStyles) => {
+                        return {
+                            ...baseStyles,
+                            zIndex: 30
+                        }
+                    }
+                }}
             />
         </div>
     );
