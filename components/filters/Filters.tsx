@@ -117,7 +117,7 @@ export default function Filters() {
     };
 
     return (
-        <div className={`grid lg:grid-cols-5 grid-cols-1 gap-x-3 gap-y-6 z-20 text-sm`}>
+        <div className={`grid lg:grid-cols-5 grid-cols-1 gap-x-3 gap-y-6 z-20 text-base`}>
             <div className={`md:col-span-2`}>
                 <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
             </div>
