@@ -27,7 +27,7 @@ export const PropertyTypeFilter = ({filters, setFilters, translations}: FilterPr
                 onChange={(selectedOption) => {
                     setFilters({...filters, propertyType: selectedOption?.value})
                 }}
-                placeholder={`Typ nieruchomości`}
+                placeholder={translations.filters.propertyType.placeholder}
                 isClearable={true}
                 styles={{
                     menu: (baseStyles) => {
