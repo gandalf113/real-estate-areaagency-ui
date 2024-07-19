@@ -81,6 +81,14 @@ export interface Translations {
             sale: string;
             rent: string;
         };
+        propertyType: {
+            placeholder: string;
+            apartment: string;
+            house: string;
+            commercial: string;
+            investment: string;
+            land: string;
+        }
         location: {
             placeholder: string;
         };

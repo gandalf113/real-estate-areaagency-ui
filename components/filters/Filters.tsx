@@ -11,6 +11,7 @@ import {Translations} from "@/types";
 import {AreaFilter} from "@/components/filters/AreaFilter";
 import {YearBuiltFilter} from "@/components/filters/YearBuiltFilter";
 import SortBy from "@/components/SortBy";
+import {PropertyTypeFilter} from "@/components/filters/PropertyTypeFilter";
 
 const toQuery = (filters: IFilter, sort?: { field: string, direction: string }) => {
     const query: { [key: string]: string } = {};
@@ -64,7 +65,7 @@ const toQuery = (filters: IFilter, sort?: { field: string, direction: string }) 
 
 export interface IFilter {
     transactionType?: 'buy' | 'rent';
-    propertyType?: 'house' | 'apartment' | 'commercial';
+    propertyType?: 'house' | 'apartment' | 'commercial' | 'land';
     locationFilter?: string[];
     roomFilter?: number[]
     priceFilter?: { min?: number; max?: number };
@@ -129,12 +130,15 @@ export default function Filters() {
     return (
         <>
             <div className={`grid lg:grid-cols-10 grid-cols-1 gap-x-3 gap-y-6 text-base`}>
-                <div className={`md:col-span-3`}>
+                <div className={`md:col-span-5`}>
                     <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
                 </div>
-                {/*<PropertyTypeFilter filters={filters} setFilters={setFilters}/>*/}
 
-                <div className={`lg:col-span-5`}>
+                <div className={`md:col-span-5`}>
+                    <PropertyTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                </div>
+
+                <div className={`lg:col-span-8`}>
                     <LocationFilter filters={filters} setFilters={setFilters} translations={translations}/>
                 </div>
 
@@ -147,7 +151,8 @@ export default function Filters() {
 
                 {filtersExpanded && <>
                     <div className={`lg:col-span-6`}>
-                        <PriceFilter filters={filters} setFilters={setFilters} translations={translations} transactionType={filters.transactionType}/>
+                        <PriceFilter filters={filters} setFilters={setFilters} translations={translations}
+                                     transactionType={filters.transactionType}/>
                     </div>
 
 

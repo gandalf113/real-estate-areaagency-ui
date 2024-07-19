@@ -39,6 +39,14 @@ const translations: Record<LanguageType, Translations> = {
                     rent: "Rent",
                     sale: "Buy",
                 },
+                propertyType: {
+                    placeholder: "Property type",
+                    apartment: "Apartment",
+                    house: "House",
+                    commercial: "Commercial",
+                    investment: "Investment",
+                    land: "Land",
+                },
                 location: {
                     placeholder: "Location",
                 },
@@ -148,6 +156,14 @@ const translations: Record<LanguageType, Translations> = {
                     rent: "Wynająć",
                     sale: "Kupić",
                 },
+                propertyType: {
+                    placeholder: "Typ nieruchomości",
+                    apartment: "Mieszkania",
+                    investment: "Inwestycyjne",
+                    house: "Domy",
+                    commercial: "Komercyjne obiekty",
+                    land: "Działki",
+                },
                 location: {
                     placeholder: "Lokalizacja",
                 },
@@ -256,6 +272,14 @@ const translations: Record<LanguageType, Translations> = {
                     placeholder: "Я хочу...",
                     rent: "Орендувати",
                     sale: "Купити",
+                },
+                propertyType: {
+                    placeholder: "Тип нерухомості",
+                    apartment: "Квартира",
+                    house: "Будинок",
+                    commercial: "Комерційна",
+                    investment: "Інвестиційна",
+                    land: "Земля",
                 },
                 location: {
                     placeholder: "Локація",

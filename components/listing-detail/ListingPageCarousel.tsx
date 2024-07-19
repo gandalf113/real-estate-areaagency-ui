@@ -83,7 +83,7 @@ const ListingPageCarousel = ({images}: ListingPageCarouselProps) => {
                     {images.map((image, index) => (
                         <SwiperSlide key={index} className={`h-full`}>
                             <img width={640} height={480} src={image.url} alt={`Image ${index}`}
-                                   className={`w-full h-[32rem] object-cover rounded-lg shadow-2xl`}
+                                   className={`w-full h-[32rem] object-cover rounded-lg shadow-2xl cursor-pointer`}
                                    onClick={() => setFullScreen(!fullScreen)}/>
                         </SwiperSlide>
                     ))}
@@ -143,7 +143,7 @@ const ListingPageCarousel = ({images}: ListingPageCarouselProps) => {
                 </button>
 
                 <div
-                    className="w-full aspect-video bg-black"
+                    className="w-10/12 aspect-video bg-black"
                     onClick={(e) => e.stopPropagation()}
                 >
                     <Swiper

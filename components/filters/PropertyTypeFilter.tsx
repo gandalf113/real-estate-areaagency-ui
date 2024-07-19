@@ -1,26 +1,41 @@
 import Select from 'react-select';
 import {FilterProps} from "@/components/filters/Filters";
 
-export const PropertyTypeFilter = ({filters, setFilters}: FilterProps) => {
+export const PropertyTypeFilter = ({filters, setFilters, translations}: FilterProps) => {
     const options = [
         {
             value: 'house' as const,
-            label: 'Dom'
+            label: translations.filters.propertyType.house
         },
         {
             value: 'apartment' as const,
-            label: 'Mieszkanie'
+            label: translations.filters.propertyType.apartment
         },
         {
             value: 'commercial' as const,
-            label: 'Komercyjne obiekty'
+            label: translations.filters.propertyType.commercial
+        },
+        {
+            value: 'land' as const,
+            label: translations.filters.propertyType.land
         }
     ]
 
     return (
-        <Select options={options} value={options.find(option => option.value === filters.propertyType)}
+        <Select options={options}
+                value={options.find(option => option.value === filters.propertyType)}
                 onChange={(selectedOption) => {
                     setFilters({...filters, propertyType: selectedOption?.value})
-                }} placeholder={`Typ nieruchomości`} isClearable={true}/>
+                }}
+                placeholder={`Typ nieruchomości`}
+                isClearable={true}
+                styles={{
+                    menu: (baseStyles) => {
+                        return {
+                            ...baseStyles,
+                            zIndex: 30
+                        }
+                    }
+                }}/>
     );
 }
