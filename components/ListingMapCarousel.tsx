@@ -2,7 +2,6 @@
 
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Pagination} from "swiper/modules";
-import Image from "next/image";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {fetchListingImages} from "@/app/actions";
 
@@ -63,7 +62,7 @@ const ListingMapCarousel = ({locationId}: { locationId: number }) => {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <Image src={image.url} width={160} height={120} alt={`Image ${index}`} className={`group-hover:scale-105 duration-200 w-full h-full object-cover`} />
+                        <img src={image.url} alt={`Image ${index}`} className={`group-hover:scale-105 duration-200 w-full h-full object-cover`} />
                     </SwiperSlide>
                 ))}
 

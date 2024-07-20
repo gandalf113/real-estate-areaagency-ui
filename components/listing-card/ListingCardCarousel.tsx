@@ -49,7 +49,7 @@ const ListingPageCarousel = ({ images }: ListingPageCarouselProps) => {
             >
                 {images.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <Image src={image.url} width={160} height={120} alt={`Image ${index}`} className={`h-52 group-hover:scale-105 duration-200 w-full object-cover`} />
+                        <img src={image.url} alt={`Image ${index}`} className={`h-52 group-hover:scale-105 duration-200 w-full object-cover`} fetchPriority="high"/>
                     </SwiperSlide>
                 ))}
 

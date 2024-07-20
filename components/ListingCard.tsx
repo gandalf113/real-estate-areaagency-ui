@@ -91,8 +91,8 @@ const ListingCard = ({listing, lang, onClickPin}: ListingCardProps) => {
                 className={`font-sans grid sm:grid-cols-5 grid-cols-1 w-full shadow-lg duration-100 cursor-pointer bg-slate-50 bg-opacity-80 hover:bg-opacity-90 mb-4 gap-x-2 rounded overflow-hidden`}>
                 <div className={`w-full h-52 sm:col-span-2`}>
                     {hasImages ? <ListingCardCarousel images={images}/> :
-                        <Image src={hasImages ? listing.images[0]?.url : "/no-image.png"} alt={`House`}
-                               width={600} height={300} className={`w-full h-full object-cover`}/>}
+                        <img src={hasImages ? listing.images[0]?.url : "/no-image.png"} alt={`House`}
+                             className={`w-full h-full object-cover`}/>}
                 </div>
                 <div className={`p-4 sm:col-span-3 flex flex-col gap-y-2 h-full`}>
                     <div className={`text-black  font-light`}> {formatAdditionalInfo(listing)}</div>
@@ -104,7 +104,8 @@ const ListingCard = ({listing, lang, onClickPin}: ListingCardProps) => {
                         <div
                             className={`w-fit font-thin text-xl`}>{price} zł {listing.transaction === 'wynajem' && ' / ' + t.listingCard.month}</div>
                         {/*  Location Pin Icon  */}
-                        <button onClick={handleClickPin} className={`lg:flex items-center text-gray-700 gap-x-1 hidden px-2 py-0.5 hover:bg-zinc-200 bg-opacity-40 duration-300 rounded-lg text-sm`}>
+                        <button onClick={handleClickPin}
+                                className={`lg:flex items-center text-gray-700 gap-x-1 hidden px-2 py-0.5 hover:bg-zinc-200 bg-opacity-40 duration-300 rounded-lg text-sm`}>
                             {t.showOnMap}
                             <svg fill="#808080" height="28px" width="28px" version="1.1" id="Capa_1"
                                  xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
