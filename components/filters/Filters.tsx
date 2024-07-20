@@ -63,9 +63,12 @@ const toQuery = (filters: IFilter, sort?: { field: string, direction: string }) 
     return query;
 }
 
+
+type PropertyType = 'house' | 'apartment' | 'commercial' | 'land';
+
 export interface IFilter {
     transactionType?: 'buy' | 'rent';
-    propertyType?: 'house' | 'apartment' | 'commercial' | 'land';
+    propertyType?: PropertyType;
     locationFilter?: string[];
     roomFilter?: number[]
     priceFilter?: { min?: number; max?: number };
@@ -84,19 +87,21 @@ export default function Filters() {
     const searchParams = useSearchParams();
 
     const initTransactionType = searchParams.get('transactionType');
-    // const initPropertyType = searchParams.get('propertyType');
+    const initPropertyType = searchParams.get('propertyType') as PropertyType;
     const initLocationFilter = searchParams.get('locationFilter');
     const initRoomFilter = searchParams.get('roomFilter');
     const initPriceFilter = searchParams.get('priceFilter');
     const initAreaFilter = searchParams.get('areaFilter');
     const initYearBuiltFilter = searchParams.get('yearBuiltFilter');
+    const initSortBy = searchParams.get('sortBy');
+
 
     const translations = useTranslations();
     const [filtersExpanded, setFiltersExpanded] = useState(false);
 
     const [filters, setFilters] = useState<IFilter>({
         transactionType: initTransactionType === 'buy' || initTransactionType === 'rent' ? initTransactionType : undefined,
-        // propertyType: initPropertyType === 'house' || initPropertyType === 'apartment' || initPropertyType === 'commercial' ? initPropertyType : undefined,
+        propertyType: initPropertyType ? initPropertyType : undefined,
         locationFilter: initLocationFilter ? initLocationFilter.split(',') : undefined,
         roomFilter: initRoomFilter ? initRoomFilter.split(',').map(Number) : undefined,
         priceFilter: initPriceFilter ? {
@@ -112,7 +117,11 @@ export default function Filters() {
             max: parseInt(initYearBuiltFilter.split('-')[1])
         } : undefined
     });
-    const [sortBy, setSortBy] = useState<{ field: string, direction: string }>();
+
+    const [sortBy, setSortBy] = useState<{ field: string, direction: string } | undefined>(initSortBy ? {
+        field: initSortBy.split('-')[0],
+        direction: initSortBy.split('-')[1]
+    } : undefined);
 
     useEffect(() => {
         applyFilters();
