@@ -20,6 +20,7 @@ const SortBy = ({ value, setValue, t }: SortByProps) => {
             <Select
                 name={`sort`}
                 options={options}
+                isSearchable={false}
                 placeholder={t.filters.sortBy.placeholder}
                 value={options.find(option => option.value.field === value?.field && option.value.direction === value?.direction)}
                 onChange={(selectedOption: SingleValue<{ value: { field: string, direction: string }, label: string }>) => {
