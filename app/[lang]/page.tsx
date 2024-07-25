@@ -1,3 +1,5 @@
+// [lang]/page.tsx
+
 import {LanguageType} from "@/types";
 import Filters from "@/components/filters/Filters";
 import translations from "@/app/translations";
