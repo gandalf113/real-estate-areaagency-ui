@@ -1,32 +1,20 @@
 'use client'
 
-import {LocationFilter} from "@/components/filters/LocationFilter";
-import {TransactionTypeFilter} from "@/components/filters/TransactionTypeFilter";
-import {RoomFilter} from "@/components/filters/RoomFilter";
-import {PriceFilter} from "@/components/filters/PriceFilter";
-import {useEffect, useState} from "react";
-import {useRouter, useSearchParams} from 'next/navigation'
+import { LocationFilter } from "@/components/filters/LocationFilter";
+import { TransactionTypeFilter } from "@/components/filters/TransactionTypeFilter";
+import { RoomFilter } from "@/components/filters/RoomFilter";
+import { PriceFilter } from "@/components/filters/PriceFilter";
+import { useEffect, useState } from "react";
+import {useRouter, useSearchParams, useParams} from 'next/navigation';
 import useTranslations from "@/components/hooks/useTranslations";
-import {Translations} from "@/types";
-import {AreaFilter} from "@/components/filters/AreaFilter";
-import {YearBuiltFilter} from "@/components/filters/YearBuiltFilter";
+import { Translations } from "@/types";
+import { AreaFilter } from "@/components/filters/AreaFilter";
+import { YearBuiltFilter } from "@/components/filters/YearBuiltFilter";
 import SortBy from "@/components/SortBy";
-import {PropertyTypeFilter} from "@/components/filters/PropertyTypeFilter";
+import { PropertyTypeFilter } from "@/components/filters/PropertyTypeFilter";
 
 const toQuery = (filters: IFilter, sort?: { field: string, direction: string }) => {
     const query: { [key: string]: string } = {};
-
-    if (filters.transactionType) {
-        query['transactionType'] = filters.transactionType;
-    }
-
-    if (filters.propertyType) {
-        query['propertyType'] = filters.propertyType;
-    }
-
-    if (filters.locationFilter) {
-        query['locationFilter'] = filters.locationFilter.join(',');
-    }
 
     if (filters.roomFilter) {
         query['roomFilter'] = filters.roomFilter.map(room => room.toString()).join(',');
@@ -63,7 +51,6 @@ const toQuery = (filters: IFilter, sort?: { field: string, direction: string }) 
     return query;
 }
 
-
 type PropertyType = 'house' | 'apartment' | 'commercial' | 'land';
 
 export interface IFilter {
@@ -84,25 +71,27 @@ export interface FilterProps {
 
 export default function Filters() {
     const router = useRouter();
+    const params = useParams();
     const searchParams = useSearchParams();
 
-    const initTransactionType = searchParams.get('transactionType');
-    const initPropertyType = searchParams.get('propertyType') as PropertyType;
-    const initLocationFilter = searchParams.get('locationFilter');
+    const initTransactionType = params.transactionType ?? 'buy';
+    const initPropertyType = (params.propertyType ?? 'house') as PropertyType;
+    const initLocationFilter = params.location as string;
     const initRoomFilter = searchParams.get('roomFilter');
     const initPriceFilter = searchParams.get('priceFilter');
     const initAreaFilter = searchParams.get('areaFilter');
     const initYearBuiltFilter = searchParams.get('yearBuiltFilter');
     const initSortBy = searchParams.get('sortBy');
 
-
     const translations = useTranslations();
     const [filtersExpanded, setFiltersExpanded] = useState(false);
+
+    console.log(typeof initLocationFilter)
 
     const [filters, setFilters] = useState<IFilter>({
         transactionType: initTransactionType === 'buy' || initTransactionType === 'rent' ? initTransactionType : undefined,
         propertyType: initPropertyType ? initPropertyType : undefined,
-        locationFilter: initLocationFilter ? initLocationFilter.split(',') : undefined,
+        locationFilter: initLocationFilter ? initLocationFilter.split('%2C') : undefined,
         roomFilter: initRoomFilter ? initRoomFilter.split(',').map(Number) : undefined,
         priceFilter: initPriceFilter ? {
             min: parseInt(initPriceFilter.split('-')[0]),
@@ -128,8 +117,10 @@ export default function Filters() {
     }, [filters, sortBy]);
 
     const applyFilters = () => {
+        const path = `${filters.propertyType || 'buy'}/${filters.transactionType || 'house'}/${filters.locationFilter?.join(',') || 'all'}`;
         const query = new URLSearchParams(toQuery(filters, sortBy)).toString();
-        router.push('?' + query + (query ? `&_=d` : `_=d`));
+        const url = `/${path}${query ? `?${query}` : ''}`;
+        router.push(url);
     };
 
     const toggleExpanded = () => {
@@ -140,18 +131,18 @@ export default function Filters() {
         <>
             <div className={`grid lg:grid-cols-10 grid-cols-1 gap-x-3 gap-y-6 text-base`}>
                 <div className={`md:col-span-5`}>
-                    <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                    <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations} />
                 </div>
 
                 <div className={`md:col-span-5`}>
-                    <PropertyTypeFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                    <PropertyTypeFilter filters={filters} setFilters={setFilters} translations={translations} />
                 </div>
 
                 <div className={`lg:col-span-8`}>
-                    <LocationFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                    <LocationFilter filters={filters} setFilters={setFilters} translations={translations} />
                 </div>
 
-                {/*More filters*/}
+                {/* More filters */}
                 <button
                     className={`lg:col-span-2 text-sm text-white bg-slate-500 hover:bg-slate-600 rounded-md p-2 z-20 whitespace-nowrap`}
                     onClick={toggleExpanded}>
@@ -161,31 +152,26 @@ export default function Filters() {
                 {filtersExpanded && <>
                     <div className={`lg:col-span-6`}>
                         <PriceFilter filters={filters} setFilters={setFilters} translations={translations}
-                                     transactionType={filters.transactionType}/>
+                                     transactionType={filters.transactionType} />
                     </div>
-
 
                     <div className={`lg:col-span-4`}>
-                        <RoomFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                        <RoomFilter filters={filters} setFilters={setFilters} translations={translations} />
                     </div>
-
 
                     <div className={`lg:col-span-8`}>
-                        <AreaFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                        <AreaFilter filters={filters} setFilters={setFilters} translations={translations} />
                     </div>
-
 
                     <div className={`lg:col-span-8`}>
-                        <YearBuiltFilter filters={filters} setFilters={setFilters} translations={translations}/>
+                        <YearBuiltFilter filters={filters} setFilters={setFilters} translations={translations} />
                     </div>
-
                 </>}
             </div>
 
             <div className={`my-6 w-fit ml-auto`}>
-                <SortBy value={sortBy} setValue={setSortBy} t={translations}/>
+                <SortBy value={sortBy} setValue={setSortBy} t={translations} />
             </div>
         </>
-
     )
 }

@@ -39,7 +39,7 @@ const Pagination = ({ currentPage, totalPages }: PaginationProps) => {
         if (page > 0 && page <= totalPages) {
             const params = new URLSearchParams(searchParams.toString());
             params.set('page', page.toString());
-            router.push(`/?${params.toString()}`);
+            router.push(`?${params.toString()}`);
         }
     };
 

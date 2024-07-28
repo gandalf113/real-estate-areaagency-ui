@@ -28,7 +28,7 @@ export const PropertyTypeFilter = ({filters, setFilters, translations}: FilterPr
                     setFilters({...filters, propertyType: selectedOption?.value})
                 }}
                 placeholder={translations.filters.propertyType.placeholder}
-                isClearable={true}
+                isClearable={false}
                 styles={{
                     menu: (baseStyles) => {
                         return {

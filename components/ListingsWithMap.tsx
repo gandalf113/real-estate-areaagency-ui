@@ -3,11 +3,11 @@
 import {IListing, IListingPin, LanguageType} from "@/types";
 import ListingCard from "@/components/ListingCard";
 import Pagination from "@/components/filters/Pagination";
-import {useMemo, useState, useEffect} from "react";
+import {useMemo, useState} from "react";
 import dynamic from "next/dynamic";
 import useTranslations from "@/components/hooks/useTranslations";
 import Filters from "@/components/filters/Filters";
-import {useSearchParams} from "next/navigation";
+import {useParams, useSearchParams} from "next/navigation";
 
 interface ListingsWithMapProps {
     listings: IListing[];
@@ -34,9 +34,10 @@ const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: Listin
 
     const t = useTranslations();
 
+    const params = useParams();
     const searchParams = useSearchParams();
 
-    const transactionType = searchParams.get('transactionType');
+    const transactionType = params.transactionType;
     const priceFilter = searchParams.get('priceFilter');
     const maxPrice = priceFilter ? parseInt(priceFilter.split('-')[1]) : undefined;
 
@@ -52,7 +53,7 @@ const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: Listin
                     {t.noResults}
                 </p>}
 
-                {(listings.length === 0 && maxPrice && maxPrice < 700000 && transactionType === "buy") ?
+                {(listings.length === 0 && maxPrice && maxPrice <= 700000 && transactionType === "buy") ?
                     <p className={`text-center text-2xl mt-8`}>
                         {t.tooCheap}
                     </p> : null}

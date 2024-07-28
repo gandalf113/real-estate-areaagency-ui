@@ -1,12 +1,18 @@
 // [lang]/page.tsx
 
 import {LanguageType} from "@/types";
-import Filters from "@/components/filters/Filters";
 import translations from "@/app/translations";
 import ListingsWithMap from "@/components/ListingsWithMap";
 
+interface HomePageParams {
+    lang: LanguageType,
+    transactionType: string,
+    propertyType: string,
+    location: string
+}
+
 interface HomePageProps {
-    params: {lang: LanguageType}
+    params: HomePageParams;
     searchParams: ListingsQueryParams;
 }
 
@@ -15,13 +21,10 @@ export default async function Home({params, searchParams}: HomePageProps) {
     const t = translations[params.lang];
 
     const currentPage = Number.parseInt(searchParams.page || '1');
-    const {listings, totalPages, pins} = await findListings({...searchParams, page: currentPage.toString()}, params.lang);
+    const {listings, totalPages, pins} = await findListings(params, {...searchParams, page: currentPage.toString()});
 
     return (
         <>
-            {/*<div className={`px-8 pt-4 pb-16 flex flex-col`}>*/}
-            {/*    <Filters/>*/}
-            {/*</div>*/}
             <main className="overflow-x-clip pb-8">
                 <ListingsWithMap
                     listings={listings}
@@ -47,14 +50,22 @@ interface ListingsQueryParams {
     maxPrice?: string;
 }
 
-async function findListings(search: ListingsQueryParams = {}, lang: string) {
-    const params = {
+async function findListings(params: HomePageParams, search: ListingsQueryParams = {}) {
+    const {transactionType, propertyType, location, lang} = params;
+
+    const requestParams = {
+        transactionType,
+        propertyType,
+        locationFilter: location === "all" ? undefined : location.replace('%2C', ','),
         lang,
         ...search
     }
-    const queryParams = Object.keys(params)
+
+    console.log(requestParams);
+
+    const queryParams = Object.keys(requestParams)
         .map(key => {
-            const value = (params as any)[key];
+            const value = (requestParams as any)[key];
             return value !== undefined ? `${encodeURIComponent(key)}=${encodeURIComponent(value)}` : '';
         })
         .filter(param => param !== '')
