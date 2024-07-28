@@ -117,6 +117,11 @@ const translations: Record<LanguageType, Translations> = {
                 roomsNominative: "rooms",
                 roomsGentitive: "rooms",
                 month: "month"
+            },
+            listingNotFound: {
+                title: "Listing not found",
+                description: "The listing you are looking for does not exist or has been removed.",
+                returnToHome: "Return to home page"
             }
         },
         pl: {
@@ -234,6 +239,11 @@ const translations: Record<LanguageType, Translations> = {
                 roomsNominative: "pokoje",
                 roomsGentitive: "pokoi",
                 month: "miesiąc"
+            },
+            listingNotFound: {
+                title: "Ogłoszenie zostało usunięte",
+                description: "Przepraszamy, szukane ogłoszenie nie istnieje lub zostało usunięte.",
+                returnToHome: "Powrót na stronę główną"
             }
         },
         ua: {
@@ -351,6 +361,11 @@ const translations: Record<LanguageType, Translations> = {
                 roomsNominative: "кімнати",
                 roomsGentitive: "кімнат",
                 month: "місяць"
+            },
+            listingNotFound: {
+                title: "Оголошення не знайдено",
+                description: "Оголошення, яке ви шукаєте, не існує або було видалено.",
+                returnToHome: "Повернутися на головну сторінку"
             }
         }
     }

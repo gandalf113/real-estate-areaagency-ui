@@ -7,7 +7,7 @@ import { PriceFilter } from "@/components/filters/PriceFilter";
 import { useEffect, useState } from "react";
 import {useRouter, useSearchParams, useParams} from 'next/navigation';
 import useTranslations from "@/components/hooks/useTranslations";
-import { Translations } from "@/types";
+import {LanguageType, Translations} from "@/types";
 import { AreaFilter } from "@/components/filters/AreaFilter";
 import { YearBuiltFilter } from "@/components/filters/YearBuiltFilter";
 import SortBy from "@/components/SortBy";
@@ -73,6 +73,7 @@ export default function Filters() {
     const router = useRouter();
     const params = useParams();
     const searchParams = useSearchParams();
+    const language = params.lang as LanguageType;
 
     const initTransactionType = params.transactionType ?? 'buy';
     const initPropertyType = (params.propertyType ?? 'house') as PropertyType;
@@ -117,7 +118,7 @@ export default function Filters() {
     }, [filters, sortBy]);
 
     const applyFilters = () => {
-        const path = `${filters.propertyType || 'buy'}/${filters.transactionType || 'house'}/${filters.locationFilter?.join(',') || 'all'}`;
+        const path = `${language}/${filters.propertyType || 'buy'}/${filters.transactionType || 'house'}/${filters.locationFilter?.join(',') || 'all'}`;
         const query = new URLSearchParams(toQuery(filters, sortBy)).toString();
         const url = `/${path}${query ? `?${query}` : ''}`;
         router.push(url);

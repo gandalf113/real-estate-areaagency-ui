@@ -1,10 +1,11 @@
-import {IListing, LanguageType} from "@/types";
+import {LanguageType} from "@/types";
 import ListingPageCarousel from "@/components/listing-detail/ListingPageCarousel";
 import translations from "@/app/translations";
 import {useMemo} from "react";
 import dynamic from "next/dynamic";
 import ListingDetailCard from "@/components/listing-detail/ListingDetailCard";
 import ContactForm from "@/components/listing-detail/ContactForm";
+import { redirect } from 'next/navigation'
 
 function formatPrice(price: string) {
     // Convert the price to a float
@@ -24,7 +25,12 @@ export default async function Page({params}: { params: { listingId: string, lang
         }
     ), [])
 
-    const listing: IListing = await findListing(parseInt(params.listingId), params.lang);
+
+    const listing = await findListing(parseInt(params.listingId), params.lang);
+    if (!listing) {
+        return redirect('/'+ params.lang + '/listing/' + params.listingId + '/not-found')
+    }
+
     const t = translations[params.lang];
 
     const descriptionLines = listing.description ? listing.description.split('\n') : [];
@@ -44,7 +50,7 @@ export default async function Page({params}: { params: { listingId: string, lang
             <h1 className={`text-3xl font-bold my-8 lg:w-4/5`}>{listing.title}</h1>
 
             <div className={`lg:w-2/3`}>
-                {descriptionLines.map((line, index) => <p key={index} className={`font-light mb-2`}>{line}</p>)}
+                {descriptionLines.map((line: string, index: number) => <p key={index} className={`font-light mb-2`}>{line}</p>)}
             </div>
 
             <h3 className={`text-2xl font-bold my-8`}>{t.details}</h3>
@@ -82,7 +88,7 @@ async function findListing(id: number, lang: string) {
     const res = await fetch(url, {next: {revalidate: 900}})
 
     if (!res.ok) {
-        throw new Error('Failed to fetch data')
+        return Promise.reject("Listing not found");
     }
 
     return res.json()

@@ -28,11 +28,13 @@ export function middleware(request: NextRequest) {
 
     // Check if the first segment is a valid locale
     if (locales.includes(localeSegment)) {
-        console.log('locale is valid');
         if (segments.length === 1) {
-            console.log('segments length is 1');
             // Redirect if the route is incomplete (e.g., '/pl/')
             return NextResponse.redirect(new URL(defaultPath, request.url));
+        }
+
+        if (segments.includes('not-found')) {
+            return NextResponse.next();
         }
 
         if (segments[1] === 'listing') {

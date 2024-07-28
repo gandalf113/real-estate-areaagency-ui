@@ -157,5 +157,10 @@ export interface Translations {
         room: string;
         roomsNominative: string;
         roomsGentitive: string;
+    },
+    listingNotFound: {
+        title: string;
+        description: string;
+        returnToHome: string;
     }
 }
