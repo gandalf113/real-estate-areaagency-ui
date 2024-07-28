@@ -40,7 +40,7 @@ export interface IListingPin {
     transaction: string;
 }
 
-export type LanguageType = 'en' | 'pl' | 'ua';
+export type LanguageType = 'en' | 'pl' | 'ua' | 'ru';
 
 export interface Translations {
     contact: string;

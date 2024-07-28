@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { useRouter } from 'next/navigation';
 
 interface LanguageDropdownProps {
-    lang: string; // en, pl, ua
+    lang: string; // en, pl, ua, ru
 }
 
 const LanguageDropdown = ({ lang }: LanguageDropdownProps) => {
@@ -23,6 +23,7 @@ const LanguageDropdown = ({ lang }: LanguageDropdownProps) => {
         { value: 'en', label: 'EN' },
         { value: 'pl', label: 'PL' },
         { value: 'ua', label: 'UA' },
+        { value: 'ru', label: 'RU' },
     ];
 
     const selectedOption = options.find(option => option.value === lang) || { value: 'en', label: 'EN' };

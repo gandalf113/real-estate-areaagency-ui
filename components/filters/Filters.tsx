@@ -145,7 +145,7 @@ export default function Filters() {
 
                 {/* More filters */}
                 <button
-                    className={`lg:col-span-2 text-sm text-white bg-slate-500 hover:bg-slate-600 rounded-md p-2 z-20 whitespace-nowrap`}
+                    className={`lg:col-span-2 text-sm text-white bg-slate-500 hover:bg-slate-600 rounded-md p-2 z-20 whitespace-nowrap truncate`}
                     onClick={toggleExpanded}>
                     {filtersExpanded ? translations.filters.showLessFilters : translations.filters.showMoreFilters}
                 </button>

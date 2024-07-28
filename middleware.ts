@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const locales = ['en', 'pl', 'ua'];
+const locales = ['en', 'pl', 'ua', 'ru'];
 const propertyTypes = ['house', 'apartment', 'land', 'commercial'];
 const transactionTypes = ['buy', 'rent'];
 
-const getDefaultPath = (request: NextRequest) => {
-    const defaultLocale = getLocale(request);
-    return `/${defaultLocale}/house/buy/all`;
+const getDefaultPath = (locale: string | undefined, request: NextRequest) => {
+    const pathLocale = locale ?? getLocale(request);
+    return `/${pathLocale}/house/buy/all`;
 };
 
 function getLocale(request: NextRequest) {
@@ -22,9 +22,8 @@ export function middleware(request: NextRequest) {
 
     const segments = pathname.split('/').filter(Boolean);
     const localeSegment = segments[0];
-    console.log(localeSegment);
 
-    const defaultPath = getDefaultPath(request);
+    const defaultPath = getDefaultPath(localeSegment, request);
 
     // Check if the first segment is a valid locale
     if (locales.includes(localeSegment)) {

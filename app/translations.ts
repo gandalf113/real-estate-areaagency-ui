@@ -367,6 +367,128 @@ const translations: Record<LanguageType, Translations> = {
                 description: "Оголошення, яке ви шукаєте, не існує або було видалено.",
                 returnToHome: "Повернутися на головну сторінку"
             }
+        },
+        ru: {
+            contact: "Контакт",
+            phone: "Телефон",
+            email: "Электронная почта",
+            company: "Компания",
+            details: "Детали объявления",
+            location: "Местоположение",
+            area: "Площадь",
+            price: "Цена",
+            rooms: "Количество комнат",
+            dateAdded: "Дата добавления",
+            floor: "Этаж",
+            city: "Город",
+            street: "Улица",
+            buildingYear: "Год постройки",
+            description: "Описание",
+            noResults: "Нет результатов",
+            tooCheap: "Пожалуйста, выберите более высокий ценовой диапазон",
+            nextPage: "Следующая страница",
+            viewMore: "Показать больше",
+            showOnMap: "Показать на карте",
+            navbar: {
+                aboutUs: "О нас",
+                services: "Услуги",
+                realEstate: "Недвижимость",
+                team: "Команда",
+                reviews: "Отзывы",
+                blog: "Блог",
+                chatbot: "Чатбот",
+                contacts: "Контакты"
+            },
+            filters: {
+                transactionType: {
+                    placeholder: "Я хочу...",
+                    rent: "Арендовать",
+                    sale: "Купить",
+                },
+                propertyType: {
+                    placeholder: "Тип недвижимости",
+                    apartment: "Квартира",
+                    house: "Дом",
+                    commercial: "Коммерческая",
+                    investment: "Инвестиционная",
+                    land: "Земля",
+                },
+                location: {
+                    placeholder: "Местоположение",
+                },
+                rooms: {
+                    placeholder: "Количество комнат",
+                },
+                priceFrom: {
+                    placeholder: "Цена от..",
+                },
+                priceTo: {
+                    placeholder: "Цена до..",
+                },
+                areaFrom: {
+                    placeholder: "Площадь от..",
+                },
+                areaTo: {
+                    placeholder: "Площадь до..",
+                },
+                yearBuiltFrom: {
+                    placeholder: "Год постройки от..",
+                },
+                yearBuiltTo: {
+                    placeholder: "Год постройки до..",
+                },
+                sortBy: {
+                    placeholder: "Сортировать по",
+                    priceDesc: "Цена (по убыванию)",
+                    priceAsc: "Цена (по возрастанию)",
+                    areaDesc: "Площадь (по убыванию)",
+                    areaAsc: "Площадь (по возрастанию)",
+                },
+                showMoreFilters: "Больше фильтров",
+                showLessFilters: "Меньше фильтров"
+            },
+            contactForm: {
+                name: "Имя",
+                email: "Электронная почта",
+                message: "Сообщение",
+                send: "Отправить",
+                phone: "Номер телефона",
+                sendResultSuccess: "Спасибо за ваше сообщение. Наш консультант свяжется с вами в ближайшее время.",
+                sendResultError: "Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте позже.",
+                reason: {
+                    needMoreInfo: {
+                        label: "Мне нужно больше информации",
+                        content: "Этот объект недвижимости кажется мне интересным. Я хотел бы узнать больше подробностей. Пожалуйста, свяжитесь со мной.\n"
+                    },
+                    scheduleVisit: {
+                        label: "Я хочу назначить визит",
+                        content: "Я хотел бы назначить встречу для просмотра недвижимости. Пожалуйста, свяжитесь со мной, чтобы договориться о встрече.\n"
+                    },
+                    other: {
+                        label: "Другая причина",
+                        content: ""
+                    }
+                },
+                validation: {
+                    nameRequired: "Имя обязательно",
+                    invalidEmail: "Недействительный адрес электронной почты",
+                    invalidPhoneNumber: "Недействительный номер телефона",
+                    messageRequired: "Сообщение обязательно"
+                }
+            },
+            listingCard: {
+                floor: "этаж",
+                floor_0: "Первый этаж",
+                room: "комната",
+                roomsNominative: "комнаты",
+                roomsGentitive: "комнат",
+                month: "месяц"
+            },
+            listingNotFound: {
+                title: "Объявление не найдено",
+                description: "Объявление, которое вы ищете, не существует или было удалено.",
+                returnToHome: "Вернуться на главную страницу"
+            }
         }
     }
 ;
