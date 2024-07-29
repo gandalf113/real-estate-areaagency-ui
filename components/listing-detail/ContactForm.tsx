@@ -128,7 +128,7 @@ const ContactForm = ({listing, lang}: { listing: IListing, lang: LanguageType })
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
             <PhoneInput
-                defaultCountry={lang === 'pl' ? 'pl' : lang === 'ua' ? 'ua' : lang === 'ru' ? 'ru' : 'us'}
+                defaultCountry={lang === 'pl' ? 'pl' : lang === 'ua' ? 'ua' : lang === 'ru' ? 'by' : 'us'}
                 value={phoneNumber}
                 onChange={(phone) => setPhoneNumber(phone)}
                 className={`w-full`}
