@@ -6,7 +6,7 @@ const transactionTypes = ['buy', 'rent'];
 
 const getDefaultPath = (locale: string | undefined, request: NextRequest) => {
     const pathLocale = locale ?? getLocale(request);
-    return `/${pathLocale}/house/buy/all`;
+    return `/${pathLocale}/real-estate/house/buy/all`;
 };
 
 function getLocale(request: NextRequest) {
@@ -36,17 +36,17 @@ export function middleware(request: NextRequest) {
             return NextResponse.next();
         }
 
-        if (segments[1] === 'listing') {
-            if (segments.length === 3) {
-                return NextResponse.next(); // Valid listings route
+        if (segments[2] === 'listing') {
+            if (segments.length === 4) {
+                return NextResponse.next();
             } else {
                 return NextResponse.redirect(new URL(defaultPath, request.url)); // Incomplete or invalid listings route
             }
         }
 
-        const propertyTypeSegment = segments[1];
-        const transactionTypeSegment = segments[2];
-        const locationSegment = segments[3];
+        const propertyTypeSegment = segments[2];
+        const transactionTypeSegment = segments[3];
+        const locationSegment = segments[4];
 
         // Validate the segments for the property route
         if (

@@ -118,7 +118,7 @@ export default function Filters() {
     }, [filters, sortBy]);
 
     const applyFilters = () => {
-        const path = `${language}/${filters.propertyType || 'buy'}/${filters.transactionType || 'house'}/${filters.locationFilter?.join(',') || 'all'}`;
+        const path = `${language}/real-estate/${filters.propertyType || 'buy'}/${filters.transactionType || 'house'}/${filters.locationFilter?.join(',') || 'all'}`;
         const query = new URLSearchParams(toQuery(filters, sortBy)).toString();
         const url = `/${path}${query ? `?${query}` : ''}`;
         router.push(url);

@@ -83,7 +83,7 @@ const ListingCard = ({listing, lang, onClickPin}: ListingCardProps) => {
     const price = formatPrice(listing.price);
     const location = formatLocation(listing.city_name, listing.street_name, listing.precinct_name);
 
-    const hrefUrl = lang ? `/${lang}/listing/${listing.id}` : `/listing/${listing.id}`;
+    const hrefUrl = lang ? `/${lang}/real-estate/listing/${listing.id}` : `/listing/${listing.id}`;
 
     return (
         <Link key={listing.id} href={hrefUrl}>
