@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Check if the request is for a public file
-    const isPublicFile = pathname.startsWith('/static') || pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|txt|xml|json|js|css|otf)$/);
+    const isPublicFile = pathname.startsWith('/next-static') || pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|txt|xml|json|js|css|otf)$/);
     if (isPublicFile) return NextResponse.next();
 
     const segments = pathname.split('/').filter(Boolean);

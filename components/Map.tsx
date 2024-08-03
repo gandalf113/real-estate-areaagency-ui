@@ -16,8 +16,8 @@ import listingMapCarousel from "@/components/ListingMapCarousel";
 import Link from "next/link";
 
 const icon = L.icon({
-    iconUrl: "/static/marker/marker-icon.png",
-    shadowUrl: '/static/marker/marker-shadow.png',
+    iconUrl: "/next-static/marker/marker-icon.png",
+    shadowUrl: '/next-static/marker/marker-shadow.png',
 });
 
 interface MapProps {
