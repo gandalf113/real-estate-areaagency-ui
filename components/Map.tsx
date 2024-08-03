@@ -98,7 +98,7 @@ export default function Map(props: MapProps) {
                         >
                             {!props.noPopup &&
                                 <Popup offset={[12, 15]} closeButton={false} autoClose className={`relative`}>
-                                    <Link href={`${props.language}/real-estate/listing/${location.id}`} className={`!text-black`}>
+                                    <Link href={`/${props.language}/real-estate/listing/${location.id}`} className={`!text-black`}>
                                         <ListingMapCarousel locationId={location.id}/>
 
                                         {/*Close button*/}
