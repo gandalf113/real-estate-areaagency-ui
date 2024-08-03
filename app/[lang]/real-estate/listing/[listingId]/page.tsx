@@ -28,7 +28,7 @@ export default async function Page({params}: { params: { listingId: string, lang
 
     const listing = await findListing(parseInt(params.listingId), params.lang);
     if (!listing) {
-        return redirect('/'+ params.lang + '/listing/' + params.listingId + '/not-found')
+        return redirect('/'+ params.lang + '/real-estate/listing/' + params.listingId + '/not-found')
     }
 
     const t = translations[params.lang];
@@ -69,7 +69,7 @@ export default async function Page({params}: { params: { listingId: string, lang
             <div className={`md:w-4/5 h-96 overflow-hidden`}>
                 <div className={`h-full bg-red-200 overflow-hidden rounded-xl shadow-lg`}>
                     <Map position={[Number.parseFloat(listing.lat) - 0.004, Number.parseFloat(listing.lon)]} zoom={15}
-                         locations={[listing]} noPopup/>
+                         locations={[listing]} noPopup language={params.lang}/>
                 </div>
             </div>
 

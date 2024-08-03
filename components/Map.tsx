@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "./Map.css";
-import {IListing, IListingPin} from "@/types";
+import {IListing, IListingPin, LanguageType} from "@/types";
 import {useRef, useEffect} from "react";
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import useTranslations from "@/components/hooks/useTranslations";
@@ -27,6 +27,7 @@ interface MapProps {
     noPopup?: boolean;
     activeLocationId?: number;
     setActiveLocationId?: (id: number | undefined) => void;
+    language: LanguageType;
 }
 
 export default function Map(props: MapProps) {
@@ -97,7 +98,7 @@ export default function Map(props: MapProps) {
                         >
                             {!props.noPopup &&
                                 <Popup offset={[12, 15]} closeButton={false} autoClose className={`relative`}>
-                                    <Link href={`/listing/${location.id}`} className={`!text-black`}>
+                                    <Link href={`${props.language}/real-estate/listing/${location.id}`} className={`!text-black`}>
                                         <ListingMapCarousel locationId={location.id}/>
 
                                         {/*Close button*/}

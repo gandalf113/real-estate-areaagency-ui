@@ -78,7 +78,8 @@ const ListingsWithMap = ({listings, pins, totalPages, currentPage, lang}: Listin
             <div className={`lg:block hidden sticky right-0 h-[calc(100vh-64px)] top-0 w-5/12`}>
                 <Map position={[52.247463, 21.015801]} zoom={10} locations={pins}
                      activeLocationId={activeLocationId}
-                     setActiveLocationId={setActiveLocationId}/>
+                     setActiveLocationId={setActiveLocationId}
+                     language={lang}/>
             </div>
         </div>
     );
