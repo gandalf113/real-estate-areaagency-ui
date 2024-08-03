@@ -22,7 +22,7 @@ export default function Navbar({lang}: NavbarProps) {
         },
         {
             content: t.navbar.realEstate,
-            href: "/" + lang,
+            href: "/" + lang + "/real-estate",
             active: true,
         },
         {
