@@ -1,4 +1,4 @@
-import {NextRequest, NextResponse} from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const locales = ['en', 'pl', 'ua', 'ru'];
 const propertyTypes = ['house', 'apartment', 'land', 'commercial'];
@@ -14,21 +14,26 @@ function getLocale(request: NextRequest) {
 }
 
 export function middleware(request: NextRequest) {
-    const {pathname} = request.nextUrl;
+    const { pathname } = request.nextUrl;
+    console.log(`Middleware triggered for: ${pathname}`);
 
     // Check if the request is for a public file
     const isPublicFile = pathname.startsWith('/next-static') || pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|txt|xml|json|js|css|otf)$/);
-    if (isPublicFile) return NextResponse.next();
+    if (isPublicFile) {
+        console.log('Public file request:', pathname);
+        return NextResponse.next();
+    }
 
     const segments = pathname.split('/').filter(Boolean);
     const localeSegment = segments[0];
 
     const defaultPath = getDefaultPath(localeSegment, request);
+    console.log('Default path:', defaultPath);
 
     // Check if the first segment is a valid locale
     if (locales.includes(localeSegment)) {
         if (segments.length === 1) {
-            // Redirect if the route is incomplete (e.g., '/pl/')
+            console.log('Redirecting to default path due to incomplete route');
             return NextResponse.redirect(new URL(defaultPath, request.url));
         }
 
@@ -40,6 +45,7 @@ export function middleware(request: NextRequest) {
             if (segments.length === 4) {
                 return NextResponse.next();
             } else {
+                console.log('Redirecting due to incomplete or invalid listings route');
                 return NextResponse.redirect(new URL(defaultPath, request.url)); // Incomplete or invalid listings route
             }
         }
@@ -56,12 +62,14 @@ export function middleware(request: NextRequest) {
         ) {
             return NextResponse.next(); // Valid property route
         } else {
+            console.log('Redirecting due to invalid property route');
             return NextResponse.redirect(new URL(defaultPath, request.url)); // Invalid property route
         }
     } else {
         // Redirect if the locale is not valid or missing
         const locale = getLocale(request);
         request.nextUrl.pathname = `/${locale}${pathname}`;
+        console.log('Redirecting due to missing or invalid locale');
         return NextResponse.redirect(request.nextUrl);
     }
 }
