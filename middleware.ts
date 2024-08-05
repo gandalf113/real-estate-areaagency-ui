@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import {NextRequest, NextResponse} from 'next/server';
 
 const locales = ['en', 'pl', 'ua', 'ru'];
 const propertyTypes = ['house', 'apartment', 'land', 'commercial'];
@@ -14,7 +14,7 @@ function getLocale(request: NextRequest) {
 }
 
 export function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    const {pathname} = request.nextUrl;
 
     // Check if the request is for a public file
     const isPublicFile = pathname.startsWith('/next-static') || pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|txt|xml|json|js|css|otf)$/);
@@ -50,7 +50,7 @@ export function middleware(request: NextRequest) {
 
         // Validate the segments for the property route
         if (
-            propertyTypes.includes(propertyTypeSegment.split("-")[0]) &&
+            (propertyTypeSegment && propertyTypes.includes(propertyTypeSegment.split("-")[0])) &&
             transactionTypes.includes(transactionTypeSegment) &&
             locationSegment
         ) {
