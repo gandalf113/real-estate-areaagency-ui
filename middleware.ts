@@ -50,7 +50,7 @@ export function middleware(request: NextRequest) {
 
         // Validate the segments for the property route
         if (
-            propertyTypes.includes(propertyTypeSegment) &&
+            propertyTypes.includes(propertyTypeSegment.split("-")[0]) &&
             transactionTypes.includes(transactionTypeSegment) &&
             locationSegment
         ) {

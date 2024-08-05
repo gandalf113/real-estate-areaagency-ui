@@ -16,7 +16,7 @@ import { PropertyTypeFilter } from "@/components/filters/PropertyTypeFilter";
 const toQuery = (filters: IFilter, sort?: { field: string, direction: string }) => {
     const query: { [key: string]: string } = {};
 
-    if (filters.roomFilter) {
+    if (filters.roomFilter && filters.roomFilter.length > 1) {
         query['roomFilter'] = filters.roomFilter.map(room => room.toString()).join(',');
     }
 
@@ -55,7 +55,7 @@ type PropertyType = 'house' | 'apartment' | 'commercial' | 'land';
 
 export interface IFilter {
     transactionType?: 'buy' | 'rent';
-    propertyType?: PropertyType;
+    propertyType?: string;
     locationFilter?: string[];
     roomFilter?: number[]
     priceFilter?: { min?: number; max?: number };
@@ -76,7 +76,7 @@ export default function Filters() {
     const language = params.lang as LanguageType;
 
     const initTransactionType = params.transactionType ?? 'buy';
-    const initPropertyType = (params.propertyType ?? 'house') as PropertyType;
+    let initPropertyType = (params.propertyType ?? 'house') as PropertyType;
     const initLocationFilter = params.location as string;
     const initRoomFilter = searchParams.get('roomFilter');
     const initPriceFilter = searchParams.get('priceFilter');
@@ -87,13 +87,19 @@ export default function Filters() {
     const translations = useTranslations();
     const [filtersExpanded, setFiltersExpanded] = useState(false);
 
-    console.log(typeof initLocationFilter)
+    // Extract room filter from property type if present
+    let roomFilter: number[] | undefined;
+    const propertyTypeMatch = initPropertyType.match(/-(\d+)p$/);
+    if (propertyTypeMatch) {
+        roomFilter = [parseInt(propertyTypeMatch[1], 10)];
+        initPropertyType = initPropertyType.replace(/-\d+p$/, '') as PropertyType;
+    }
 
     const [filters, setFilters] = useState<IFilter>({
         transactionType: initTransactionType === 'buy' || initTransactionType === 'rent' ? initTransactionType : undefined,
         propertyType: initPropertyType ? initPropertyType : undefined,
         locationFilter: initLocationFilter ? initLocationFilter.split('%2C') : undefined,
-        roomFilter: initRoomFilter ? initRoomFilter.split(',').map(Number) : undefined,
+        roomFilter: initRoomFilter ? initRoomFilter.split(',').map(Number) : roomFilter,
         priceFilter: initPriceFilter ? {
             min: parseInt(initPriceFilter.split('-')[0]),
             max: parseInt(initPriceFilter.split('-')[1])
@@ -118,7 +124,12 @@ export default function Filters() {
     }, [filters, sortBy]);
 
     const applyFilters = () => {
-        const path = `${language}/real-estate/${filters.propertyType || 'buy'}/${filters.transactionType || 'house'}/${filters.locationFilter?.join(',') || 'all'}`;
+        let propertyType = filters.propertyType || 'house';
+        if (filters.roomFilter && filters.roomFilter.length === 1) {
+            propertyType = `${propertyType}-${filters.roomFilter[0]}p`;
+        }
+
+        const path = `${language}/real-estate/${propertyType}/${filters.transactionType || 'buy'}/${filters.locationFilter?.join(',') || 'all'}`;
         const query = new URLSearchParams(toQuery(filters, sortBy)).toString();
         const url = `/${path}${query ? `?${query}` : ''}`;
         router.push(url);
@@ -170,7 +181,7 @@ export default function Filters() {
                 </>}
             </div>
 
-            <div className={`my-6 w-fit ml-auto`}>
+            <div className={`my-6 w-fit ml-auto col-span-8`}>
                 <SortBy value={sortBy} setValue={setSortBy} t={translations} />
             </div>
         </>

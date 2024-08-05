@@ -18,8 +18,23 @@ export default async function Home({params, searchParams}: HomePageProps) {
 
     const t = translations[params.lang];
 
+    // Extract roomFilter from propertyType if present
+    let { propertyType } = params;
+    let roomFilterFromType: string | undefined;
+    const propertyTypeMatch = propertyType.match(/-(\d+)p$/);
+    if (propertyTypeMatch) {
+        roomFilterFromType = propertyTypeMatch[1];
+        propertyType = propertyType.replace(/-\d+p$/, '');
+    }
+
+    // Merge roomFilter from query params and property type
+    const roomFilter = searchParams.roomFilter ? searchParams.roomFilter : roomFilterFromType;
+
     const currentPage = Number.parseInt(searchParams.page || '1');
-    const {listings, totalPages, pins} = await findListings(params, {...searchParams, page: currentPage.toString()});
+    const {listings, totalPages, pins} = await findListings(
+        { ...params, propertyType },
+        { ...searchParams, roomFilter, page: currentPage.toString() }
+    );
 
     return (
         <>
@@ -46,10 +61,11 @@ interface ListingsQueryParams {
     maxRooms?: string;
     minPrice?: string;
     maxPrice?: string;
+    roomFilter?: string;
 }
 
 async function findListings(params: HomePageParams, search: ListingsQueryParams = {}) {
-    const {transactionType, propertyType, location, lang} = params;
+    const { transactionType, propertyType, location, lang } = params;
 
     const requestParams = {
         transactionType,
@@ -57,7 +73,7 @@ async function findListings(params: HomePageParams, search: ListingsQueryParams 
         locationFilter: location === "all" ? undefined : location.replace('%2C', ','),
         lang,
         ...search
-    }
+    };
 
     console.log(requestParams);
 
@@ -73,8 +89,8 @@ async function findListings(params: HomePageParams, search: ListingsQueryParams 
     const pinsUrl = process.env.API_BASE_URL + `/pins?` + queryParams;
 
     const [listingsRes, pinsRes] = await Promise.all([
-        fetch(listingsUrl, {next: {revalidate: 900}}),
-        fetch(pinsUrl, {next: {revalidate: 900}})
+        fetch(listingsUrl, { next: { revalidate: 900 } }),
+        fetch(pinsUrl, { next: { revalidate: 900 } })
     ]);
 
     if (!listingsRes.ok || !pinsRes.ok) {
