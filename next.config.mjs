@@ -9,6 +9,11 @@ const nextConfig = {
             },
         ],
     },
+    experimental: {
+        serverActions: {
+            allowedOrigins: ['areaagency.pl', '*.areaagency.pl'],
+        },
+    },
 };
 
 export default nextConfig;
