@@ -2,6 +2,8 @@ import type {Metadata} from "next";
 import "../../globals.css";
 import Navbar from "@/components/Navbar";
 import {LanguageType} from "@/types";
+import Head from "next/head";
+import Script from "next/script";
 
 export const metadata: Metadata = {
     title: "Real Estate - AREA",
@@ -20,6 +22,33 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body>
+        {/*Google Analytics*/}
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-WHWZME4JPD"></Script>
+        <Script id='ga-init'>
+            {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', 'G-WHWZME4JPD');
+              `}
+        </Script>
+        {/*Google Tag Manager*/}
+        <Script id="gtm-init">
+            {`
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-M8G7CPN7');
+            `}
+        </Script>
+
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M8G7CPN7" height="0" width="0"
+                    style={{display: "none", visibility: "hidden"}}></iframe>
+        </noscript>
+
         <Navbar lang={lang}/>
         {children}
         </body>
