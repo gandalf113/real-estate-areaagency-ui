@@ -70,7 +70,7 @@ async function findListings(params: HomePageParams, search: ListingsQueryParams 
     const requestParams = {
         transactionType,
         propertyType,
-        locationFilter: location === "all" ? undefined : location.replace('%2C', ','),
+        locationFilter: location === "all" ? undefined : location.replaceAll('%2C', ','),
         lang,
         ...search
     };
