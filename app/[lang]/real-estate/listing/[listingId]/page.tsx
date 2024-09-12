@@ -35,8 +35,11 @@ export default async function Page({params}: { params: { listingId: string, lang
 
     const descriptionLines = listing.description ? listing.description.split('\n') : [];
 
+    const offerNumber = listing.provider.substring(0, 1).toUpperCase() + "/" + listing.crm_id.toUpperCase()
+
     return <div className={`max-w-6xl mx-auto py-4 pb-16`}>
         <div className={`grid grid-cols-10 gap-4 mb-4 px-4`}>
+
             <div className={`lg:col-span-7 col-span-10`}>
                 <ListingPageCarousel images={listing.images}/>
             </div>
@@ -47,18 +50,23 @@ export default async function Page({params}: { params: { listingId: string, lang
         </div>
 
         <div className={`px-4`}>
-            <h1 className={`text-3xl font-bold my-8 lg:w-4/5`}>{listing.title}</h1>
+            <p className={`text-gray-600 mt-6 mb-4`}>{t.offerNumber}: <b>{offerNumber}</b></p>
+
+            <h1 className={`text-3xl font-bold mt-4 mb-8 lg:w-4/5`}>{listing.title}</h1>
 
             <div className={`lg:w-2/3`}>
-                {descriptionLines.map((line: string, index: number) => <p key={index} className={`font-light mb-2`}>{line}</p>)}
+                {descriptionLines.map((line: string, index: number) => <p key={index}
+                                                                          className={`font-light mb-2`}>{line}</p>)}
             </div>
 
             <h3 className={`text-2xl font-bold my-8`}>{t.details}</h3>
             <div className={`flex md:flex-row flex-col gap-4 mb-4`}>
                 <ListingDetailCard name={t.area} value={listing.areaTotal + ' m2'}/>
                 <ListingDetailCard name={t.price} value={formatPrice(listing.price) + ' zł'}/>
-                {listing.apartment_room_number ? <ListingDetailCard name={t.rooms} value={listing.apartment_room_number}/> : null}
-                {listing.building_year ? <ListingDetailCard name={t.buildingYear} value={listing.building_year}/> : null}
+                {listing.apartment_room_number ?
+                    <ListingDetailCard name={t.rooms} value={listing.apartment_room_number}/> : null}
+                {listing.building_year ?
+                    <ListingDetailCard name={t.buildingYear} value={listing.building_year}/> : null}
                 {listing.floor_number ? <ListingDetailCard name={t.floor} value={listing.floor_number}/> : null}
             </div>
 

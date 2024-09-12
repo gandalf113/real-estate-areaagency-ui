@@ -63,6 +63,7 @@ export interface Translations {
     tooCheap: string;
     viewMore: string;
     showOnMap: string;
+    offerNumber: string;
     navbar: {
         aboutUs: string;
         services: string;

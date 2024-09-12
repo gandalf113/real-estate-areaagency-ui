@@ -23,6 +23,7 @@ const translations: Record<LanguageType, Translations> = {
             nextPage: "Next Page",
             viewMore: "View More",
             showOnMap: "Show on Map",
+            offerNumber: "Offer ID",
             navbar: {
                 aboutUs: "About Us",
                 services: "Services",
@@ -145,6 +146,7 @@ const translations: Record<LanguageType, Translations> = {
             tooCheap: "Proszę wybrać wyższy przedział cenowy",
             viewMore: "Zobacz więcej",
             showOnMap: "Pokaż na mapie",
+            offerNumber: "Numer oferty",
             navbar: {
                 aboutUs: "O nas",
                 services: "Usługi",
@@ -267,6 +269,7 @@ const translations: Record<LanguageType, Translations> = {
             tooCheap: "Будь ласка, оберіть вищий ціновий діапазон",
             viewMore: "Детальніше",
             showOnMap: "Показати на карті",
+            offerNumber: "номер пропозиції",
             navbar: {
                 aboutUs: "Про нас",
                 services: "Послуги",
@@ -389,6 +392,7 @@ const translations: Record<LanguageType, Translations> = {
             nextPage: "Следующая страница",
             viewMore: "Показать больше",
             showOnMap: "Показать на карте",
+            offerNumber: "номер предложения",
             navbar: {
                 aboutUs: "О нас",
                 services: "Услуги",
