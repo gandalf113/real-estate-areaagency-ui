@@ -85,7 +85,7 @@ export default function Filters() {
     const initSortBy = searchParams.get('sortBy');
 
     const translations = useTranslations();
-    const [filtersExpanded, setFiltersExpanded] = useState(false);
+    const [filtersExpanded, setFiltersExpanded] = useState(true);
 
     // Extract room filter from property type if present
     let roomFilter: number[] | undefined;
@@ -141,7 +141,7 @@ export default function Filters() {
 
     return (
         <>
-            <div className={`grid lg:grid-cols-10 grid-cols-1 gap-x-3 gap-y-6 text-base`}>
+            <div className={`grid md:grid-cols-10 grid-cols-1 gap-x-3 gap-y-6 text-base`}>
                 <div className={`md:col-span-5`}>
                     <TransactionTypeFilter filters={filters} setFilters={setFilters} translations={translations} />
                 </div>
@@ -150,32 +150,32 @@ export default function Filters() {
                     <PropertyTypeFilter filters={filters} setFilters={setFilters} translations={translations} />
                 </div>
 
-                <div className={`lg:col-span-8`}>
+                <div className={`md:col-span-8`}>
                     <LocationFilter filters={filters} setFilters={setFilters} translations={translations} />
                 </div>
 
                 {/* More filters */}
                 <button
-                    className={`lg:col-span-2 text-sm text-white bg-slate-500 hover:bg-slate-600 rounded-md p-2 z-20 whitespace-nowrap truncate`}
+                    className={`md:col-span-2 text-sm text-white bg-slate-500 hover:bg-slate-600 rounded-md p-2 z-20 whitespace-nowrap truncate`}
                     onClick={toggleExpanded}>
                     {filtersExpanded ? translations.filters.showLessFilters : translations.filters.showMoreFilters}
                 </button>
 
                 {filtersExpanded && <>
-                    <div className={`lg:col-span-6`}>
+                    <div className={`md:col-span-6`}>
                         <PriceFilter filters={filters} setFilters={setFilters} translations={translations}
                                      transactionType={filters.transactionType} />
                     </div>
 
-                    <div className={`lg:col-span-4`}>
+                    <div className={`md:col-span-4`}>
                         <RoomFilter filters={filters} setFilters={setFilters} translations={translations} />
                     </div>
 
-                    <div className={`lg:col-span-8`}>
+                    <div className={`md:col-span-8`}>
                         <AreaFilter filters={filters} setFilters={setFilters} translations={translations} />
                     </div>
 
-                    <div className={`lg:col-span-8`}>
+                    <div className={`md:col-span-8`}>
                         <YearBuiltFilter filters={filters} setFilters={setFilters} translations={translations} />
                     </div>
                 </>}
